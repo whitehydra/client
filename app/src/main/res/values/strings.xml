@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">client</string>
+
+    <!-- Авторизация -->
+    <string name="login_activity">Авторизация</string>
+    <string name="prompt_username">Логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Авторизация</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_empty_password">Пароль не введён</string>
+    <string name="error_empty_username">Логин не введён</string>
+    <string name="error_incorrect_connection">Подключение не удалось</string>
+    <string name="login_progress">Авторизация…</string>
+
+    <!-- Домашний экран -->
+
+    <string name="home_activity">Профиль</string>
+
+    <string name="title_home">Блок 1</string>
+    <string name="title_dashboard">Блок 2</string>
+    <string name="title_notifications">Блок 3</string>
+
+
+
+</resources>
