@@ -66,6 +66,14 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/testButton"
+                android:layout_width="67dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:onClick="test"
+                android:text="test" />
+
         </LinearLayout>
     </ScrollView>
 

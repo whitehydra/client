@@ -1,15 +1,29 @@
 package com.fadeev.bgtu.client;
 
+
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    ProfileFragment profileFragment;
+    PortfolioFragment portfolioFragment;
+    UploadFragment uploadFragment;
+
+
+    FragmentManager fragmentManager;
+
+
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -18,13 +32,17 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+
+                    fragmentManager.beginTransaction().replace(R.id.homeFrame, profileFragment).commit();
+
+
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+
+                    fragmentManager.beginTransaction().replace(R.id.homeFrame, portfolioFragment).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    fragmentManager.beginTransaction().replace(R.id.homeFrame, uploadFragment).commit();
                     return true;
             }
             return false;
@@ -34,11 +52,25 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        profileFragment = new ProfileFragment();
+        portfolioFragment = new PortfolioFragment();
+        uploadFragment = new UploadFragment();
+        fragmentManager =  getSupportFragmentManager();
+
+
+        fragmentManager.beginTransaction().add(R.id.homeFrame, profileFragment).commit();
+
+
         setContentView(R.layout.activity_home);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+
+
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
     }
 
 }

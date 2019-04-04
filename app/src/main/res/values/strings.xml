@@ -16,10 +16,14 @@
 
     <string name="home_activity">Профиль</string>
 
-    <string name="title_home">Блок 1</string>
-    <string name="title_dashboard">Блок 2</string>
-    <string name="title_notifications">Блок 3</string>
+    <string name="title_home">Профиль</string>
+    <string name="title_dashboard">Портфолио</string>
+    <string name="title_notifications">Загрузка</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_profile_fragment">Profile fragment</string>
+    <string name="hello_portfolio_fragment">Portfolio fragment</string>
+    <string name="hello_upload_fragment">Upload fragment</string>
 
 
 </resources>

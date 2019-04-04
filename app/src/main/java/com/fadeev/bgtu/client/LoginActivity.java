@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+
     }
 
 
@@ -154,9 +156,6 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-               // mPasswordView.setError("Успех!");
-              //  mPasswordView.requestFocus();
-                //  finish();
 
 
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -174,6 +173,12 @@ public class LoginActivity extends AppCompatActivity {
             authorizationTask = null;
             showProgress(false);
         }
+    }
+
+    public void test (View v){
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
 
