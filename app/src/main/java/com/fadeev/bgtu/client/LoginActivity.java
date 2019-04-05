@@ -17,7 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
+import com.fadeev.bgtu.client.dto.UserDTO;
 
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, UserDTO> {
 
         private final String mUsername;
         private final String mPassword;
@@ -135,29 +137,31 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected UserDTO doInBackground(Void... params) {
+          //  ClientHttpRequestFactory requestFactory = getClientHttpRequestFactory();
             RestTemplate template = new RestTemplate();
             template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             AuthorizationDTO authorizationDTO = new AuthorizationDTO();
             authorizationDTO.setUsername(mUsername);
             authorizationDTO.setPassword(mPassword);
 
+//            return template.postForObject(Constants.URL.POST_AUTHORIZATION,authorizationDTO,UserDTO.class);
+
             try {
-                return template.postForObject(Constants.URL.POST_AUTHORIZATION,authorizationDTO,Boolean.class);
+                UserDTO userDTO = template.postForObject(Constants.URL.POST_AUTHORIZATION,authorizationDTO,UserDTO.class);
+                return userDTO;
 
             } catch (Exception e) {
-                return false;
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final UserDTO success) {
             authorizationTask = null;
             showProgress(false);
 
-            if (success) {
-
-
+            if (success!=null) {
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();

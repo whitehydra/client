@@ -3,15 +3,28 @@ package com.fadeev.bgtu.client;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.fadeev.bgtu.client.dto.UserDTO;
 
 
 public class ProfileFragment extends Fragment {
+    HomeActivity homeActivity;
+    TextView pfNameValue;
+    TextView pfPositionValue;
+    TextView pfFacultyValue;
+    TextView pfGroupValue;
+    TextView pfNumberValue;
+    TextView pfMailValue;
+    TextView pfInfoValue;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //    private static final String ARG_PARAM1 = "param1";
@@ -54,11 +67,86 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         Log.d(LOG_TAG, "Fragment1 onCreateView");
         getActivity().setTitle(getString(R.string.title_profile));
+
+
+//        homeActivity.userLoginTask = new HomeActivity.UserLoginTask("admin", "admin");
+//        homeActivity.userLoginTask.execute((Void) null);
+
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        pfNameValue = getView().findViewById(R.id.pfNameValue);
+        pfPositionValue = getView().findViewById(R.id.pfPositionValue);
+        pfFacultyValue = getView().findViewById(R.id.pfFacultyValue);
+        pfGroupValue = getView().findViewById(R.id.pfGroupValue);
+        pfNumberValue = getView().findViewById(R.id.pfNumberValue);
+        pfMailValue = getView().findViewById(R.id.pfMailValue);
+        pfInfoValue = getView().findViewById(R.id.pfInfoValue);
+
+
+        homeActivity = (HomeActivity)getActivity();
+        homeActivity.loginExecute("admin", "admin",1);
+
+      //  pfNameValue.setText(homeActivity.userDTO.getUsername());
+    }
+
+    public void loadData(){
+        pfNameValue.setText("loading...");
+    }
+
+    public void printData(){
+        pfNameValue.setText(homeActivity.userDTO.getName());
+        pfPositionValue.setText(homeActivity.userDTO.getLevel());
+        pfFacultyValue.setText(homeActivity.userDTO.getFaculty());
+        pfGroupValue.setText(homeActivity.userDTO.getStudyGroup());
+        pfNumberValue.setText(homeActivity.userDTO.getPhone());
+        pfMailValue.setText(homeActivity.userDTO.getMail());
+        pfInfoValue.setText(homeActivity.userDTO.getInfo());
+
+    }
+
+
+
+
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        Log.d(LOG_TAG, "Fragment1 onStart");
+
+//        while(homeActivity.userDTO==null){
+//            try {
+//                Thread.sleep(50);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//        pfNameValue.setText(homeActivity.userDTO.getUsername());
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(LOG_TAG, "Fragment1 onResume");
+
+//        while(homeActivity.userDTO==null){
+//            try {
+//                Thread.sleep(50);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//        pfNameValue.setText(homeActivity.userDTO.getUsername());
+
+    }
+
 
 
 //    public void onButtonPressed(Uri uri) {
@@ -87,16 +175,6 @@ public class ProfileFragment extends Fragment {
        // mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
 //    public interface OnFragmentInteractionListener {
 //        // TODO: Update argument type and name
 //        void onFragmentInteraction(Uri uri);
