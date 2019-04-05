@@ -36,12 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mUsernameView = (EditText) findViewById(R.id.username);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mLoginFormView = findViewById(R.id.login_form);
+        mUsernameView = (EditText) findViewById(R.id.lgUsername);
+        mPasswordView = (EditText) findViewById(R.id.lgPassword);
+        mLoginFormView = findViewById(R.id.lgLoginFormScroll);
         mProgressView = findViewById(R.id.login_progress);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.lgSignInButton);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

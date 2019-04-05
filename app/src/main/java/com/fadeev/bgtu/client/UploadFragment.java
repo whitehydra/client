@@ -19,6 +19,7 @@ public class UploadFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle(getString(R.string.title_upload));
         return inflater.inflate(R.layout.fragment_upload, container, false);
     }
 }

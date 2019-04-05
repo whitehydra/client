@@ -36,6 +36,7 @@ dependencies {
 
     implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 repositories {

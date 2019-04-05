@@ -56,6 +56,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         Log.d(LOG_TAG, "Fragment1 onCreateView");
+        getActivity().setTitle(getString(R.string.title_profile));
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">client</string>
 
+    <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
+
+
+
     <!-- Авторизация -->
     <string name="login_activity">Авторизация</string>
     <string name="prompt_username">Логин</string>
@@ -11,19 +15,26 @@
     <string name="error_empty_username">Логин не введён</string>
     <string name="error_incorrect_connection">Подключение не удалось</string>
     <string name="login_progress">Авторизация…</string>
+    <string name="action_recovery">Восстановление доступа</string>
+
 
     <!-- Домашний экран -->
 
     <string name="home_activity">Профиль</string>
 
-    <string name="title_home">Профиль</string>
-    <string name="title_dashboard">Портфолио</string>
-    <string name="title_notifications">Загрузка</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_portfolio">Портфолио</string>
+    <string name="title_upload">Загрузка</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_profile_fragment">Profile fragment</string>
-    <string name="hello_portfolio_fragment">Portfolio fragment</string>
-    <string name="hello_upload_fragment">Upload fragment</string>
+
+    <!-- Профиль -->
+
+    <string name="profile_faculty">Факультет: </string>
+    <string name="profile_group">Группа: </string>
+    <string name="profile_number">Телефон: </string>
+    <string name="profile_mail">Почта: </string>
+    <string name="profile_info">Дополнительная информация: </string>
+
 
 
 </resources>
