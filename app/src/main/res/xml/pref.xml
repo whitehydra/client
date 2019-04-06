@@ -1,0 +1,54 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/AppTheme">
+    <PreferenceCategory android:key="zero_category"/>
+    <PreferenceCategory
+
+        android:key="first_category"
+        android:title="First Category">
+        <EditTextPreference
+            android:dialogTitle="Dialog title"
+            android:dialogMessage="Dialog message"
+            android:inputType="textCapWords"
+            android:key="key_edit_text"
+            android:title="EditText"
+            android:summary="Hello"/>
+
+        <EditTextPreference
+            android:dialogTitle="Dialog title2"
+            android:dialogMessage="Dialog message2"
+            android:inputType="textCapWords"
+            android:key="key_edit_text2"
+            android:title="EditText2"
+            android:summary="Brother"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Second Category">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="key_check_box"
+            android:summary="Enable check box"
+            android:title="CheckBox"/>
+
+        <ListPreference
+            android:key="key_list_preference"
+            android:title="ListPreference"
+            android:summary="List Preference"
+            android:entries="@array/string_array"
+            android:entryValues="@array/string_array_values"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Third Category">
+
+        <SwitchPreference
+            android:key="switch_preference"
+            android:editable="true"
+            android:title="SwitchPreference"/>
+    </PreferenceCategory>
+    <Preference
+        android:title="Exit"
+        android:key="key_exit"
+        android:summary="Exit button"/>
+</PreferenceScreen>

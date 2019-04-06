@@ -22,8 +22,6 @@ import com.fadeev.bgtu.client.dto.UserDTO;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.beans.PropertyChangeSupport;
-import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -112,7 +110,9 @@ public class HomeActivity extends AppCompatActivity {
                         setTitle("Update");
                         break;
                     case (R.id.options):
-                        setTitle("Options");
+                        Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                      //  setTitle("Options");
                         break;
                 }
                 return false;
