@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,6 +23,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -30,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     UserLoginTask userLoginTask;
 
 
+    Toolbar toolbar;
     UserDTO userDTO;
 
 
@@ -78,6 +82,17 @@ public class HomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.toolbar_menu);
+        toolBarListener();
+
+
+
+
+
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
 
@@ -86,6 +101,32 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void toolBarListener(){
+        Toolbar.OnMenuItemClickListener toolbarListener = new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case (R.id.update):
+                        setTitle("Update");
+                        break;
+                    case (R.id.options):
+                        setTitle("Options");
+                        break;
+                }
+                return false;
+            }
+        };
+        toolbar.setOnMenuItemClickListener(toolbarListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
 
     public void loginExecute(String username, String password, int postExecuteOption){
         switch (postExecuteOption){
