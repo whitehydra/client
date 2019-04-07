@@ -2,6 +2,7 @@ package com.fadeev.bgtu.client;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -26,6 +27,11 @@ public class SettingsActivity extends PreferenceActivity {
                 new MainSettingsFragment()).commit();
     }
 
+    private void exit(){
+
+    }
+
+
     public static class MainSettingsFragment extends PreferenceFragment{
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,14 @@ public class SettingsActivity extends PreferenceActivity {
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+
+
+                    SharedPreferences sPref = preference.getContext().getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sPref.edit();
+                    ed.putString(Constants.PREFERENCES.USERNAME,"");
+                    ed.putString(Constants.PREFERENCES.TOKEN,"");
+                    ed.commit();
+
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                     getActivity().finish();

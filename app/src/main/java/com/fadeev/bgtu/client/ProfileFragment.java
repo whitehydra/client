@@ -89,10 +89,19 @@ public class ProfileFragment extends Fragment {
 
 
         homeActivity = (HomeActivity)getActivity();
-        homeActivity.loginExecute("admin", "admin",1);
+        autoUpdate();
+
 
       //  pfNameValue.setText(homeActivity.userDTO.getUsername());
     }
+
+    public void autoUpdate(){
+        if(homeActivity.userDTO!=null){
+            printData();
+        }
+        else homeActivity.loginExecute(1);
+    }
+
 
     public void loadData(){
         pfNameValue.setText("loading...");

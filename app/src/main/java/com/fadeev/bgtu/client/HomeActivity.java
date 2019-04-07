@@ -3,6 +3,7 @@ package com.fadeev.bgtu.client;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,11 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.fadeev.bgtu.client.dto.AuthorizationDTO;
+import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -107,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case (R.id.update):
-                        setTitle("Update");
+                        loginExecute(1);
                         break;
                     case (R.id.options):
                         Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
@@ -128,41 +126,52 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void loginExecute(String username, String password, int postExecuteOption){
-        switch (postExecuteOption){
-            case 1:
-                profileFragment.loadData();
-                break;
-        }
+    public void loginExecute(int postExecuteOption){
 
-        userLoginTask = new UserLoginTask(username, password, postExecuteOption);
-        userLoginTask.execute((Void) null);
+        SharedPreferences sPref;
+        sPref = getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
+        String username = sPref.getString(Constants.PREFERENCES.USERNAME,"");
+        String token = sPref.getString(Constants.PREFERENCES.TOKEN,"");
+        if((!username.equals("")) && (!token.equals("")))
+        {
+            switch (postExecuteOption){
+                case 1:
+                    profileFragment.loadData();
+                    break;
+            }
+            userLoginTask = new UserLoginTask(username, token,postExecuteOption);
+            userLoginTask.execute((Void) null);
+        }else {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
     public class UserLoginTask extends AsyncTask<Void, Void, UserDTO> {
 
-        private final String mUsername;
-        private final String mPassword;
+
         private final int mPostExecuteOption;
+        private final String mUsername;
+        private final String mToken;
 
-        UserLoginTask(String email, String password, int postExecuteOption) {
-            mUsername = email;
-            mPassword = password;
+        UserLoginTask(String username, String token, int postExecuteOption) {
             mPostExecuteOption = postExecuteOption;
-
+            mUsername = username;
+            mToken = token;
         }
 
         @Override
         protected UserDTO doInBackground(Void... params) {
             RestTemplate template = new RestTemplate();
             template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            AuthorizationDTO authorizationDTO = new AuthorizationDTO();
-            authorizationDTO.setUsername(mUsername);
-            authorizationDTO.setPassword(mPassword);
+            TokenAndNameDTO tokenAndNameDTO = new TokenAndNameDTO();
 
+            tokenAndNameDTO.setUsername(mUsername);
+            tokenAndNameDTO.setToken(mToken);
             try {
-                return template.postForObject(Constants.URL.POST_AUTHORIZATION,authorizationDTO,UserDTO.class);
+                return template.postForObject(Constants.URL.POST_AUTHENTICATION,tokenAndNameDTO,UserDTO.class);
 
             } catch (Exception e) {
                 return null;
@@ -173,15 +182,11 @@ public class HomeActivity extends AppCompatActivity {
         protected void onPostExecute(final UserDTO transactionResult) {
             if (transactionResult!=null) {
                 userDTO = transactionResult;
-
-
                 switch (mPostExecuteOption){
                     case 1:
                         profileFragment.printData();
                         break;
                 }
-
-
             } else {
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);

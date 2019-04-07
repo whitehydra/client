@@ -3,7 +3,9 @@ package com.fadeev.bgtu.client;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -18,20 +20,21 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
+import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
 
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    private UserLoginTask authorizationTask = null;
+    private UserLoginTask userLoginTask = null;
     private EditText mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+ //   SharedPreferences sPref;
     Toolbar toolbar;
 
 
@@ -54,12 +57,13 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
-
     }
 
 
+
+
     private void attemptLogin() {
-        if (authorizationTask != null) {
+        if (userLoginTask != null) {
             return;
         }
 
@@ -92,8 +96,8 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            authorizationTask = new UserLoginTask(username, password);
-            authorizationTask.execute((Void) null);
+            userLoginTask = new UserLoginTask(username, password,this);
+            userLoginTask.execute((Void) null);
         }
     }
 
@@ -127,45 +131,60 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    public void test (View v){
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 
 
-    public class UserLoginTask extends AsyncTask<Void, Void, UserDTO> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String mUsername;
         private final String mPassword;
+        private final Context mContext;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, Context context) {
             mUsername = email;
             mPassword = password;
+            mContext = context;
         }
 
         @Override
-        protected UserDTO doInBackground(Void... params) {
-          //  ClientHttpRequestFactory requestFactory = getClientHttpRequestFactory();
+        protected String doInBackground(Void... params) {
             RestTemplate template = new RestTemplate();
             template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             AuthorizationDTO authorizationDTO = new AuthorizationDTO();
             authorizationDTO.setUsername(mUsername);
             authorizationDTO.setPassword(mPassword);
-
-//            return template.postForObject(Constants.URL.POST_AUTHORIZATION,authorizationDTO,UserDTO.class);
-
             try {
-                UserDTO userDTO = template.postForObject(Constants.URL.POST_AUTHORIZATION,authorizationDTO,UserDTO.class);
-                return userDTO;
+                return template.postForObject(Constants.URL.POST_LOGIN,authorizationDTO,String.class);
 
             } catch (Exception e) {
-                return null;
+                return "";
             }
         }
 
         @Override
-        protected void onPostExecute(final UserDTO success) {
-            authorizationTask = null;
+        protected  void onPreExecute(){
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected void onPostExecute(String token) {
+            token = token.replace("\"","");
+            userLoginTask = null;
             showProgress(false);
 
-            if (success!=null) {
+            if (!token.equals("")) {
+                SharedPreferences sPref = mContext.getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
+              //  sPref = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putString(Constants.PREFERENCES.USERNAME,mUsername);
+                ed.putString(Constants.PREFERENCES.TOKEN,token);
+                ed.commit();
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
@@ -178,15 +197,9 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onCancelled() {
-            authorizationTask = null;
+            userLoginTask = null;
             showProgress(false);
         }
-    }
-
-    public void test (View v){
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
 
