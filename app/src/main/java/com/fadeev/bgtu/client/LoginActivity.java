@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -14,17 +15,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
-import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
-import com.fadeev.bgtu.client.dto.UserDTO;
+import com.fadeev.bgtu.client.file.OpenFileDialog;
+import com.fadeev.bgtu.client.retrofit.NetworkService;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import retrofit2.Call;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
- //   SharedPreferences sPref;
     Toolbar toolbar;
 
 
@@ -137,6 +138,50 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    Drawable image;
+
+
+
+    public void openFile(View view){
+        OpenFileDialog openFileDialog = new OpenFileDialog(this)
+                .setFilter(".*\\.jpg")
+                .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
+                    @Override
+                    public void OnSelectedFile(String fileName) {
+                        Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
+                        image = Drawable.createFromPath(fileName);
+
+                        SendFileTask sendFileTask = new SendFileTask(fileName);
+                        sendFileTask.execute((Void)null);
+
+                    }
+                });
+        openFileDialog.show();
+    }
+
+
+
+
+    public class SendFileTask extends AsyncTask<Void, Void, String>{
+        private final String fileName;
+
+        SendFileTask(String fileName){
+            this.fileName = fileName;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            //*********************
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+           Log.d("File", "result = " + result);
+        }
+    }
+
+
 
 
     public class UserLoginTask extends AsyncTask<Void, Void, String> {
@@ -153,17 +198,14 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            RestTemplate template = new RestTemplate();
-            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             AuthorizationDTO authorizationDTO = new AuthorizationDTO();
             authorizationDTO.setUsername(mUsername);
-            authorizationDTO.setPassword(mPassword);
             try {
-                return template.postForObject(Constants.URL.POST_LOGIN,authorizationDTO,String.class);
+                authorizationDTO.setPassword(Functions.generateHash(mPassword));
+            } catch (Exception e) { e.printStackTrace(); }
 
-            } catch (Exception e) {
-                return "";
-            }
+            Call<String> call = NetworkService.getInstance().getJSONApi().postAuthorizationGetToken(authorizationDTO);
+            try { return call.execute().body(); } catch (Exception e) { return ""; }
         }
 
         @Override
@@ -180,7 +222,6 @@ public class LoginActivity extends AppCompatActivity {
 
             if (!token.equals("")) {
                 SharedPreferences sPref = mContext.getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
-              //  sPref = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor ed = sPref.edit();
                 ed.putString(Constants.PREFERENCES.USERNAME,mUsername);
                 ed.putString(Constants.PREFERENCES.TOKEN,token);

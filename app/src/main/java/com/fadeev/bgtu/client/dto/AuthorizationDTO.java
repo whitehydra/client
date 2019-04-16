@@ -1,6 +1,12 @@
 package com.fadeev.bgtu.client.dto;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class AuthorizationDTO {
     @JsonProperty("username")

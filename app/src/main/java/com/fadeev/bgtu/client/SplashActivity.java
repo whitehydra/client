@@ -1,6 +1,5 @@
 package com.fadeev.bgtu.client;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -10,9 +9,9 @@ import android.widget.TextView;
 
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
+import com.fadeev.bgtu.client.retrofit.NetworkService;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import retrofit2.Call;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -36,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         String username = sPref.getString(Constants.PREFERENCES.USERNAME, "");
         String token = sPref.getString(Constants.PREFERENCES.TOKEN, "");
         if ((!username.equals("")) && (!token.equals(""))) {
-            autoLoginTask = new SplashActivity.AutoLoginTask(username, token,this);
+            autoLoginTask = new SplashActivity.AutoLoginTask(username, token);
             autoLoginTask.execute((Void) null);
         }
         else {
@@ -51,27 +50,22 @@ public class SplashActivity extends AppCompatActivity {
     public class AutoLoginTask extends AsyncTask<Void, Void, UserDTO> {
         private final String mUsername;
         private final String mToken;
-        private final Context mContext;
 
-        AutoLoginTask(String username, String token, Context context) {
+        AutoLoginTask(String username, String token) {
             mUsername = username;
             mToken = token;
-            mContext = context;
         }
 
         @Override
         protected UserDTO doInBackground(Void... params) {
-            RestTemplate template = new RestTemplate();
-            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             TokenAndNameDTO tokenAndNameDTO = new TokenAndNameDTO();
             tokenAndNameDTO.setUsername(mUsername);
             tokenAndNameDTO.setToken(mToken);
-            try {
-                return template.postForObject(Constants.URL.POST_AUTHENTICATION,tokenAndNameDTO, UserDTO.class);
-            } catch (Exception e) {
-                return null;
-            }
+
+            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().postTokenGetUser(tokenAndNameDTO);
+            try { return call.execute().body(); } catch (Exception e) { return null; }
         }
+
         @Override
         protected void onPostExecute(final UserDTO transactionResult) {
             if (transactionResult!=null) {

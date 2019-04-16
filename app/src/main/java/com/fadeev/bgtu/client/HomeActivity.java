@@ -16,9 +16,10 @@ import android.view.MenuItem;
 
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
+import com.fadeev.bgtu.client.retrofit.NetworkService;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+
+import retrofit2.Call;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -28,15 +29,10 @@ public class HomeActivity extends AppCompatActivity {
     UploadFragment uploadFragment;
     UserLoginTask userLoginTask;
 
-
     Toolbar toolbar;
     UserDTO userDTO;
 
-
     FragmentManager fragmentManager;
-
-
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -82,20 +78,8 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.toolbar_menu);
         toolBarListener();
-
-
-
-
-
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-       // getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
     }
 
 
@@ -164,18 +148,13 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         protected UserDTO doInBackground(Void... params) {
-            RestTemplate template = new RestTemplate();
-            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             TokenAndNameDTO tokenAndNameDTO = new TokenAndNameDTO();
-
             tokenAndNameDTO.setUsername(mUsername);
             tokenAndNameDTO.setToken(mToken);
-            try {
-                return template.postForObject(Constants.URL.POST_AUTHENTICATION,tokenAndNameDTO,UserDTO.class);
 
-            } catch (Exception e) {
-                return null;
-            }
+            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().postTokenGetUser(tokenAndNameDTO);
+
+            try { return call.execute().body(); } catch (Exception e) { return null; }
         }
 
         @Override
