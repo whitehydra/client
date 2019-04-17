@@ -1,7 +1,10 @@
 package com.fadeev.bgtu.client;
 
+import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
@@ -17,4 +20,7 @@ public class Functions {
         return hexString.toString();
 
     }
+
+
+
 }

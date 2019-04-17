@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +28,17 @@ import com.fadeev.bgtu.client.dto.AuthorizationDTO;
 import com.fadeev.bgtu.client.file.OpenFileDialog;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
+
+import java.io.File;
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -137,9 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
     Drawable image;
-
 
 
     public void openFile(View view){
@@ -151,36 +161,27 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
                         image = Drawable.createFromPath(fileName);
 
-                        SendFileTask sendFileTask = new SendFileTask(fileName);
-                        sendFileTask.execute((Void)null);
+                        File originalFile = new File(fileName);
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),originalFile);
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("file",originalFile.getName(),requestFile);
+                        Call<String> call = NetworkService.getInstance().getJSONApi().uploadFile(body);
 
+
+                        call.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                Log.d("File", "YES! body =" + response.body());
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                Log.d("File", "NO");
+                            }
+                        });
                     }
                 });
         openFileDialog.show();
     }
-
-
-
-
-    public class SendFileTask extends AsyncTask<Void, Void, String>{
-        private final String fileName;
-
-        SendFileTask(String fileName){
-            this.fileName = fileName;
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            //*********************
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-           Log.d("File", "result = " + result);
-        }
-    }
-
 
 
 
