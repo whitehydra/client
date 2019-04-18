@@ -32,8 +32,8 @@ public class SplashActivity extends AppCompatActivity {
     private void autoLogin() {
         SharedPreferences sPref;
         sPref = getSharedPreferences(Constants.PREFERENCES.MAIN, MODE_PRIVATE);
-        String username = sPref.getString(Constants.PREFERENCES.USERNAME, "");
-        String token = sPref.getString(Constants.PREFERENCES.TOKEN, "");
+        String username = Functions.getSharedUsername(this);
+        String token = Functions.getSharedToken(this);
         if ((!username.equals("")) && (!token.equals(""))) {
             autoLoginTask = new SplashActivity.AutoLoginTask(username, token);
             autoLoginTask.execute((Void) null);

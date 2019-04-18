@@ -10,6 +10,11 @@ public class TokenAndNameDTO {
 
     public TokenAndNameDTO(){}
 
+    public TokenAndNameDTO(String username, String token){
+        this.username = username;
+        this.token = token;
+    }
+
     public String getUsername() { return username; }
     public String getToken() { return token; }
     public void setUsername(String username) { this.username = username; }

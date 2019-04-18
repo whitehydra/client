@@ -2,7 +2,8 @@ package com.fadeev.bgtu.client;
 
 public class Constants {
     public static class URL{
-        public static final String HOST = "http://192.168.1.3:8080/";
+        public static final String HOST = "http://192.168.1.4:8080/";
+        public static final String AVATARS = HOST + "avatars/";
     }
     public  static class PREFERENCES{
         public static final String USERNAME = "username";
