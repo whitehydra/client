@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -20,29 +18,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
+import com.fadeev.bgtu.client.dto.FileDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
-import com.fadeev.bgtu.client.file.OpenFileDialog;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -164,101 +152,33 @@ public class LoginActivity extends AppCompatActivity {
     Drawable image;
 
 
-    public void openFile(View view){
-        OpenFileDialog openFileDialog = new OpenFileDialog(this)
-                .setFilter(".*\\.jpg")
-                .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
-                    @Override
-                    public void OnSelectedFile(final String fileName) {
-                        Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
-                        image = Drawable.createFromPath(fileName);
-
-                        File originalFile = new File(fileName);
-                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),originalFile);
-
-                        RequestBody descriptionPart = RequestBody.create(MultipartBody.FORM, "info");
-                        MultipartBody.Part body = MultipartBody.Part.createFormData("file",originalFile.getName(),requestFile);
-                        Call<String> call = NetworkService.getInstance().getJSONApi().uploadFile(descriptionPart, body);
-
-
-                        call.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                String result = response.body().substring(0,response.body().indexOf(" "));
-                                if(result.equals("Done"))
-                                {
-                                    String resultFilename = response.body().substring(response.body().indexOf(" "), response.body().length());
-                                    Log.d(TAG, "Загрузка завершена. Имя файла =" + resultFilename);
-                                }
-                                Toast.makeText(getApplicationContext(), "Загрузка завершена", Toast.LENGTH_LONG).show();
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-                                Log.d(TAG, "NO");
-                            }
-                        });
-                    }
-                });
-        openFileDialog.show();
-    }
 
 
 
 
     public void downloadFile(View view){
-        String avatarName = "300.jpg";
-        final String url = Constants.URL.AVATARS + avatarName;
-        Log.d(TAG, "type = " + Functions.getType(url));
+        List<Object>  postData = new ArrayList<>();
+        TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(this),Functions.getSharedToken(this));
+        FileDTO file = new FileDTO("name","src", "type", 0);
 
-        Call<ResponseBody> call = NetworkService.getInstance().getJSONApi().downloadFileWithUrl(url);
-        call.enqueue(new Callback<ResponseBody>() {
+        postData.add(token);
+        postData.add(file);
+
+        Call<String> call = NetworkService.getInstance().getJSONApi().addFile(postData);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    LoadFileTask loadFileTask = new LoadFileTask(
-                            LoginActivity.this, response.body(),"avatar",Functions.getType(url));
-                    loadFileTask.execute();
-                    Log.d(TAG, "getting file...");
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d(TAG, "Response");
 
-                }
-                else Log.d(TAG,"getting file error");
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d(TAG,"Error");
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG, "fail  ");
             }
         });
     }
 
-
-
-    public class LoadFileTask extends AsyncTask<Void, Void, Boolean>{
-
-        Context context;
-        ResponseBody responseBody;
-        String filename;
-        String fileType;
-
-        LoadFileTask(Context context, ResponseBody responseBody, String filename, String fileType){
-            this.context = context;
-            this.responseBody = responseBody;
-            this.filename = filename;
-            this.fileType = fileType;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            return Functions.writeResponseBodyToDisk(context, responseBody,filename+fileType);
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            Log.d(TAG,"download result: " + result);
-            image = Drawable.createFromPath(getExternalFilesDir(null) + File.separator + filename + fileType);
-            mLogo.setImageDrawable(image);
-        }
-    }
 
 
 

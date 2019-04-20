@@ -1,5 +1,6 @@
 package com.fadeev.bgtu.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -21,6 +22,8 @@ public class UserDTO implements Serializable{
     private String mail;
     @JsonProperty("info")
     private String info;
+    @JsonProperty("avatar")
+    private String avatar;
 
     public UserDTO(){ }
 
@@ -33,7 +36,7 @@ public class UserDTO implements Serializable{
     public String getPhone() { return phone; }
     public String getMail() { return mail; }
     public String getInfo() { return info; }
-
+    public String getAvatar() { return avatar; }
 
     public void setName(String name) { this.name = name; }
     public void setLevel(String level) { this.level = level; }
@@ -42,4 +45,5 @@ public class UserDTO implements Serializable{
     public void setPhone(String phone) { this.phone = phone; }
     public void setMail(String mail) { this.mail = mail; }
     public void setInfo(String info) { this.info = info; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 }

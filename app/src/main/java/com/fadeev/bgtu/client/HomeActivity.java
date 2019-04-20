@@ -163,6 +163,7 @@ public class HomeActivity extends AppCompatActivity {
                 userDTO = transactionResult;
                 switch (mPostExecuteOption){
                     case 1:
+                        profileFragment.loadAvatar();
                         profileFragment.printData();
                         break;
                 }

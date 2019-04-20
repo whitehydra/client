@@ -2,6 +2,9 @@ package com.fadeev.bgtu.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -90,6 +93,15 @@ public class Functions {
         }
     }
 
+    public static Drawable resize(Context context, Drawable image, int size){
+        Bitmap b = ((BitmapDrawable)image).getBitmap();
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b,size,size,false);
+        return new BitmapDrawable(context.getResources(),bitmapResized);
+    }
 
+    public static boolean checkAvatar(Context context){
+        File file = new File(context.getExternalFilesDir(null) + File.separator + Constants.FILES.AVATAR);
+        return file.exists();
+    }
 
 }

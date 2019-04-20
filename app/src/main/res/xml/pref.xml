@@ -47,6 +47,12 @@
             android:editable="true"
             android:title="SwitchPreference"/>
     </PreferenceCategory>
+
+    <Preference
+        android:title="Load avatar"
+        android:key="load_avatar"
+        android:summary="Loading"/>
+
     <Preference
         android:title="Exit"
         android:key="key_exit"

@@ -10,4 +10,8 @@ public class Constants {
         public static final String TOKEN = "token";
         public static final String MAIN = "main";
     }
+
+    public static class FILES{
+        public static final String AVATAR = "avatar.jpg";
+    }
 }
