@@ -12,6 +12,12 @@ public class CategoryDTO {
 
     public CategoryDTO(){}
 
+    public CategoryDTO(int categoryID, String name_category, String sort_category){
+        this.categoryID = categoryID;
+        this.name_category = name_category;
+        this.sort_category = sort_category;
+    }
+
     public int getCategoryID() { return categoryID; }
     public String getName_category() { return name_category; }
     public String getSort_category() { return sort_category; }

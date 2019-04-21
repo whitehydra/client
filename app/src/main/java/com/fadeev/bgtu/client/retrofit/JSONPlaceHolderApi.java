@@ -9,8 +9,6 @@ import com.fadeev.bgtu.client.dto.TypeDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -21,7 +19,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
@@ -61,6 +58,10 @@ public interface JSONPlaceHolderApi {
                             @Part("token") RequestBody token,
                             @Part MultipartBody.Part file);
 
+
+
+    @POST("portfolio/list")
+    Call<List<PortfolioDTO>> getPortfolioList(@Body List<Object> list);
 
 
     @GET("/categories")
