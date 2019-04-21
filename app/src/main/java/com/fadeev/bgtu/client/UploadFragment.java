@@ -1,5 +1,8 @@
 package com.fadeev.bgtu.client;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,9 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fadeev.bgtu.client.dto.CategoryDTO;
@@ -21,11 +29,19 @@ import com.fadeev.bgtu.client.dto.FileDTO;
 import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.TypeDTO;
+import com.fadeev.bgtu.client.file.OpenFileDialog;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +56,39 @@ public class UploadFragment extends Fragment {
     Spinner categorySpinner;
     Spinner criterionSpinner;
     Spinner typeSpinner;
+
+
+    LinearLayout dateEventBlock;
+    LinearLayout datePublicationBlock;
+    LinearLayout fileLoadBlock1;
+    LinearLayout fileLoadBlock2;
+
+    Button fileLoadButton1;
+    Button fileLoadButton2;
+    Button openCloseButton;
+    Button uploadButton;
+
+
+    TextView dateEventPole;
+    TextView datePublicationPole;
+
+    EditText fileLoadPole1;
+    EditText fileLoadPole2;
+    EditText nameText;
+
+    Calendar selectedTimeEvent = Calendar.getInstance();
+    Calendar selectedTimePublication = Calendar.getInstance();
+
+    Boolean additionalFileBlock = false;
+    List<String> selectedFiles = new ArrayList<>();
+
+    int id_category;
+    int id_criterion;
+    int id_type;
+
+    @SuppressLint("SimpleDateFormat") final SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
+    String[] monthName = {"Янв", "Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"};
+
 
     String TAG = "Upload fragment";
 
@@ -63,43 +112,184 @@ public class UploadFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //super.onViewCreated(view, savedInstanceState);
         homeActivity = (HomeActivity)getActivity();
-        categorySpinner = view.findViewById(R.id.categorySpinner);
-        criterionSpinner = view.findViewById(R.id.criterionSpinner);
-        typeSpinner = view.findViewById(R.id.typeSpinner);
+        categorySpinner = view.findViewById(R.id.upCategorySpinner);
+        criterionSpinner = view.findViewById(R.id.upCriterionSpinner);
+        typeSpinner = view.findViewById(R.id.upTypeSpinner);
+
+        dateEventPole = view.findViewById(R.id.upDateEventPole);
+        datePublicationPole = view.findViewById(R.id.upDatePublicationPole);
+
+        fileLoadBlock1 = view.findViewById(R.id.upFileLoadBlock1);
+        fileLoadBlock2 = view.findViewById(R.id.upFileLoadBlock2);
+        fileLoadBlock2.setVisibility(LinearLayout.GONE);
+
+        fileLoadPole1 = view.findViewById(R.id.upFileLoadPole1);
+        fileLoadPole2 = view.findViewById(R.id.upFileLoadPole2);
+        nameText = view.findViewById(R.id.upNameText);
 
 
+        setCurrentTime();
+        addListener(view);
         getCategories();
     }
 
 
 
     private void displayCategory(CategoryDTO categoryDTO){
-        String name = categoryDTO.getName_category();
+        //String name = categoryDTO.getName_category();
         getCriteria(categoryDTO.getCategoryID());
         getTypes(categoryDTO.getCategoryID());
-        Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
+       // Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
+
+        id_category = categoryDTO.getCategoryID();
     }
     private void displayCriterion(CriterionDTO criterionDTO){
-        String name = criterionDTO.getName_criterion();
-        Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
+       // String name = criterionDTO.getName_criterion();
+       // Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
+
+        id_criterion = criterionDTO.getCriterionID();
     }
     private void displayType(TypeDTO typeDTO){
-        String name = typeDTO.getName_type();
-        Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
+      //  String name = typeDTO.getName_type();
+      //  Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
+
+        id_type = typeDTO.getTypeID();
     }
 
 
 
+    public void setCurrentTime(){
+        Date currentTime = Calendar.getInstance().getTime();
+        selectedTimeEvent.setTime(currentTime);
+        selectedTimePublication.setTime(currentTime);
+        dateEventPole.setText(date.format(currentTime));
+        datePublicationPole.setText(date.format(currentTime));
+    }
+
+
+    public void addListener(View view) {
+        dateEventBlock = view.findViewById(R.id.upDateEventBlock);
+        datePublicationBlock = view.findViewById(R.id.upDatePublicationBlock);
+        fileLoadButton1 = view.findViewById(R.id.upFileLoadButton1);
+        fileLoadButton2 = view.findViewById(R.id.upFileLoadButton2);
+        openCloseButton = view.findViewById(R.id.upOpenCloseButton);
+        uploadButton = view.findViewById(R.id.upUploadButton);
+
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == dateEventBlock || v == datePublicationBlock)createDateBlock(v);
+                if (v == fileLoadButton1 || v == fileLoadButton2)createOpenFileBlock(v);
+                if (v == openCloseButton)openClose();
+                if (v == uploadButton)createPortfolio();
+            }
+        };
+
+        dateEventBlock.setOnClickListener(onClickListener);
+        datePublicationBlock.setOnClickListener(onClickListener);
+        fileLoadButton1.setOnClickListener(onClickListener);
+        fileLoadButton2.setOnClickListener(onClickListener);
+        openCloseButton.setOnClickListener(onClickListener);
+        uploadButton.setOnClickListener(onClickListener);
+    }
 
 
 
+    public void createDateBlock(final View v){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-    public void addPortfolio(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        if (v == dateEventBlock){
+                            dateEventPole.setText(day + " " + monthName[month] + " " + year);
+                            selectedTimeEvent.set(Calendar.YEAR, year);
+                            selectedTimeEvent.set(Calendar.MONTH, month);
+                            selectedTimeEvent.set(Calendar.DAY_OF_MONTH, day);
+                        }
+                        if (v == datePublicationBlock){
+                            datePublicationPole.setText(day + " " + monthName[month] + " " + year);
+                            selectedTimePublication.set(Calendar.YEAR, year);
+                            selectedTimePublication.set(Calendar.MONTH, month);
+                            selectedTimePublication.set(Calendar.DAY_OF_MONTH, day);
+                        }
+                    }
+                }, year, month, dayOfMonth);
+        datePickerDialog.show();
+    }
+
+    public void createOpenFileBlock(final View v){
+        OpenFileDialog openFileDialog = new OpenFileDialog(getContext())
+                .setFilter(".*\\.jpg")
+                .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
+                    @Override
+                    public void OnSelectedFile(final String fileName) {
+                        if(v == fileLoadButton1)
+                        {
+                            fileLoadPole1.setText(fileName);
+                            fileLoadPole1.setSelection(fileLoadPole1.getText().length());
+                        }
+                        if(v == fileLoadButton2){
+                            fileLoadPole2.setText(fileName);
+                            fileLoadPole2.setSelection(fileLoadPole2.getText().length());
+                        }
+                        Toast.makeText(getContext().getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
+                        selectedFiles.add(fileName);
+                    }
+                });
+        openFileDialog.show();
+    }
+
+
+
+    public void openClose(){
+        if(additionalFileBlock){
+            fileLoadBlock2.setVisibility(LinearLayout.GONE);
+            openCloseButton.setText("Добавить");
+            fileLoadPole2.setText("...");
+            selectedFiles.remove(selectedFiles.size()-1);
+            additionalFileBlock = false;
+        }
+        else{
+            fileLoadBlock2.setVisibility(LinearLayout.VISIBLE);
+            openCloseButton.setText("Убрать");
+            additionalFileBlock = true;
+        }
+    }
+
+
+
+    public void createPortfolio(){
+        PortfolioDTO portfolio = new PortfolioDTO();
+
+        String name = nameText.getText().toString();
+        if(name.length() > 6){
+            portfolio.setName(name);
+
+            portfolio.setId_category(id_category);
+            portfolio.setId_criterion(id_criterion);
+            portfolio.setId_type(id_type);
+
+            portfolio.setDate_event(date.format(selectedTimeEvent.getTime()));
+            portfolio.setDate_publication(date.format(selectedTimePublication.getTime()));
+
+            sendPortfolio(portfolio);
+        }
+        else Toast.makeText(homeActivity,"Описание слишком короткое",Toast.LENGTH_SHORT).show();
+
+
+    }
+
+
+    public void sendPortfolio(PortfolioDTO portfolio){
         List<Object> postData = new ArrayList<>();
         TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
-        PortfolioDTO portfolio = new PortfolioDTO("name", "eve",
-                "pub", 1, 1, 1);
-
         postData.add(token);
         postData.add(portfolio);
 
@@ -108,16 +298,88 @@ public class UploadFragment extends Fragment {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if(response.body()!=null)
-                    Log.d(TAG, "portfolio num = " + response.body());
-                    addFile(response.body());
+                    Log.d(TAG, "Портфолио загружено, id = " + response.body());
+                addFiles(response.body());
+                if(selectedFiles.isEmpty()){
+                    Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
+                    clean();
+                }
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
-
             }
         });
     }
+
+    public void clean(){
+        nameText.setText("");
+        fileLoadPole1.setText("...");
+        fileLoadPole2.setText("...");
+        selectedFiles.clear();
+    }
+
+
+
+    public void addFiles(int id){
+        if(!selectedFiles.isEmpty()){
+            for(String fileName: selectedFiles){
+                final File originalFile = new File(fileName);
+                FileDTO file = new FileDTO(originalFile.getName(),"-",Functions.getFileExtension(originalFile),id);
+                List<Object> postData = new ArrayList<>();
+                TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
+                postData.add(token);
+                postData.add(file);
+
+                Call<String> call = NetworkService.getInstance().getJSONApi().addFile(postData);
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if(response.body()!=null){
+                            String answer = response.body();
+                            Log.d(TAG, "Информация о файле загружена. Ссылка на него - " + answer );
+                            uploadFiles(answer,originalFile);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                    }
+                });
+            }
+        }
+    }
+
+    public void uploadFiles(String src, final File originalFile){
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),originalFile);
+        Log.d(TAG,"Передача файла...");
+
+        String username = Functions.getSharedUsername(homeActivity);
+        String token = Functions.getSharedToken(homeActivity);
+        RequestBody usernamePart = RequestBody.create(MultipartBody.FORM, username);
+        RequestBody tokenPart = RequestBody.create(MultipartBody.FORM,token);
+
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file",src,requestFile);
+        Call<String> call = NetworkService.getInstance().getJSONApi().uploadFile(usernamePart,tokenPart, body);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d(TAG, response.body());
+                if(originalFile.getName().equals(new File(selectedFiles.get(selectedFiles.size()-1)).getName())){
+                    Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
+                    clean();
+                    //clean
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG, "Ошибка подключения");
+            }
+        });
+    }
+
+
+
 
 
     public void getCategories(){
@@ -221,30 +483,5 @@ public class UploadFragment extends Fragment {
 
 
 
-    public void addFile(int id){
-
-        List<Object> postData = new ArrayList<>();
-        TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
-        FileDTO file = new FileDTO("name","src", "type", id);
-
-        postData.add(token);
-        postData.add(file);
-
-        Call<String> call = NetworkService.getInstance().getJSONApi().addFile(postData);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String answer = response.body();
-                Log.d(TAG, "Response - " + answer );
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-
-
-    }
 
 }

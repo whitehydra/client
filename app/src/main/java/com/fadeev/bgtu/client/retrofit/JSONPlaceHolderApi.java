@@ -35,11 +35,6 @@ public interface JSONPlaceHolderApi {
     @POST("/login")
     Call<String> postAuthorizationGetToken(@Body AuthorizationDTO data);
 
-    @Multipart
-    @POST("/file")
-    Call<String> uploadFile(
-            @Part("text") RequestBody info,
-            @Part MultipartBody.Part file);
 
     @Multipart
     @POST("/file")
@@ -59,6 +54,13 @@ public interface JSONPlaceHolderApi {
 
     @POST("/portfolio/add")
     Call<Integer> addPortfolio(@Body List<Object> list);
+
+    @Multipart
+    @POST("portfolio/upload")
+    Call<String> uploadFile(@Part("username") RequestBody username,
+                            @Part("token") RequestBody token,
+                            @Part MultipartBody.Part file);
+
 
 
     @GET("/categories")

@@ -104,4 +104,9 @@ public class Functions {
         return file.exists();
     }
 
+    public static String getFileExtension(File file){
+        String name = file.getName();
+        return name.substring(name.lastIndexOf(".")).substring(1);
+    }
+
 }
