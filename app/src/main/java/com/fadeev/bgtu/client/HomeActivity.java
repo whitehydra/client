@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
@@ -25,14 +26,19 @@ import retrofit2.Call;
 public class HomeActivity extends AppCompatActivity {
 
     ProfileFragment profileFragment;
+    PortfolioListFragment portfolioListFragment;
     PortfolioFragment portfolioFragment;
+
     UploadFragment uploadFragment;
     UserLoginTask userLoginTask;
 
     Toolbar toolbar;
     UserDTO userDTO;
+    PortfolioDTO portfolioDTO;
 
     FragmentManager fragmentManager;
+    Boolean update;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -49,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
 
-                    fragmentManager.beginTransaction().replace(R.id.homeFrame, portfolioFragment).commit();
+                    fragmentManager.beginTransaction().replace(R.id.homeFrame, portfolioListFragment).commit();
                     return true;
                 case R.id.navigation_notifications:
                     fragmentManager.beginTransaction().replace(R.id.homeFrame, uploadFragment).commit();
@@ -64,9 +70,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         profileFragment = new ProfileFragment();
-        portfolioFragment = new PortfolioFragment();
+        portfolioListFragment = new PortfolioListFragment();
         uploadFragment = new UploadFragment();
+        portfolioFragment = new PortfolioFragment();
         fragmentManager =  getSupportFragmentManager();
+        update = false;
 
 
         fragmentManager.beginTransaction().add(R.id.homeFrame, profileFragment).commit();

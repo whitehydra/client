@@ -1,28 +1,29 @@
 package com.fadeev.bgtu.client;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.fadeev.bgtu.client.adapters.PortfolioAdapter;
-import com.fadeev.bgtu.client.dto.CategoryDTO;
+import com.fadeev.bgtu.client.dto.FileDTO;
 import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,13 +33,30 @@ import retrofit2.Response;
 public class PortfolioFragment extends Fragment {
 
     HomeActivity homeActivity;
-    String TAG = "Portfolio fragment";
-    ListView portfolioList;
-    EditText searchBar;
-    Spinner categorySpinner;
-    List<PortfolioDTO> list;
-    List<CategoryDTO> categories;
-    PortfolioAdapter adapter;
+
+
+    TextView nameText;
+    TextView categoryText;
+    TextView criterionText;
+    TextView typeText;
+    TextView dateEventText;
+    TextView datePublicationText;
+    TextView fileNameText1;
+    TextView fileTypeText1;
+    TextView fileNameText2;
+    TextView fileTypeText2;
+
+    Button loadFileButton1;
+    Button loadFileButton2;
+    Button updatePortfolioButton;
+
+    LinearLayout fileBlock1;
+    LinearLayout fileBlock2;
+
+    List<FileDTO> fileList;
+
+    DownloadManager downloadManager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,109 +68,114 @@ public class PortfolioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle(getString(R.string.title_portfolio));
+
         return inflater.inflate(R.layout.fragment_portfolio, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         homeActivity = (HomeActivity)getActivity();
-        portfolioList = view.findViewById(R.id.poPortfolioList);
-        searchBar = view.findViewById(R.id.pfSearchBar);
-        categorySpinner = view.findViewById(R.id.pfCategorySpinner);
-        getPortfolio();
+        nameText = view.findViewById(R.id.pflNamePole);
+        categoryText = view.findViewById(R.id.pflCategoryPole);
+        criterionText = view.findViewById(R.id.pflCriterionPole);
+        typeText = view.findViewById(R.id.pflTypePole);
+        dateEventText = view.findViewById(R.id.pflDateEventPole);
+        datePublicationText = view.findViewById(R.id.pflDatePublicationPole);
+        fileNameText1 = view.findViewById(R.id.pflFileNamePole1);
+        fileTypeText1 = view.findViewById(R.id.pflFileTypePole1);
+        fileNameText2 = view.findViewById(R.id.pflFileNamePole2);
+        fileTypeText2 = view.findViewById(R.id.pflFileTypePole2);
+
+        loadFileButton1 = view.findViewById(R.id.pflLoadFileButton1);
+        loadFileButton2 = view.findViewById(R.id.pflLoadFileButton2);
+        updatePortfolioButton = view.findViewById(R.id.pflUpdatePortfolioButton);
+
+        fileBlock1 = view.findViewById(R.id.pflFileBlock1);
+        fileBlock2 = view.findViewById(R.id.pflFileBlock2);
+
+        fileBlock1.setVisibility(LinearLayout.GONE);
+        fileBlock2.setVisibility(LinearLayout.GONE);
+
+        printData();
+        loadFilesInfo();
+    }
+
+    public void loadListener(){
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v == loadFileButton1)downloadFile(0);
+                if(v == loadFileButton2)downloadFile(1);
+            }
+        };
+        loadFileButton1.setOnClickListener(onClickListener);
+        loadFileButton2.setOnClickListener(onClickListener);
+    }
+
+    public void downloadFile(int num){
+        downloadManager = (DownloadManager)homeActivity.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(
+                Functions.createDownloadUri(homeActivity,fileList.get(num).getFile_src()));
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setTitle(fileList.get(num).getFile_name());
+        //request.setDestinationInExternalFilesDir(homeActivity,Environment.DIRECTORY_DOWNLOADS, fileList.get(num).getFile_name());
+        downloadManager.enqueue(request);
     }
 
 
 
 
-    public void getPortfolio(){
+    public void printData(){
+        nameText.setText(homeActivity.portfolioDTO.getName());
+        categoryText.setText(homeActivity.portfolioDTO.getCategory().getName_category());
+        criterionText.setText(homeActivity.portfolioDTO.getCriterion().getName_criterion());
+        typeText.setText(homeActivity.portfolioDTO.getType().getName_type());
+        dateEventText.setText(homeActivity.portfolioDTO.getDate_event());
+        datePublicationText.setText(homeActivity.portfolioDTO.getDate_publication());
+    }
+
+    public void printFileData(){
+        if (!fileList.isEmpty()){
+            fileBlock1.setVisibility(LinearLayout.VISIBLE);
+            fileNameText1.setText(fileList.get(0).getFile_name());
+            fileTypeText1.setText(fileList.get(0).getFile_type());
+            if(fileList.size() == 2){
+                fileBlock2.setVisibility(LinearLayout.VISIBLE);
+                fileNameText2.setText(fileList.get(1).getFile_name());
+                fileTypeText2.setText(fileList.get(1).getFile_type());
+            }
+        }
+    }
+
+
+    public void loadFilesInfo(){
         List<Object> postData = new ArrayList<>();
         TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
+      //  Integer portfolioID = homeActivity.portfolioDTO.getId_portfolio();
+        HashMap<String, Integer> portfolioID = new HashMap<>();
+        portfolioID.put("portfolioID",homeActivity.portfolioDTO.getId_portfolio());
         postData.add(token);
+        postData.add(portfolioID);
 
-        Call<List<PortfolioDTO>> call = NetworkService.getInstance().getJSONApi().getPortfolioList(postData);
-        call.enqueue(new Callback<List<PortfolioDTO>>() {
+        Call<List<FileDTO>> call = NetworkService.getInstance().getJSONApi().getFile(postData);
+        call.enqueue(new Callback<List<FileDTO>>() {
             @Override
-            public void onResponse(Call<List<PortfolioDTO>> call, Response<List<PortfolioDTO>> response) {
-                if(response.body()!=null){
-                    Log.d(TAG, "Портфолио получено");
-                    list = response.body();
-                    createAdapter();
-                    getCategories(adapter);
-                }
+            public void onResponse(Call<List<FileDTO>> call, Response<List<FileDTO>> response) {
+                fileList = response.body();
+                loadListener();
+                printFileData();
             }
 
             @Override
-            public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) {
+            public void onFailure(Call<List<FileDTO>> call, Throwable t) {
 
             }
         });
-    }
 
 
-    public void createAdapter(){
-        adapter = new PortfolioAdapter(homeActivity,R.layout.portfolio_list_layout,list);
-        portfolioList.setAdapter(adapter);
-
-        searchBar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getSearchFilter().filter(s);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
 
 
 
-
-
-
-
-
-    public void getCategories(final PortfolioAdapter portfolioAdapter){
-        Call<List<CategoryDTO>> call = NetworkService.getInstance().getJSONApi().getCategories();
-        call.enqueue(new Callback<List<CategoryDTO>>() {
-            @Override
-            public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
-                if(response.body()!=null){
-                    categories = response.body();
-                    categories.add(0,new CategoryDTO(-1,"Все категории","0"));
-                    Log.d(TAG, "Категорий получено: " + categories.size());
-
-                    ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
-                            homeActivity,android.R.layout.simple_spinner_item, categories);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    categorySpinner.setAdapter(adapter);
-
-
-                    categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            CharSequence charSequence = categories.get(position).getName_category();
-                            portfolioAdapter.getCategoryFilter().filter(charSequence);
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onFailure(Call<List<CategoryDTO>> call, Throwable t) {
-                Log.d(TAG, "Ошибка получения категорий");
-            }
-        });
-    }
 }

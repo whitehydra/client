@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import  android.net.Uri;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
@@ -107,6 +108,11 @@ public class Functions {
     public static String getFileExtension(File file){
         String name = file.getName();
         return name.substring(name.lastIndexOf(".")).substring(1);
+    }
+
+    public static Uri createDownloadUri(Context c, String src){
+        return Uri.parse(Constants.URL.FILES + "username=" + Functions.getSharedUsername(c) +
+                "&token=" + Functions.getSharedToken(c) + "&src=" + src);
     }
 
 }

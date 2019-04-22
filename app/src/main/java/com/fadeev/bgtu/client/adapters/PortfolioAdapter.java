@@ -75,13 +75,11 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         tvCategory.setText(category);
         tvType.setText(type);
 
-
-
         return rowView;
     }
 
     @NonNull
-    public Filter getSearchFilter() {
+    public Filter getSearchFilter(final CharSequence choose) {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -109,6 +107,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredData = (List<PortfolioDTO>)results.values;
                 notifyDataSetChanged();
+                getCategoryFilter().filter(choose);
 
             }
         };
@@ -122,13 +121,13 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
                 if(constraint == null || constraint.length() == 0){
-                    results.values = originalData;
-                    results.count = originalData.size();
+                    results.values = filteredData;
+                    results.count = filteredData.size();
                 }
                 else{
                     List<PortfolioDTO> filterResultsData = new ArrayList<>();
 
-                    for(PortfolioDTO data : originalData){
+                    for(PortfolioDTO data : filteredData){
                         if(data.getCategory().getName_category().equals(constraint.toString()) ||
                         constraint.toString().equals("Все категории")){
                             filterResultsData.add(data);

@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Описание"
-                    android:inputType="textMultiLine"
+                    android:inputType="text"
                     android:lines="3"
                     android:maxLines="3"
                     android:minLines="3"
@@ -61,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp" />
+
             </LinearLayout>
 
 
@@ -77,11 +78,11 @@
                     android:layout_height="wrap_content"
                     android:text="Критерий получения:" />
 
-                <Spinner
-                    android:id="@+id/upCriterionSpinner"
+                <RadioGroup
+                    android:id="@+id/upRadioButtons"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp" />
+                    android:layout_height="match_parent" />
+
             </LinearLayout>
 
             <LinearLayout

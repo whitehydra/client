@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +53,9 @@ public class UploadFragment extends Fragment {
     List<TypeDTO> types;
 
     Spinner categorySpinner;
-    Spinner criterionSpinner;
     Spinner typeSpinner;
+
+    RadioGroup radioButtons;
 
 
     LinearLayout dateEventBlock;
@@ -72,6 +75,8 @@ public class UploadFragment extends Fragment {
     EditText fileLoadPole1;
     EditText fileLoadPole2;
     EditText nameText;
+
+
 
     Calendar selectedTimeEvent = Calendar.getInstance();
     Calendar selectedTimePublication = Calendar.getInstance();
@@ -110,7 +115,6 @@ public class UploadFragment extends Fragment {
         //super.onViewCreated(view, savedInstanceState);
         homeActivity = (HomeActivity)getActivity();
         categorySpinner = view.findViewById(R.id.upCategorySpinner);
-        criterionSpinner = view.findViewById(R.id.upCriterionSpinner);
         typeSpinner = view.findViewById(R.id.upTypeSpinner);
 
         dateEventPole = view.findViewById(R.id.upDateEventPole);
@@ -124,6 +128,10 @@ public class UploadFragment extends Fragment {
         fileLoadPole2 = view.findViewById(R.id.upFileLoadPole2);
         nameText = view.findViewById(R.id.upNameText);
 
+        radioButtons = view.findViewById(R.id.upRadioButtons);
+
+
+
 
         setCurrentTime();
         addListener(view);
@@ -131,25 +139,21 @@ public class UploadFragment extends Fragment {
     }
 
 
+    public void updatePortfolio(){
+        
+    }
+
+
 
     private void displayCategory(CategoryDTO categoryDTO){
-        //String name = categoryDTO.getName_category();
         getCriteria(categoryDTO.getCategoryID());
         getTypes(categoryDTO.getCategoryID());
-       // Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
-
         id_category = categoryDTO.getCategoryID();
     }
     private void displayCriterion(CriterionDTO criterionDTO){
-       // String name = criterionDTO.getName_criterion();
-       // Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
-
         id_criterion = criterionDTO.getCriterionID();
     }
     private void displayType(TypeDTO typeDTO){
-      //  String name = typeDTO.getName_type();
-      //  Toast.makeText(homeActivity,name,Toast.LENGTH_SHORT).show();
-
         id_type = typeDTO.getTypeID();
     }
 
@@ -223,7 +227,7 @@ public class UploadFragment extends Fragment {
 
     public void createOpenFileBlock(final View v){
         OpenFileDialog openFileDialog = new OpenFileDialog(getContext())
-                .setFilter(".*\\.jpg")
+                .setFilter(".*\\.(?:jpg|jpeg|png|doc|pdf)")
                 .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
                     @Override
                     public void OnSelectedFile(final String fileName) {
@@ -296,7 +300,8 @@ public class UploadFragment extends Fragment {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if(response.body()!=null)
                     Log.d(TAG, "Портфолио загружено, id = " + response.body());
-                addFiles(response.body());
+                if(!selectedFiles.isEmpty())addFiles(response.body());
+
                 if(selectedFiles.isEmpty()){
                     Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
                     clean();
@@ -361,10 +366,13 @@ public class UploadFragment extends Fragment {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d(TAG, response.body());
-                if(originalFile.getName().equals(new File(selectedFiles.get(selectedFiles.size()-1)).getName())){
-                    Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
-                    clean();
-                    //clean
+                if(selectedFiles.size()!=0){
+                    if(originalFile.getName().equals(new File(selectedFiles.get(selectedFiles.size()-1)).getName())){
+                        Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
+                        clean();
+                        //clean
+                    }
+
                 }
             }
 
@@ -420,18 +428,32 @@ public class UploadFragment extends Fragment {
                 if(response.body()!=null){
                     criteria = response.body();
                     Log.d(TAG, "Критериев получено: " + criteria.size());
-                    ArrayAdapter<CriterionDTO> adapter = new ArrayAdapter<CriterionDTO>(
-                            homeActivity,android.R.layout.simple_spinner_item, criteria);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    criterionSpinner.setAdapter(adapter);
-                    criterionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            CriterionDTO criterion = (CriterionDTO) parent.getSelectedItem();
-                            displayCriterion(criterion);
+                   // radioButtons.clearCheck();
+//                    for(int i = 0; i <radioButtons.getChildCount(); i++){
+//                        radioButtons.remove
+//                    }
+
+                    radioButtons.removeAllViews();
+
+                    boolean first = true;
+                    for(CriterionDTO criterion:criteria){
+                        RadioButton radioButton = new RadioButton(homeActivity);
+                        radioButton.setId(criterion.getCriterionID());
+                        radioButton.setText(criterion.getName_criterion());
+                        radioButtons.addView(radioButton);
+                        if (first){
+                            radioButtons.check(radioButton.getId());
+                            id_criterion = radioButton.getId();
                         }
+                        first = false;
+                    }
+                    radioButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            RadioButton checkedRadioButton = radioButtons.findViewById(checkedId);
+                            if(checkedRadioButton.isChecked()){
+                                id_criterion = checkedRadioButton.getId();
+                            }
                         }
                     });
 
@@ -478,7 +500,10 @@ public class UploadFragment extends Fragment {
         });
     }
 
-
-
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "Detach");
+        homeActivity.update = false;
+    }
 }
