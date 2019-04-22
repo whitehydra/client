@@ -131,16 +131,21 @@ public class UploadFragment extends Fragment {
         radioButtons = view.findViewById(R.id.upRadioButtons);
 
 
-
-
         setCurrentTime();
         addListener(view);
         getCategories();
+
+   //     if(homeActivity.update)updatePortfolio();
     }
 
 
     public void updatePortfolio(){
-        
+        Log.d(TAG, "old - " + nameText.getText().toString() );
+        nameText.setText(homeActivity.portfolioDTO.getName());
+        Log.d(TAG, "new - " + nameText.getText().toString() );
+        dateEventPole.setText(homeActivity.portfolioDTO.getDate_event());
+        datePublicationPole.setText(homeActivity.portfolioDTO.getDate_publication());
+
     }
 
 
@@ -193,6 +198,9 @@ public class UploadFragment extends Fragment {
         fileLoadButton2.setOnClickListener(onClickListener);
         openCloseButton.setOnClickListener(onClickListener);
         uploadButton.setOnClickListener(onClickListener);
+
+        if(homeActivity.update)uploadButton.setText("Обновление портфолио");
+        else uploadButton.setText("Загрузка портфолио");
     }
 
 
@@ -294,18 +302,25 @@ public class UploadFragment extends Fragment {
         postData.add(token);
         postData.add(portfolio);
 
-        Call<Integer> call = NetworkService.getInstance().getJSONApi().addPortfolio(postData);
+        Call<Integer> call;
+        if(homeActivity.update){
+            call = NetworkService.getInstance().getJSONApi().updatePortfolio(postData);
+            portfolio.setId_portfolio(homeActivity.portfolioDTO.getId_portfolio());
+        }
+        else call = NetworkService.getInstance().getJSONApi().addPortfolio(postData);
         call.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if(response.body()!=null)
+                if(response.body()!=null){
                     Log.d(TAG, "Портфолио загружено, id = " + response.body());
-                if(!selectedFiles.isEmpty())addFiles(response.body());
+                    if(!selectedFiles.isEmpty())addFiles(response.body());
 
-                if(selectedFiles.isEmpty()){
-                    Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
-                    clean();
+                    if(selectedFiles.isEmpty()){
+                        Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
+                        clean();
+                    }
                 }
+
             }
 
             @Override
@@ -388,11 +403,13 @@ public class UploadFragment extends Fragment {
 
 
     public void getCategories(){
+     //   Log.d(TAG, "new[2] - " + nameText.getText().toString() );
         Call<List<CategoryDTO>> call = NetworkService.getInstance().getJSONApi().getCategories();
         call.enqueue(new Callback<List<CategoryDTO>>() {
             @Override
             public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                 if(response.body()!=null){
+             //       Log.d(TAG, "new[3] - " + nameText.getText().toString() );
                     categories = response.body();
                     Log.d(TAG, "Категорий получено: " + categories.size());
 
@@ -400,6 +417,16 @@ public class UploadFragment extends Fragment {
                             homeActivity,android.R.layout.simple_spinner_item, categories);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     categorySpinner.setAdapter(adapter);
+
+                    if(homeActivity.update){
+                        for(int i = 0; i < adapter.getCount(); i++){
+                            if(adapter.getItem(i).getCategoryID() == homeActivity.portfolioDTO.getCategory()
+                                    .getCategoryID())categorySpinner.setSelection(i);
+                        }
+                    }
+
+                    if(homeActivity.update)updatePortfolio();
+
                     categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -444,6 +471,7 @@ public class UploadFragment extends Fragment {
                         if (first){
                             radioButtons.check(radioButton.getId());
                             id_criterion = radioButton.getId();
+                            Log.d(TAG, "first detected");
                         }
                         first = false;
                     }
@@ -479,6 +507,15 @@ public class UploadFragment extends Fragment {
                             homeActivity,android.R.layout.simple_spinner_item, types);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     typeSpinner.setAdapter(adapter);
+
+                    if(homeActivity.update){
+                        for(int i = 0; i < adapter.getCount(); i++){
+                            if(adapter.getItem(i).getTypeID() == homeActivity.portfolioDTO.getType()
+                                    .getTypeID())typeSpinner.setSelection(i);
+                        }
+                    }
+
+
                     typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -504,6 +541,7 @@ public class UploadFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, "Detach");
+        clean();
         homeActivity.update = false;
     }
 }

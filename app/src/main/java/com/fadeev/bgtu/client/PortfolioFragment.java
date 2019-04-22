@@ -106,10 +106,15 @@ public class PortfolioFragment extends Fragment {
             public void onClick(View v) {
                 if(v == loadFileButton1)downloadFile(0);
                 if(v == loadFileButton2)downloadFile(1);
+                if(v == updatePortfolioButton){
+                    homeActivity.update = true;
+                    homeActivity.fragmentManager.beginTransaction().replace(R.id.homeFrame, homeActivity.uploadFragment).commit();
+                }
             }
         };
         loadFileButton1.setOnClickListener(onClickListener);
         loadFileButton2.setOnClickListener(onClickListener);
+        updatePortfolioButton.setOnClickListener(onClickListener);
     }
 
     public void downloadFile(int num){
