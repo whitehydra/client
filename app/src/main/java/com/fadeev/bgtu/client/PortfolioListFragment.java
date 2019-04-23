@@ -3,6 +3,7 @@ package com.fadeev.bgtu.client;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -44,6 +45,7 @@ public class PortfolioListFragment extends Fragment {
     CharSequence search = null;
     CharSequence choose = null;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,10 @@ public class PortfolioListFragment extends Fragment {
         portfolioList = view.findViewById(R.id.poPortfolioList);
         searchBar = view.findViewById(R.id.pfSearchBar);
         categorySpinner = view.findViewById(R.id.pfCategorySpinner);
+
+        homeActivity.fragmentID = 2;
+
+        portfolioList.setNestedScrollingEnabled(true);
         getPortfolio();
     }
 
@@ -84,7 +90,9 @@ public class PortfolioListFragment extends Fragment {
                     list = response.body();
                     createAdapter();
                     createListener();
+
                     getCategories(adapter);
+
                 }
             }
 
@@ -140,6 +148,30 @@ public class PortfolioListFragment extends Fragment {
 
 
 
+    public void drawCategories(final PortfolioAdapter portfolioAdapter){
+        categories.add(0,new CategoryDTO(-1,"Все категории","0"));
+        Log.d(TAG, "Категорий получено: " + categories.size());
+
+        ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
+                homeActivity,android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
+
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                choose = categories.get(position).getName_category();
+
+                //  portfolioAdapter.getCategoryFilter().filter(choose);
+                portfolioAdapter.getSearchFilter(choose).filter(search);
+                //   Toast.makeText(homeActivity,"category choose",Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
 
 
 
@@ -150,28 +182,7 @@ public class PortfolioListFragment extends Fragment {
             public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                 if(response.body()!=null){
                     categories = response.body();
-                    categories.add(0,new CategoryDTO(-1,"Все категории","0"));
-                    Log.d(TAG, "Категорий получено: " + categories.size());
-
-                    ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
-                            homeActivity,android.R.layout.simple_spinner_item, categories);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    categorySpinner.setAdapter(adapter);
-
-
-                    categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            choose = categories.get(position).getName_category();
-
-                          //  portfolioAdapter.getCategoryFilter().filter(choose);
-                            portfolioAdapter.getSearchFilter(choose).filter(search);
-                         //   Toast.makeText(homeActivity,"category choose",Toast.LENGTH_SHORT).show();
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                        }
-                    });
+                    drawCategories(portfolioAdapter);
                 }
             }
             @Override

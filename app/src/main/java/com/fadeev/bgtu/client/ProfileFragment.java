@@ -1,6 +1,7 @@
 package com.fadeev.bgtu.client;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
@@ -73,18 +75,48 @@ public class ProfileFragment extends Fragment {
 
 
         homeActivity = (HomeActivity)getActivity();
-        autoUpdate();
+
+        homeActivity.fragmentID = 1;
+        update();
 
 
       //  pfNameValue.setText(homeActivity.userDTO.getUsername());
     }
 
-    public void autoUpdate(){
+    public void update(){
         if(homeActivity.userDTO!=null){
             printData();
         }
-        else homeActivity.loginExecute(1);
+        else getProfile();
     }
+
+
+
+    public void getProfile(){
+        TokenAndNameDTO tokenAndNameDTO = new TokenAndNameDTO();
+        tokenAndNameDTO.setUsername(Functions.getSharedUsername(homeActivity));
+        tokenAndNameDTO.setToken(Functions.getSharedToken(homeActivity));
+
+        Call<UserDTO> call = NetworkService.getInstance().getJSONApi().postTokenGetUser(tokenAndNameDTO);
+        call.enqueue(new Callback<UserDTO>() {
+            @Override
+            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                if(response.body()!=null){
+                    homeActivity.userDTO = response.body();
+                    loadAvatar();
+                    printData();
+                }
+                else homeActivity.logout();
+            }
+
+            @Override
+            public void onFailure(Call<UserDTO> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
 
     public void loadData(){
@@ -164,71 +196,10 @@ public class ProfileFragment extends Fragment {
 
 
 
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        Log.d(TAG, "onStart");
-
-//        while(homeActivity.userDTO==null){
-//            try {
-//                Thread.sleep(50);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//        pfNameValue.setText(homeActivity.userDTO.getUsername());
-
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        Log.d(TAG, "onResume");
-
-//        while(homeActivity.userDTO==null){
-//            try {
-//                Thread.sleep(50);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//        pfNameValue.setText(homeActivity.userDTO.getUsername());
-
-    }
-
-
-
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        Log.d(TAG, "onAttach");
-
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
-       // mListener = null;
+        Log.d(TAG, "Profile detach");
     }
 
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

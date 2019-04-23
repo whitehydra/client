@@ -14,11 +14,11 @@
 
         <TextView
             android:id="@+id/ltCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textStyle="italic" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,9 +37,16 @@
                 android:id="@+id/ltType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="TextView" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/ltClose"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:text="X"
+            android:focusable="false"/>
     </LinearLayout>
 
     <LinearLayout

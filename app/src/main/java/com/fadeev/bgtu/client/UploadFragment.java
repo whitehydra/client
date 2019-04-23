@@ -2,6 +2,7 @@ package com.fadeev.bgtu.client;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,9 +49,7 @@ import retrofit2.Response;
 
 public class UploadFragment extends Fragment {
     HomeActivity homeActivity;
-    List<CategoryDTO> categories;
-    List<CriterionDTO> criteria;
-    List<TypeDTO> types;
+
 
     Spinner categorySpinner;
     Spinner typeSpinner;
@@ -85,7 +84,7 @@ public class UploadFragment extends Fragment {
     List<String> selectedFiles = new ArrayList<>();
 
     int id_category;
-    int id_criterion;
+    int id_criterion = -1;
     int id_type;
 
     @SuppressLint("SimpleDateFormat") final SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
@@ -103,16 +102,18 @@ public class UploadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         getActivity().setTitle(getString(R.string.title_upload));
-
-
         return inflater.inflate(R.layout.fragment_upload, container, false);
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "onAttach");
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //super.onViewCreated(view, savedInstanceState);
         homeActivity = (HomeActivity)getActivity();
         categorySpinner = view.findViewById(R.id.upCategorySpinner);
         typeSpinner = view.findViewById(R.id.upTypeSpinner);
@@ -130,16 +131,30 @@ public class UploadFragment extends Fragment {
 
         radioButtons = view.findViewById(R.id.upRadioButtons);
 
+        homeActivity.fragmentID = 3;
+
+        Log.d(TAG, "Elements loaded");
+
+
 
         setCurrentTime();
-        addListener(view);
-        getCategories();
+        addListeners(view);
+
+        if(homeActivity.categories==null)getCategories();
+
+
+       // if(!homeActivity.uploadDataLoaded)getCategories();
+        autoUpdate();
+        if(id_criterion!=-1)radioButtons.check(id_criterion);
+        Log.d(TAG, "clean");
+        clean();
 
    //     if(homeActivity.update)updatePortfolio();
     }
 
 
     public void updatePortfolio(){
+        Log.d(TAG, "update portfolio");
         Log.d(TAG, "old - " + nameText.getText().toString() );
         nameText.setText(homeActivity.portfolioDTO.getName());
         Log.d(TAG, "new - " + nameText.getText().toString() );
@@ -151,6 +166,7 @@ public class UploadFragment extends Fragment {
 
 
     private void displayCategory(CategoryDTO categoryDTO){
+        Log.d(TAG, "Display category");
         getCriteria(categoryDTO.getCategoryID());
         getTypes(categoryDTO.getCategoryID());
         id_category = categoryDTO.getCategoryID();
@@ -160,6 +176,16 @@ public class UploadFragment extends Fragment {
     }
     private void displayType(TypeDTO typeDTO){
         id_type = typeDTO.getTypeID();
+     //   clean();
+        if(homeActivity.update)updatePortfolio();
+
+    }
+
+    public void autoUpdate(){
+        if(homeActivity.categories!=null)drawCategories();
+        if(homeActivity.criteria!=null)drawCriteria();
+        if(homeActivity.types!=null)drawTypes();
+
     }
 
 
@@ -173,7 +199,7 @@ public class UploadFragment extends Fragment {
     }
 
 
-    public void addListener(View view) {
+    public void addListeners(View view) {
         dateEventBlock = view.findViewById(R.id.upDateEventBlock);
         datePublicationBlock = view.findViewById(R.id.upDatePublicationBlock);
         fileLoadButton1 = view.findViewById(R.id.upFileLoadButton1);
@@ -198,6 +224,54 @@ public class UploadFragment extends Fragment {
         fileLoadButton2.setOnClickListener(onClickListener);
         openCloseButton.setOnClickListener(onClickListener);
         uploadButton.setOnClickListener(onClickListener);
+
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CategoryDTO category = (CategoryDTO)parent.getSelectedItem();
+                displayCategory(category);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+
+        radioButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton checkedRadioButton = group.findViewById(checkedId);
+                if(checkedRadioButton != null){
+                    if(checkedRadioButton.isChecked()){
+                        id_criterion = checkedRadioButton.getId();
+                        Log.d(TAG, "id_criterion = " + id_criterion);
+                    }
+                   // else checkedRadioButton.setChecked(true);
+                    checkedRadioButton.setChecked(true);
+                    Log.d(TAG, "currently checked - " + group.getCheckedRadioButtonId());
+
+                }
+
+            }
+        });
+
+
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TypeDTO type = (TypeDTO)parent.getSelectedItem();
+                displayType(type);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         if(homeActivity.update)uploadButton.setText("Обновление портфолио");
         else uploadButton.setText("Загрузка портфолио");
@@ -279,16 +353,19 @@ public class UploadFragment extends Fragment {
 
         String name = nameText.getText().toString();
         if(name.length() > 6){
-            portfolio.setName(name);
+            if(id_criterion != -1){
+                portfolio.setName(name);
 
-            portfolio.setId_category(id_category);
-            portfolio.setId_criterion(id_criterion);
-            portfolio.setId_type(id_type);
+                portfolio.setId_category(id_category);
+                portfolio.setId_criterion(id_criterion);
+                portfolio.setId_type(id_type);
 
-            portfolio.setDate_event(date.format(selectedTimeEvent.getTime()));
-            portfolio.setDate_publication(date.format(selectedTimePublication.getTime()));
+                portfolio.setDate_event(date.format(selectedTimeEvent.getTime()));
+                portfolio.setDate_publication(date.format(selectedTimePublication.getTime()));
 
-            sendPortfolio(portfolio);
+                sendPortfolio(portfolio);
+            }
+            else Toast.makeText(homeActivity,"Не выбран критерий получения",Toast.LENGTH_SHORT).show();
         }
         else Toast.makeText(homeActivity,"Описание слишком короткое",Toast.LENGTH_SHORT).show();
 
@@ -400,6 +477,71 @@ public class UploadFragment extends Fragment {
 
 
 
+    public void drawCategories(){
+        ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
+                homeActivity,android.R.layout.simple_spinner_item, homeActivity.categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
+
+        if(homeActivity.update){
+            for(int i = 0; i < adapter.getCount(); i++){
+                if(adapter.getItem(i).getCategoryID() == homeActivity.portfolioDTO.getCategory()
+                        .getCategoryID())categorySpinner.setSelection(i);
+            }
+        }
+    }
+
+    public void drawCriteria(){
+        radioButtons.removeAllViews();
+
+
+
+        boolean first = true;
+        Log.d(TAG,"criteria size = " + homeActivity.criteria.size());
+        RadioButton firstButton = null;
+        Log.d(TAG, "[1] All buttons = " + radioButtons.getChildCount() + " criteria = " + homeActivity.criteria.size() );
+        for(CriterionDTO criterion:homeActivity.criteria){
+            RadioButton radioButton = new RadioButton(homeActivity);
+            radioButton.setId(criterion.getCriterionID());
+            radioButton.setText(criterion.getName_criterion());
+            radioButtons.addView(radioButton);
+            Log.d(TAG, "Radio buttons add");
+            if (first){
+                firstButton = radioButton;
+                first = false;
+               // radioButtons.check(radioButton.getId());
+            //    id_criterion = radioButton.getId();
+          //      radioButton.setChecked(true);
+                Log.d(TAG, "first detected id = " + id_criterion);
+            }
+          //  first = false;
+        }
+
+        Log.d(TAG, "[2] All buttons = " + radioButtons.getChildCount() + " criteria = " + homeActivity.criteria.size() );
+    //    radioButtons.check(radioButtons.getChildCount()-1);
+    //    radioButtons.check(firstButton.getId());
+   //     firstButton.setChecked(true);
+    //    id_criterion = firstButton.getId();
+
+
+    }
+
+    public void drawTypes(){
+        ArrayAdapter<TypeDTO> adapter = new ArrayAdapter<TypeDTO>(
+                homeActivity,android.R.layout.simple_spinner_item, homeActivity.types);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(adapter);
+
+        if(homeActivity.update){
+            for(int i = 0; i < adapter.getCount(); i++){
+                if(adapter.getItem(i).getTypeID() == homeActivity.portfolioDTO.getType()
+                        .getTypeID())typeSpinner.setSelection(i);
+            }
+        }
+    }
+
+
+
 
 
     public void getCategories(){
@@ -410,33 +552,10 @@ public class UploadFragment extends Fragment {
             public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                 if(response.body()!=null){
              //       Log.d(TAG, "new[3] - " + nameText.getText().toString() );
-                    categories = response.body();
-                    Log.d(TAG, "Категорий получено: " + categories.size());
+                    homeActivity.categories = response.body();
+                    Log.d(TAG, "Категорий получено: " + homeActivity.categories.size());
+                    drawCategories();
 
-                    ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
-                            homeActivity,android.R.layout.simple_spinner_item, categories);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    categorySpinner.setAdapter(adapter);
-
-                    if(homeActivity.update){
-                        for(int i = 0; i < adapter.getCount(); i++){
-                            if(adapter.getItem(i).getCategoryID() == homeActivity.portfolioDTO.getCategory()
-                                    .getCategoryID())categorySpinner.setSelection(i);
-                        }
-                    }
-
-                    if(homeActivity.update)updatePortfolio();
-
-                    categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            CategoryDTO category = (CategoryDTO)parent.getSelectedItem();
-                            displayCategory(category);
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                        }
-                    });
                 }
             }
             @Override
@@ -453,37 +572,12 @@ public class UploadFragment extends Fragment {
             @Override
             public void onResponse(Call<List<CriterionDTO>> call, Response<List<CriterionDTO>> response) {
                 if(response.body()!=null){
-                    criteria = response.body();
-                    Log.d(TAG, "Критериев получено: " + criteria.size());
-                   // radioButtons.clearCheck();
-//                    for(int i = 0; i <radioButtons.getChildCount(); i++){
-//                        radioButtons.remove
-//                    }
+                    homeActivity.criteria = response.body();
+                    Log.d(TAG, "Критериев получено: " + homeActivity.criteria.size());
 
-                    radioButtons.removeAllViews();
+                    drawCriteria();
 
-                    boolean first = true;
-                    for(CriterionDTO criterion:criteria){
-                        RadioButton radioButton = new RadioButton(homeActivity);
-                        radioButton.setId(criterion.getCriterionID());
-                        radioButton.setText(criterion.getName_criterion());
-                        radioButtons.addView(radioButton);
-                        if (first){
-                            radioButtons.check(radioButton.getId());
-                            id_criterion = radioButton.getId();
-                            Log.d(TAG, "first detected");
-                        }
-                        first = false;
-                    }
-                    radioButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            RadioButton checkedRadioButton = radioButtons.findViewById(checkedId);
-                            if(checkedRadioButton.isChecked()){
-                                id_criterion = checkedRadioButton.getId();
-                            }
-                        }
-                    });
+
 
                 }
             }
@@ -500,34 +594,12 @@ public class UploadFragment extends Fragment {
             @Override
             public void onResponse(Call<List<TypeDTO>> call, Response<List<TypeDTO>> response) {
                 if(response.body()!=null){
-                    types = response.body();
-                    Log.d(TAG, "Типов участия получено:" + types.size());
+                    homeActivity.types = response.body();
+                    Log.d(TAG, "Типов участия получено:" + homeActivity.types.size());
 
-                    ArrayAdapter<TypeDTO> adapter = new ArrayAdapter<TypeDTO>(
-                            homeActivity,android.R.layout.simple_spinner_item, types);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    typeSpinner.setAdapter(adapter);
-
-                    if(homeActivity.update){
-                        for(int i = 0; i < adapter.getCount(); i++){
-                            if(adapter.getItem(i).getTypeID() == homeActivity.portfolioDTO.getType()
-                                    .getTypeID())typeSpinner.setSelection(i);
-                        }
-                    }
+                    drawTypes();
 
 
-                    typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            TypeDTO type = (TypeDTO)parent.getSelectedItem();
-                            displayType(type);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
                 }
             }
             @Override

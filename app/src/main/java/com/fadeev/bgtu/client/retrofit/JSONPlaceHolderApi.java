@@ -60,6 +60,9 @@ public interface JSONPlaceHolderApi {
     @POST("/portfolio/update")
     Call<Integer> updatePortfolio(@Body List<Object> list);
 
+    @POST("/portfolio/delete")
+    Call<Integer> deletePortfolio(@Body List<Object> list);
+
     @Multipart
     @POST("portfolio/upload")
     Call<String> uploadFile(@Part("username") RequestBody username,

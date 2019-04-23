@@ -96,6 +96,8 @@ public class PortfolioFragment extends Fragment {
         fileBlock1.setVisibility(LinearLayout.GONE);
         fileBlock2.setVisibility(LinearLayout.GONE);
 
+        homeActivity.fragmentID = 4;
+
         printData();
         loadFilesInfo();
     }
@@ -158,7 +160,7 @@ public class PortfolioFragment extends Fragment {
         TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
       //  Integer portfolioID = homeActivity.portfolioDTO.getId_portfolio();
         HashMap<String, Integer> portfolioID = new HashMap<>();
-        portfolioID.put("portfolioID",homeActivity.portfolioDTO.getId_portfolio());
+        portfolioID.put("id_portfolio",homeActivity.portfolioDTO.getId_portfolio());
         postData.add(token);
         postData.add(portfolioID);
 
