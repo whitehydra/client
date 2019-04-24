@@ -59,7 +59,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
         linearLayout.addView(listView);
         setCustomTitle(title)
                 .setView(linearLayout)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(selectedIndex > -1 && openDialogListener != null){
@@ -71,7 +71,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
                         }
                     }
                 })
-                .setNegativeButton("CANCEL",null);
+                .setNegativeButton("Отмена",null);
 
     }
 

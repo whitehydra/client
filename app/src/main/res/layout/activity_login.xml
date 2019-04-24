@@ -39,7 +39,8 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
-                app:srcCompat="@color/colorAccent" />
+                android:layout_marginBottom="30dp"
+                app:srcCompat="@drawable/logo_blue" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -90,22 +91,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_recovery"
                 android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/lgTestButton"
-                android:layout_width="67dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:onClick="test"
-                android:text="test"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/openFile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="downloadFile"
-                android:text="Open" />
 
         </LinearLayout>
     </ScrollView>

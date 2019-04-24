@@ -3,8 +3,6 @@ package com.fadeev.bgtu.client;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,15 +15,11 @@ import android.view.MenuItem;
 import com.fadeev.bgtu.client.dto.CategoryDTO;
 import com.fadeev.bgtu.client.dto.CriterionDTO;
 import com.fadeev.bgtu.client.dto.PortfolioDTO;
-import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.TypeDTO;
 import com.fadeev.bgtu.client.dto.UserDTO;
-import com.fadeev.bgtu.client.retrofit.NetworkService;
 
 
 import java.util.List;
-
-import retrofit2.Call;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -63,17 +57,13 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-
+                case R.id.navigation_profile:
                     fragmentManager.beginTransaction().replace(R.id.homeFrame, profileFragment).commit();
-
-
                     return true;
-                case R.id.navigation_dashboard:
-
+                case R.id.navigation_portfolio:
                     fragmentManager.beginTransaction().replace(R.id.homeFrame, portfolioListFragment).commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_upload:
                     fragmentManager.beginTransaction().replace(R.id.homeFrame, uploadFragment).commit();
                     return true;
             }
@@ -92,10 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         fragmentManager =  getSupportFragmentManager();
         update = false;
 
-
         fragmentManager.beginTransaction().add(R.id.homeFrame, profileFragment).commit();
-
-
         setContentView(R.layout.activity_home);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

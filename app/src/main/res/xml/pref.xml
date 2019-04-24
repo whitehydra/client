@@ -4,57 +4,54 @@
     <PreferenceCategory
 
         android:key="first_category"
-        android:title="First Category">
-        <EditTextPreference
-            android:dialogTitle="Dialog title"
-            android:dialogMessage="Dialog message"
-            android:inputType="textCapWords"
-            android:key="key_edit_text"
-            android:title="EditText"
-            android:summary="Hello"/>
+        android:title="Основные">
 
-        <EditTextPreference
-            android:dialogTitle="Dialog title2"
-            android:dialogMessage="Dialog message2"
-            android:inputType="textCapWords"
-            android:key="key_edit_text2"
-            android:title="EditText2"
-            android:summary="Brother"/>
+        <Preference
+            android:title="Редактирование профиля"
+            android:key="edit_profile_preference"/>
+
+        <Preference
+            android:title="Смена пароля"
+            android:key="edit_password_preference"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Second Category">
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="key_check_box"
-            android:summary="Enable check box"
-            android:title="CheckBox"/>
+        android:title="Внешний вид">
 
         <ListPreference
-            android:key="key_list_preference"
-            android:title="ListPreference"
+            android:key="language_preference"
+            android:title="Выбор языка"
+            android:entries="@array/language_array"
+            android:entryValues="@array/language_array_values"/>
+
+        <SwitchPreference
+            android:key="night_mode_preference"
+            android:editable="true"
+            android:title="Ночная тема"/>
+
+        <ListPreference
+            android:key="size_list_preference"
+            android:title="Размер текста"
             android:summary="List Preference"
-            android:entries="@array/string_array"
-            android:entryValues="@array/string_array_values"/>
+            android:entries="@array/font_size_array"
+            android:entryValues="@array/font_size_array_values"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Third Category">
+        android:title="Другое">
+        <Preference
+            android:title="Загрузка аватара"
+            android:key="load_avatar_preference"/>
 
-        <SwitchPreference
-            android:key="switch_preference"
-            android:editable="true"
-            android:title="SwitchPreference"/>
+        <Preference
+            android:title="О программе"
+            android:key="about_preference"/>
+
+        <Preference
+            android:title="Выход"
+            android:key="key_exit_preference"
+            android:summary="Выход из приложения"/>
     </PreferenceCategory>
-
-    <Preference
-        android:title="Load avatar"
-        android:key="load_avatar"
-        android:summary="Loading"/>
-
-    <Preference
-        android:title="Exit"
-        android:key="key_exit"
-        android:summary="Exit button"/>
 </PreferenceScreen>

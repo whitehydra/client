@@ -44,9 +44,6 @@ public class SettingsActivity extends PreferenceActivity {
                 new MainSettingsFragment()).commit();
     }
 
-    private void exit(){
-
-    }
 
 
     public static class MainSettingsFragment extends PreferenceFragment{
@@ -54,12 +51,17 @@ public class SettingsActivity extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref);
-            bindSummaryValue(findPreference("key_edit_text"));
-            bindSummaryValue(findPreference("key_edit_text2"));
-            bindSummaryValue(findPreference("key_list_preference"));
+            bindSummaryValue(findPreference("language_preference"));
+            bindSummaryValue(findPreference("size_list_preference"));
 
-            Preference buttonExit = findPreference("key_exit");
-            Preference buttonAvatar = findPreference("load_avatar");
+
+            Preference buttonEditProfile = findPreference("edit_profile_preference");
+            Preference buttonEditPassword = findPreference("edit_password_preference");
+
+            Preference buttonAbout = findPreference("about_preference");
+
+            Preference buttonExit = findPreference("key_exit_preference");
+            Preference buttonAvatar = findPreference("load_avatar_preference");
 
 
             buttonExit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){

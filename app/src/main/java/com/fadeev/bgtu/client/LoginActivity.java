@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
 import com.fadeev.bgtu.client.dto.FileDTO;
@@ -31,7 +30,6 @@ import com.fadeev.bgtu.client.retrofit.NetworkService;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,14 +37,13 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String TAG = "LoginActivity";
+    String TAG = "Login activity";
 
     private UserLoginTask userLoginTask = null;
-    private EditText mUsernameView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
-    private ImageView mLogo;
+    private EditText usernameView;
+    private EditText passwordView;
+    private View progressView;
+    private View loginFormView;
     Toolbar toolbar;
 
 
@@ -57,11 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mUsernameView = (EditText) findViewById(R.id.lgUsername);
-        mPasswordView = (EditText) findViewById(R.id.lgPassword);
-        mLoginFormView = findViewById(R.id.lgLoginFormScroll);
-        mProgressView = findViewById(R.id.login_progress);
-        mLogo = findViewById(R.id.lgLogo);
+        usernameView = (EditText) findViewById(R.id.lgUsername);
+        passwordView = (EditText) findViewById(R.id.lgPassword);
+        loginFormView = findViewById(R.id.lgLoginFormScroll);
+        progressView = findViewById(R.id.login_progress);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.lgSignInButton);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -76,32 +72,30 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void attemptLogin() {
-        if (userLoginTask != null) {
-            return;
-        }
+        if (userLoginTask != null) { return; }
 
-        mUsernameView.setError(null);
-        mPasswordView.setError(null);
+        usernameView.setError(null);
+        passwordView.setError(null);
 
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String username = usernameView.getText().toString();
+        String password = passwordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_empty_username));
-            focusView = mUsernameView;
+            usernameView.setError(getString(R.string.error_empty_username));
+            focusView = usernameView;
             cancel = true;
         }
 
         if(TextUtils.isEmpty(password)) {
-            mPasswordView.setError(getString(R.string.error_empty_password));
-            focusView = mPasswordView;
+            passwordView.setError(getString(R.string.error_empty_password));
+            focusView = passwordView;
             cancel = true;
         }else if (!isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            passwordView.setError(getString(R.string.error_invalid_password));
+            focusView = passwordView;
             cancel = true;
         }
 
@@ -125,63 +119,24 @@ public class LoginActivity extends AppCompatActivity {
 
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+        loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        loginFormView.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
         });
 
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
     }
-
-    public void test (View v){
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    Drawable image;
-
-
-
-
-
-
-    public void downloadFile(View view){
-        List<Object>  postData = new ArrayList<>();
-        TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(this),Functions.getSharedToken(this));
-        FileDTO file = new FileDTO("name","src", "type", 0);
-
-        postData.add(token);
-        postData.add(file);
-
-        Call<String> call = NetworkService.getInstance().getJSONApi().addFile(postData);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.d(TAG, "Response");
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.d(TAG, "fail  ");
-            }
-        });
-    }
-
-
-
-
 
 
 
@@ -232,8 +187,8 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
 
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_connection));
-                mPasswordView.requestFocus();
+                passwordView.setError(getString(R.string.error_incorrect_connection));
+                passwordView.requestFocus();
             }
         }
 
