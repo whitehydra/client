@@ -20,39 +20,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="10dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/pfSearchText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:text="@string/portfolio_list_search" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Поиск по названию:" />
+                <EditText
+                    android:id="@+id/pfSearchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textCapWords"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor,UnusedAttribute" />
 
-                    <EditText
-                        android:id="@+id/pfSearchBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textCapWords" />
+                <TextView
+                    android:id="@+id/pfCategoryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/portfolio_list_category" />
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Категория:" />
+                <Spinner
+                    android:id="@+id/pfCategorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                    <Spinner
-                        android:id="@+id/pfCategorySpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
             </LinearLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

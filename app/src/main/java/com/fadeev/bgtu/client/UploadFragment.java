@@ -309,7 +309,7 @@ public class UploadFragment extends Fragment {
 
     public void createOpenFileBlock(final View v){
         OpenFileDialog openFileDialog = new OpenFileDialog(getContext())
-                .setFilter(".*\\.(?:jpg|jpeg|png|doc|pdf)")
+                .setFilter(".*\\.(?:jpg|jpeg|png|doc|pdf|docs|docx)")
                 .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
                     @Override
                     public void OnSelectedFile(final String fileName) {

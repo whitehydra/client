@@ -5,6 +5,28 @@ public class Constants {
         public static final String HOST = "http://192.168.1.4:8080/";
         public static final String AVATARS = HOST + "avatars/";
         public static final String FILES = HOST + "portfolio/files/load?";
+
+
+
+        public static final String AUTH = "/authentication";
+        public static final String LOGIN = "/login";
+
+        public static final String UPLOAD_AVATAR = "/file";
+        public static final String UPLOAD_FILE = "/portfolio/upload";
+
+        public static final String ADD_PORTFOLIO = "/portfolio/add";
+        public static final String GET_PORTFOLIO = "/portfolio/list";
+        public static final String UPDATE_PORTFOLIO = "/portfolio/update";
+        public static final String DELETE_PORTFOLIO = "/portfolio/delete";
+        public static final String ADD_FILE_INFO = "/portfolio/files/post";
+        public static final String GET_FILE_INFO = "/portfolio/files/get";
+
+
+        public static final String GET_CATEGORIES = "/categories";
+        public static final String GET_CRITERIA = "/criteria/{id}";
+        public static final String GET_TYPE = "/types/{id}";
+
+
     }
     public  static class PREFERENCES{
         public static final String USERNAME = "username";

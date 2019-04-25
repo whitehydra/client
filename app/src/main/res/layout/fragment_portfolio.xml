@@ -1,268 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="15dp"
-    android:orientation="vertical"
     android:paddingBottom="35dp"
+    android:scrollbars="none"
     tools:context=".PortfolioFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pflNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/portfolio_name" />
+
+            <TextView
+                android:id="@+id/pflNamePole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pflCategoryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/portfolio_category" />
+
+            <TextView
+                android:id="@+id/pflCategoryPole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pflCriterionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/portfolio_criterion" />
+
+            <TextView
+                android:id="@+id/pflCriterionPole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pflTypeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/portfolio_type" />
+
+            <TextView
+                android:id="@+id/pflTypePole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pflDateEventText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/portfolio_date_event" />
+
+            <TextView
+                android:id="@+id/pflDateEventPole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pflDatePublicationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/portfolio_date_publication" />
+
+            <TextView
+                android:id="@+id/pflDatePublicationPole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pflNameText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Описание:" />
-
-                <TextView
-                    android:id="@+id/pflNamePole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pflCategoryText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Категория:" />
-
-                <TextView
-                    android:id="@+id/pflCategoryPole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pflCriterionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Критерий получения:" />
-
-                <TextView
-                    android:id="@+id/pflCriterionPole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_text" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/pflFileBlock1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pflTypeText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Тип участия:" />
-
-                <TextView
-                    android:id="@+id/pflTypePole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pflDateEventText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Дата проведения" />
-
-                <TextView
-                    android:id="@+id/pflDateEventPole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pflDatePublicationText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Дата публикации:" />
-
-                <TextView
-                    android:id="@+id/pflDatePublicationPole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_text" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/pflFileBlock1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/pflFileNameText1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="Имя файла: " />
-
-                        <TextView
-                            android:id="@+id/pflFileNamePole1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/default_text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/pflFileTypeText1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="Формат файла: " />
-
-                        <TextView
-                            android:id="@+id/pflFileTypePole1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/default_text" />
-
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/pflLoadFileButton1"
+                    <TextView
+                        android:id="@+id/pflFileNameText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Загрузить" />
+                        android:layout_weight="0"
+                        android:text="@string/portfolio_file_name" />
+
+                    <TextView
+                        android:id="@+id/pflFileNamePole1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/default_text" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/pflFileBlock2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/pflFileNameText2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="Имя файла: " />
-
-                        <TextView
-                            android:id="@+id/pflFileNamePole2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/default_text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/pflFileTypeText2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="Формат файла: " />
-
-                        <TextView
-                            android:id="@+id/pflFileTypePole2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/default_text" />
-
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/pflLoadFileButton2"
+                    <TextView
+                        android:id="@+id/pflFileTypeText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Загрузить" />
+                        android:layout_weight="0"
+                        android:text="@string/portfolio_file_type" />
+
+                    <TextView
+                        android:id="@+id/pflFileTypePole1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/default_text" />
+
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/pflLoadFileButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/portfolio_file_load" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/pflUpdatePortfolioButton"
+            <LinearLayout
+                android:id="@+id/pflFileBlock2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Изменить" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/pflFileNameText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="@string/portfolio_file_name" />
+
+                    <TextView
+                        android:id="@+id/pflFileNamePole2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/default_text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/pflFileTypeText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="@string/portfolio_file_type" />
+
+                    <TextView
+                        android:id="@+id/pflFileTypePole2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/default_text" />
+
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/pflLoadFileButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/portfolio_file_load" />
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <Button
+            android:id="@+id/pflUpdatePortfolioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/portfolio_update" />
+    </LinearLayout>
+</ScrollView>

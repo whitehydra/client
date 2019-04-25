@@ -1,5 +1,6 @@
 package com.fadeev.bgtu.client.retrofit;
 
+import com.fadeev.bgtu.client.Constants;
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
 import com.fadeev.bgtu.client.dto.CategoryDTO;
 import com.fadeev.bgtu.client.dto.CriterionDTO;
@@ -26,66 +27,55 @@ import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 public interface JSONPlaceHolderApi {
+    @Streaming
+    @GET
+    Call<ResponseBody> downloadFileWithUrl(@Url String fileUrl);
 
-
-    @POST("/authentication")
+    @POST(Constants.URL.AUTH)
     Call<UserDTO> postTokenGetUser(@Body TokenAndNameDTO data);
 
-    @POST("/login")
+    @POST(Constants.URL.LOGIN)
     Call<String> postAuthorizationGetToken(@Body AuthorizationDTO data);
 
-
     @Multipart
-    @POST("/file")
+    @POST(Constants.URL.UPLOAD_AVATAR)
     Call<String> uploadAvatar(
             @Part("username") RequestBody username,
             @Part("token") RequestBody token,
             @Part MultipartBody.Part file);
 
-
-
-    @Streaming
-    @GET
-    Call<ResponseBody> downloadFileWithUrl(@Url String fileUrl);
-
-    @POST("/portfolio/files/post")
-    Call<String> addFile(@Body List<Object> list);
-
-    @POST("/portfolio/files/get")
-    Call<List<FileDTO>> getFile(@Body List<Object> list);
-
-    @POST("/portfolio/add")
-    Call<Integer> addPortfolio(@Body List<Object> list);
-
-    @POST("/portfolio/update")
-    Call<Integer> updatePortfolio(@Body List<Object> list);
-
-    @POST("/portfolio/delete")
-    Call<Integer> deletePortfolio(@Body List<Object> list);
-
     @Multipart
-    @POST("portfolio/upload")
+    @POST(Constants.URL.UPLOAD_FILE)
     Call<String> uploadFile(@Part("username") RequestBody username,
                             @Part("token") RequestBody token,
                             @Part MultipartBody.Part file);
 
+    @POST(Constants.URL.ADD_PORTFOLIO)
+    Call<Integer> addPortfolio(@Body List<Object> list);
 
-
-    @POST("portfolio/list")
+    @POST(Constants.URL.GET_PORTFOLIO)
     Call<List<PortfolioDTO>> getPortfolioList(@Body List<Object> list);
 
+    @POST(Constants.URL.UPDATE_PORTFOLIO)
+    Call<Integer> updatePortfolio(@Body List<Object> list);
 
-    @GET("/categories")
+    @POST(Constants.URL.DELETE_PORTFOLIO)
+    Call<Integer> deletePortfolio(@Body List<Object> list);
+
+    @POST(Constants.URL.ADD_FILE_INFO)
+    Call<String> addFile(@Body List<Object> list);
+
+    @POST(Constants.URL.GET_FILE_INFO)
+    Call<List<FileDTO>> getFile(@Body List<Object> list);
+
+    @GET(Constants.URL.GET_CATEGORIES)
     Call<List<CategoryDTO>> getCategories();
 
-    @GET("/criteria/{id}")
+    @GET(Constants.URL.GET_CRITERIA)
     Call<List<CriterionDTO>> getCriteria(@Path("id") int id);
 
-    @GET("/types/{id}")
+    @GET(Constants.URL.GET_TYPE)
     Call<List<TypeDTO>> getTypes(@Path("id") int id);
-
-
-
 }
 
 

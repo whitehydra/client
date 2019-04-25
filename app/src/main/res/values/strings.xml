@@ -4,6 +4,11 @@
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
 
+
+    <!-- Загрузочный экран -->
+    <string name="splash_load">Загрузка</string>
+
+
     <!-- Авторизация -->
     <string name="login_activity">Авторизация</string>
     <string name="prompt_username">Логин</string>
@@ -15,6 +20,7 @@
     <string name="error_incorrect_connection">Подключение не удалось</string>
     <string name="login_progress">Авторизация…</string>
     <string name="action_recovery">Восстановление доступа</string>
+    <string name="image_description">Изображение</string>
 
 
     <!-- Домашний экран -->
@@ -28,13 +34,54 @@
 
     <!-- Профиль -->
 
-    <string name="profile_faculty">Факультет: </string>
-    <string name="profile_group">Группа: </string>
-    <string name="profile_number">Телефон: </string>
-    <string name="profile_mail">Почта: </string>
-    <string name="profile_info">Дополнительная информация: </string>
+    <string name="profile_faculty">Факультет:</string>
+    <string name="profile_group">Группа:</string>
+    <string name="profile_number">Телефон:</string>
+    <string name="profile_mail">Почта:</string>
+    <string name="profile_info">Дополнительная информация:</string>
     <string name="title_activity_settings">Settings</string>
 
 
+    <!-- Портфолио -->
+
+    <string name="portfolio_name">Описание:</string>
+    <string name="portfolio_category">Категория:</string>
+    <string name="portfolio_criterion">Критерий получения:</string>
+    <string name="portfolio_type">Тип участия:</string>
+    <string name="portfolio_date_event">Дата проведения:</string>
+    <string name="portfolio_date_publication">Дата публикации:</string>
+    <string name="portfolio_file_name">Имя файла:</string>
+    <string name="portfolio_file_type">Формат файла:</string>
+    <string name="portfolio_file_load">Загрузить</string>
+    <string name="portfolio_update">Изменить</string>
+
+
+    <!-- Список портфолио -->
+
+    <string name="portfolio_list_search">Поиск по названию:</string>
+    <string name="portfolio_list_category">Поиск по категории:</string>
+
+
+    <!-- Загрузка портфолио -->
+
+    <string name="upload_name">Описание</string>
+    <string name="upload_category">Категория:</string>
+    <string name="upload_criterion">Критерий получения:</string>
+    <string name="upload_type">Тип участия:</string>
+    <string name="upload_date_event">Дата проведения:</string>
+    <string name="upload_date_publication">Дата публикации:</string>
+    <string name="upload_default_date">00 Янв 2019</string>
+    <string name="upload_file_choose">Выбор файла:</string>
+    <string name="upload_file_choose_twice">Выбор дополнительного файла:</string>
+    <string name="upload_file_dir">...</string>
+    <string name="upload_file_search">Поиск</string>
+    <string name="upload_add">Добавить</string>
+    <string name="upload_upload">Загрузка</string>
+
+
+
+    <!-- Элементы списка -->
+
+    <string name="list_element_close">X</string>
 
 </resources>
