@@ -28,7 +28,7 @@ public class Functions {
         for (byte anEncodedHash : encodedHash) {
             hexString.append(Integer.toHexString(0xff & anEncodedHash));
         }
-        Log.d("Generated hash ", hexString.toString());
+        Log.d("Generated hash", hexString.toString());
         return hexString.toString();
     }
 
@@ -47,17 +47,13 @@ public class Functions {
     public static String getMimeType(String url){
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-        if(extension != null){
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-
-        }
+        if(extension != null) type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         return type;
     }
 
     public static String getType(String url){
         return url.substring(url.lastIndexOf("."));
     }
-
 
     public static boolean writeResponseBodyToDisk(Context context, ResponseBody body, String fileName){
         try{
@@ -66,7 +62,6 @@ public class Functions {
             OutputStream outputStream = null;
             try {
                 byte[] fileReader = new byte[4096];
-                long fileSize = body.contentLength();
                 long fileSizeDownloaded = 0;
                 inputStream = body.byteStream();
                 outputStream = new FileOutputStream(file);
@@ -75,7 +70,8 @@ public class Functions {
                     if(read == -1) break;
                     outputStream.write(fileReader, 0, read);
                     fileSizeDownloaded += read;
-                    Log.d("Download", "file download: " + fileSizeDownloaded + " byte");
+                    Log.d("Download", "загружено: " + fileSizeDownloaded + " байт (" +
+                            fileSizeDownloaded/1024 + " кБайт)" );
                 }
                 outputStream.flush();
                 return true;

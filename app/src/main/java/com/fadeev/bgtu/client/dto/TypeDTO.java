@@ -16,7 +16,6 @@ public class TypeDTO {
     public String getName_type() { return name_type; }
     public String getSort_type() { return sort_type; }
 
-
     public void setTypeID(int typeID) { this.typeID = typeID; }
     public void setName_type(String name_type) { this.name_type = name_type; }
     public void setSort_type(String sort_type) { this.sort_type = sort_type; }

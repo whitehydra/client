@@ -46,8 +46,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
     private String accessDeniedMessage;
     private boolean isOnlyFoldersFilter;
 
-
-
     public OpenFileDialog(Context context) {
         super(context);
         isOnlyFoldersFilter = false;
@@ -64,7 +62,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
                     public void onClick(DialogInterface dialog, int which) {
                         if(selectedIndex > -1 && openDialogListener != null){
                             openDialogListener.OnSelectedFile(listView.getItemAtPosition(selectedIndex).toString());
-                          //  File kek = listView.getItemAtPosition(0);
                         }
                         if(openDialogListener != null && isOnlyFoldersFilter){
                             openDialogListener.OnSelectedFile(currentPath);
@@ -72,7 +69,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
                     }
                 })
                 .setNegativeButton("Отмена",null);
-
     }
 
     @Override
@@ -82,9 +78,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
         return super.show();
     }
 
-
-
-
     private int getItemHeight(Context context){
         TypedValue value = new TypedValue();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -93,12 +86,10 @@ public class OpenFileDialog extends AlertDialog.Builder {
         return (int)TypedValue.complexToDimension(value.data, metrics);
     }
 
-
     private TextView createTitle(Context context){
         TextView textView = createTextView(context, android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle);
         return textView;
     }
-
 
     private static Display getDefaultDisplay(Context context){
         return ((WindowManager) Objects.requireNonNull(context.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay();
@@ -120,7 +111,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
         return bounds.left + bounds.width() + 80;
     }
 
-
     private  void changeTitle(){
         String titleText = currentPath;
         int screenWidth = getScreenSize(getContext()).x;
@@ -138,7 +128,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
             title.setText(titleText);
         }
     }
-
 
     private  TextView createTextView (Context context, int style){
         TextView textView = new TextView(context);
@@ -169,11 +158,8 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 }
             }
         });
-       // Drawable drawable = getContext().getResources().getDrawable(android.R.drawable.ic_menu_directions
         return  textView;
     }
-
-
 
     private LinearLayout createMainLayout(Context context){
         LinearLayout linearLayout = new LinearLayout(context);
@@ -182,10 +168,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
         return linearLayout;
     }
 
-
-
     private void RebuildFiles(ArrayAdapter<File> adapter){
-
         try {
             List<File> fileList = getFiles(currentPath);
             files.clear();
@@ -213,7 +196,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
         return this;
     }
 
-    public OpenFileDialog setOnluFoldersFilter(){
+    public OpenFileDialog setOnlyFoldersFilter(){
         isOnlyFoldersFilter = true;
         filenameFilter = new FilenameFilter() {
             @Override
@@ -224,7 +207,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
         };
         return this;
     }
-
 
     public OpenFileDialog setOpenDialogListener(OpenDialogListener listener){
         this.openDialogListener = listener;
@@ -266,8 +248,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
         return listView;
     }
 
-
-
     private List<File> getFiles(String directoryPath){
         File directory = new File(directoryPath);
         List<File> fileList = Arrays.asList(directory.listFiles(filenameFilter));
@@ -279,22 +259,17 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 else return file1.getPath().compareTo(file2.getPath());
             }
         });
-
         return fileList;
     }
-
 
     public interface OpenDialogListener{
         void OnSelectedFile(String fileName);
     }
 
-
-
     public class FileAdapter extends ArrayAdapter<File> {
         public FileAdapter(Context context, List<File> files) {
             super(context, android.R.layout.simple_list_item_1,files);
         }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
             TextView view = (TextView)super.getView(position, convertView, parent);
@@ -313,7 +288,6 @@ public class OpenFileDialog extends AlertDialog.Builder {
             }
             return view;
         }
-
 
         private void setDrawable(TextView view, Drawable drawable){
             if(view != null){

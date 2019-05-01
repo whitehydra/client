@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
 
-    <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
+    <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
 
     <!-- Загрузочный экран -->
     <string name="splash_load">Загрузка</string>
+    <string name="splash_progress">Загрузка...</string>
 
 
     <!-- Авторизация -->
@@ -24,8 +25,8 @@
 
 
     <!-- Домашний экран -->
-
     <string name="home_activity">Профиль</string>
+    <string name="home_progress">Загрузка...</string>
 
     <string name="title_profile">Профиль</string>
     <string name="title_portfolio">Портфолио</string>
@@ -33,7 +34,6 @@
 
 
     <!-- Профиль -->
-
     <string name="profile_faculty">Факультет:</string>
     <string name="profile_group">Группа:</string>
     <string name="profile_number">Телефон:</string>
@@ -43,7 +43,6 @@
 
 
     <!-- Портфолио -->
-
     <string name="portfolio_name">Описание:</string>
     <string name="portfolio_category">Категория:</string>
     <string name="portfolio_criterion">Критерий получения:</string>
@@ -57,13 +56,11 @@
 
 
     <!-- Список портфолио -->
-
     <string name="portfolio_list_search">Поиск по названию:</string>
     <string name="portfolio_list_category">Поиск по категории:</string>
 
 
     <!-- Загрузка портфолио -->
-
     <string name="upload_name">Описание</string>
     <string name="upload_category">Категория:</string>
     <string name="upload_criterion">Критерий получения:</string>
@@ -79,9 +76,7 @@
     <string name="upload_upload">Загрузка</string>
 
 
-
     <!-- Элементы списка -->
-
     <string name="list_element_close">X</string>
 
 </resources>

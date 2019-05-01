@@ -32,37 +32,26 @@ import retrofit2.Response;
 
 public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filterable {
     private String TAG = "Portfolio adapter";
+
     private Context context;
-    private int resource;
 
     private List<PortfolioDTO> originalData;
     private List<PortfolioDTO> filteredData;
     private AlertDialog.Builder ad;
 
-
     public int getCount(){
         return filteredData.size();
     }
-
     public PortfolioDTO getItem(int position){
         return filteredData.get(position);
     }
 
-
-
-
     public PortfolioAdapter(Context context, int resource, List<PortfolioDTO> portfolio) {
         super(context, resource, portfolio);
         this.context = context;
-        this.resource = resource;
-
         originalData = portfolio;
         filteredData = portfolio;
     }
-
-
-
-
 
     @NonNull
     @Override
@@ -73,8 +62,6 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         String date = currentItem.getDate_event();
         String category = currentItem.getCategory().getName_category();
         String type = currentItem.getType().getName_type();
-
-     //   PortfolioDTO portfolio = new PortfolioDTO(name,date,getItem(position).getCategory(),getItem(position).getType());
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowView = inflater.inflate(R.layout.portfolio_list_layout, parent, false);
@@ -92,15 +79,12 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
 
         createDialog(currentItem,position);
 
-
         tvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ad.show();
             }
         });
-
-
         return rowView;
     }
 
@@ -109,8 +93,6 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         String message = "Удалить информацию о данном учебном достижении?";
         String okText = "Удалить";
         String cancelText = "Отмена";
-
-
 
         ad = new AlertDialog.Builder(context);
         ad.setTitle(title);
@@ -143,7 +125,6 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                 });
             }
         });
-
         ad.setNegativeButton(cancelText, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -151,8 +132,6 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
             }
         });
     }
-
-
 
     @NonNull
     public Filter getSearchFilter(final CharSequence choose) {
@@ -184,11 +163,9 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                 filteredData = (List<PortfolioDTO>)results.values;
                 notifyDataSetChanged();
                 getCategoryFilter().filter(choose);
-
             }
         };
     }
-
 
     @NonNull
     public Filter getCategoryFilter() {
@@ -209,25 +186,16 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                             filterResultsData.add(data);
                         }
                     }
-
                     results.values = filterResultsData;
                     results.count = filterResultsData.size();
                 }
                 return results;
             }
-
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredData = (List<PortfolioDTO>)results.values;
                 notifyDataSetChanged();
-
             }
         };
     }
-
-
-
-
-
-
 }

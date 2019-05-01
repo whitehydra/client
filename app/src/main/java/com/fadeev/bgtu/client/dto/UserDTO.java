@@ -1,13 +1,9 @@
 package com.fadeev.bgtu.client.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 
 public class UserDTO implements Serializable{
-
-
     @JsonProperty("name")
     private String name;
     @JsonProperty("level")

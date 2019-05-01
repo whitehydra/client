@@ -10,7 +10,8 @@
         android:id="@+id/value_name"
         android:layout_width="274dp"
         android:layout_height="35dp"
-        android:text="@string/default_text" />
+        android:text="@string/default_text"
+        style="@style/text.OpenFileItem"/>
 
 
 

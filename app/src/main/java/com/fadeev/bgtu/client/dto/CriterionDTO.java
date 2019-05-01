@@ -16,7 +16,6 @@ public class CriterionDTO {
     public String getName_criterion() { return name_criterion; }
     public String getSort_criterion() { return sort_criterion; }
 
-
     public void setCriterionID(int criterionID) { this.criterionID = criterionID; }
     public void setName_criterion(String name_criterion) { this.name_criterion = name_criterion; }
     public void setSort_criterion(String sort_criterion) { this.sort_criterion = sort_criterion; }

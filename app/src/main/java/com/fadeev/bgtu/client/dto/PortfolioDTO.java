@@ -14,7 +14,6 @@ public class PortfolioDTO {
     @JsonProperty("date_publication")
     protected String date_publication;
 
-
     @JsonProperty("id_category")
     private int id_category;
     @JsonProperty("id_criterion")
@@ -34,7 +33,6 @@ public class PortfolioDTO {
 
     public PortfolioDTO(){}
 
-
     public PortfolioDTO(String name, String date_event, String date_publication, int id_category, int id_criterion, int id_type){
         this.name = name;
         this.date_event = date_event;
@@ -44,14 +42,12 @@ public class PortfolioDTO {
         this.id_type = id_type;
     }
 
-
     public PortfolioDTO(String name, String date_event, CategoryDTO category, TypeDTO type){
         this.name = name;
         this.date_event = date_event;
         this.category = category;
         this.type = type;
     }
-
 
     public int getId_portfolio() { return id_portfolio; }
     public String getName() { return name; }
@@ -63,8 +59,6 @@ public class PortfolioDTO {
     public CategoryDTO getCategory() { return category; }
     public CriterionDTO getCriterion() { return criterion; }
     public TypeDTO getType() { return type; }
-
-
 
     public void setId_portfolio(int id_portfolio) { this.id_portfolio = id_portfolio; }
     public void setName(String name) { this.name = name; }

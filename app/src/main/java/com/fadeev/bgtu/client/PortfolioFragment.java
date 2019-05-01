@@ -29,11 +29,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class PortfolioFragment extends Fragment {
+    String TAG = "Portfolio fragment";
 
     HomeActivity homeActivity;
-
 
     TextView nameText;
     TextView categoryText;
@@ -54,21 +53,17 @@ public class PortfolioFragment extends Fragment {
     LinearLayout fileBlock2;
 
     List<FileDTO> fileList;
-
     DownloadManager downloadManager;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle(getString(R.string.title_portfolio));
-
         return inflater.inflate(R.layout.fragment_portfolio, container, false);
     }
 
@@ -125,12 +120,8 @@ public class PortfolioFragment extends Fragment {
                 Functions.createDownloadUri(homeActivity,fileList.get(num).getFile_src()));
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setTitle(fileList.get(num).getFile_name());
-        //request.setDestinationInExternalFilesDir(homeActivity,Environment.DIRECTORY_DOWNLOADS, fileList.get(num).getFile_name());
         downloadManager.enqueue(request);
     }
-
-
-
 
     public void printData(){
         nameText.setText(homeActivity.portfolioDTO.getName());
@@ -154,11 +145,9 @@ public class PortfolioFragment extends Fragment {
         }
     }
 
-
     public void loadFilesInfo(){
         List<Object> postData = new ArrayList<>();
         TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
-      //  Integer portfolioID = homeActivity.portfolioDTO.getId_portfolio();
         HashMap<String, Integer> portfolioID = new HashMap<>();
         portfolioID.put("id_portfolio",homeActivity.portfolioDTO.getId_portfolio());
         postData.add(token);
@@ -172,17 +161,8 @@ public class PortfolioFragment extends Fragment {
                 loadListener();
                 printFileData();
             }
-
             @Override
-            public void onFailure(Call<List<FileDTO>> call, Throwable t) {
-
-            }
+            public void onFailure(Call<List<FileDTO>> call, Throwable t) { }
         });
-
-
     }
-
-
-
-
 }

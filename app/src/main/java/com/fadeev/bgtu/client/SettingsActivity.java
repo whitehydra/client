@@ -33,9 +33,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SettingsActivity extends PreferenceActivity {
+    static String TAG = "Settings activity";
 
     LinearLayout root;
-    static String TAG = "Settings Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,6 @@ public class SettingsActivity extends PreferenceActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new MainSettingsFragment()).commit();
     }
-
-
 
     public static class MainSettingsFragment extends PreferenceFragment{
         @Override
@@ -54,15 +52,11 @@ public class SettingsActivity extends PreferenceActivity {
             bindSummaryValue(findPreference("language_preference"));
             bindSummaryValue(findPreference("size_list_preference"));
 
-
             Preference buttonEditProfile = findPreference("edit_profile_preference");
             Preference buttonEditPassword = findPreference("edit_password_preference");
-
             Preference buttonAbout = findPreference("about_preference");
-
             Preference buttonExit = findPreference("key_exit_preference");
             Preference buttonAvatar = findPreference("load_avatar_preference");
-
 
             buttonExit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
                 @Override
@@ -79,8 +73,6 @@ public class SettingsActivity extends PreferenceActivity {
                     return true;
                 }
             });
-
-
             buttonAvatar.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -90,8 +82,6 @@ public class SettingsActivity extends PreferenceActivity {
             });
         }
     }
-
-
 
     public static void openFile(final Context context){
         OpenFileDialog openFileDialog = new OpenFileDialog(context)
@@ -111,32 +101,27 @@ public class SettingsActivity extends PreferenceActivity {
                         MultipartBody.Part body = MultipartBody.Part.createFormData("file",originalFile.getName(),requestFile);
                         Call<String> call = NetworkService.getInstance().getJSONApi().uploadAvatar(usernamePart,tokenPart, body);
 
-
                         call.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
                                 String result = response.body().substring(0,response.body().indexOf(" "));
                                 if(result.equals("Done"))
                                 {
-                                    String resultFilename = response.body().substring(response.body().indexOf(" "), response.body().length());
+                                    String resultFilename = response.body().substring(response.body().indexOf(" "));
                                     Log.d(TAG, "Загрузка завершена. Имя файла =" + resultFilename);
+                                    Toast.makeText(context.getApplicationContext(), "Загрузка завершена", Toast.LENGTH_LONG).show();
                                 }
-                                Toast.makeText(context.getApplicationContext(), "Загрузка завершена", Toast.LENGTH_LONG).show();
+                                else Log.d(TAG, "Ошибка загрузки файла");
                             }
-
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
-                                Log.d(TAG, "NO");
+                                Log.d(TAG, "Ошибка подключения");
                             }
                         });
                     }
                 });
         openFileDialog.show();
     }
-
-
-
-
 
     private static void bindSummaryValue(Preference preference){
         preference.setOnPreferenceChangeListener(listener);
@@ -174,7 +159,6 @@ public class SettingsActivity extends PreferenceActivity {
         }
         Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings,root,false);
         toolbar.setTitleTextColor(0xFFFFFFFF);
-
         root.addView(toolbar,0);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

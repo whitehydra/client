@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/layout.PortfolioList.Background">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -20,8 +21,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
+                style="@style/layout.PortfolioList.Head">
 
                 <TextView
                     android:id="@+id/pfSearchText"
@@ -34,8 +34,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textCapWords"
                     android:importantForAutofill="no"
+                    android:inputType="textCapWords"
                     tools:ignore="LabelFor,UnusedAttribute" />
 
                 <TextView
@@ -48,7 +48,6 @@
                     android:id="@+id/pfCategorySpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -61,13 +60,10 @@
         android:paddingBottom="35dp"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
-
         <ListView
             android:id="@+id/poPortfolioList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"/>
+            style="@style/layout.PortfolioList.Body"/>
     </android.support.v4.widget.NestedScrollView>
-
-
 </android.support.design.widget.CoordinatorLayout>

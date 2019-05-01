@@ -14,7 +14,6 @@ public class FileDTO {
     @JsonProperty("id_massage")
     private int id_massage;
 
-
     public FileDTO(){}
 
     public FileDTO(String file_name, String file_src, String file_type, int id_portfolio){
@@ -23,7 +22,6 @@ public class FileDTO {
         this.file_type = file_type;
         this.id_portfolio = id_portfolio;
     }
-
 
     public String getFile_name() { return file_name; }
     public String getFile_src() { return file_src; }

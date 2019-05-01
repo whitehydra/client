@@ -1,7 +1,6 @@
 package com.fadeev.bgtu.client;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,8 +25,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class ProfileFragment extends Fragment {
+    String TAG = "Profile fragment";
+
     HomeActivity homeActivity;
     TextView pfNameValue;
     TextView pfPositionValue;
@@ -38,20 +38,10 @@ public class ProfileFragment extends Fragment {
     TextView pfInfoValue;
     CircleImageView pfAvatar;
 
-
-
-    final String TAG = "ProfileFragment";
-
-   // private OnFragmentInteractionListener mListener;
-
     public ProfileFragment() { }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.d(TAG, "Fragment onCreate");
-
-//        }
     }
 
     @Override
@@ -73,23 +63,21 @@ public class ProfileFragment extends Fragment {
         pfInfoValue = getView().findViewById(R.id.pfInfoValue);
         pfAvatar = getView().findViewById(R.id.pfAvatar);
 
-
         homeActivity = (HomeActivity)getActivity();
 
         homeActivity.fragmentID = 1;
         update();
-
-
-      //  pfNameValue.setText(homeActivity.userDTO.getUsername());
     }
 
     public void update(){
         if(homeActivity.userDTO!=null){
             printData();
         }
-        else getProfile();
+        else {
+            homeActivity.showLoadProgress(true);
+            getProfile();
+        }
     }
-
 
 
     public void getProfile(){
@@ -105,10 +93,10 @@ public class ProfileFragment extends Fragment {
                     homeActivity.userDTO = response.body();
                     loadAvatar();
                     printData();
+                    homeActivity.showLoadProgress(false);
                 }
-                else homeActivity.logout();
+                else homeActivity.disconnect();
             }
-
             @Override
             public void onFailure(Call<UserDTO> call, Throwable t) {
 
@@ -116,11 +104,8 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
-
-
     public void loadData(){
-        pfNameValue.setText("loading...");
+        pfNameValue.setText(getString(R.string.home_progress));
     }
 
     public void printData(){
@@ -134,31 +119,26 @@ public class ProfileFragment extends Fragment {
         pfInfoValue.setText(homeActivity.userDTO.getInfo());
         if(Functions.checkAvatar(getContext()))drawAvatar();
 
-   //     Log.d(TAG,"avatar = " + homeActivity.userDTO.getAvatar());
     }
 
     public void loadAvatar(){
         Log.d(TAG,"Load avatar");
         final String url = Constants.URL.AVATARS + Functions.getSharedUsername(homeActivity);
-        Log.d(TAG, "type = " + Functions.getType(url));
         Call<ResponseBody> call = NetworkService.getInstance().getJSONApi().downloadFileWithUrl(url);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-
                     LoadAvatarTask loadAvatarTask = new LoadAvatarTask(
                             getContext(), response.body(),Constants.FILES.AVATAR);
                     loadAvatarTask.execute();
-                    Log.d(TAG, "getting file...");
-
+                    Log.d(TAG, "Загрузка файла...");
                 }
-                else Log.d(TAG,"getting file error");
+                else Log.d(TAG,"Ошибка загрузки");
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d(TAG,"Error");
+                Log.d(TAG,"Ошибка подключения");
             }
         });
     }
@@ -172,7 +152,6 @@ public class ProfileFragment extends Fragment {
 
 
     public class LoadAvatarTask extends AsyncTask<Void, Void, Boolean> {
-
         Context context;
         ResponseBody responseBody;
         String filename;
@@ -189,12 +168,10 @@ public class ProfileFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Boolean result) {
-            Log.d(TAG,"download result: " + result);
+            Log.d(TAG,"Результат загрузки: " + result);
             drawAvatar();
         }
     }
-
-
 
     @Override
     public void onDetach() {

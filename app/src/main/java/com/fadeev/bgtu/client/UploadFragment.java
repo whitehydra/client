@@ -46,16 +46,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class UploadFragment extends Fragment {
-    HomeActivity homeActivity;
+    String TAG = "Upload fragment";
 
+    HomeActivity homeActivity;
 
     Spinner categorySpinner;
     Spinner typeSpinner;
-
     RadioGroup radioButtons;
-
 
     LinearLayout dateEventBlock;
     LinearLayout datePublicationBlock;
@@ -67,32 +65,23 @@ public class UploadFragment extends Fragment {
     Button openCloseButton;
     Button uploadButton;
 
-
     TextView dateEventPole;
     TextView datePublicationPole;
-
     EditText fileLoadPole1;
     EditText fileLoadPole2;
     EditText nameText;
 
-
-
     Calendar selectedTimeEvent = Calendar.getInstance();
     Calendar selectedTimePublication = Calendar.getInstance();
 
-    Boolean additionalFileBlock = false;
     List<String> selectedFiles = new ArrayList<>();
-
-    int id_category;
-    int id_criterion = -1;
-    int id_type;
-
     @SuppressLint("SimpleDateFormat") final SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
     String[] monthName = {"Янв", "Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"};
 
-
-    String TAG = "Upload fragment";
-
+    Boolean additionalFileBlock = false;
+    int id_category;
+    int id_criterion = -1;
+    int id_type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,8 +89,7 @@ public class UploadFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setTitle(getString(R.string.title_upload));
         return inflater.inflate(R.layout.fragment_upload, container, false);
     }
@@ -133,40 +121,32 @@ public class UploadFragment extends Fragment {
 
         homeActivity.fragmentID = 3;
 
-        Log.d(TAG, "Elements loaded");
-
-
+        Log.d(TAG, "Элементы интерфейса получены");
 
         setCurrentTime();
         addListeners(view);
-
-        if(homeActivity.categories==null)getCategories();
-
-
-       // if(!homeActivity.uploadDataLoaded)getCategories();
+        if(homeActivity.categories==null){
+            homeActivity.showLoadProgress(true);
+            getCategories();
+        }
         autoUpdate();
         if(id_criterion!=-1)radioButtons.check(id_criterion);
-        Log.d(TAG, "clean");
+        Log.d(TAG, "Очистка экрана");
         clean();
-
-   //     if(homeActivity.update)updatePortfolio();
     }
 
 
     public void updatePortfolio(){
-        Log.d(TAG, "update portfolio");
-        Log.d(TAG, "old - " + nameText.getText().toString() );
+        Log.d(TAG, "Обновление портфолио");
         nameText.setText(homeActivity.portfolioDTO.getName());
-        Log.d(TAG, "new - " + nameText.getText().toString() );
         dateEventPole.setText(homeActivity.portfolioDTO.getDate_event());
         datePublicationPole.setText(homeActivity.portfolioDTO.getDate_publication());
-
     }
 
 
 
     private void displayCategory(CategoryDTO categoryDTO){
-        Log.d(TAG, "Display category");
+        Log.d(TAG, "Отрисовка категорий");
         getCriteria(categoryDTO.getCategoryID());
         getTypes(categoryDTO.getCategoryID());
         id_category = categoryDTO.getCategoryID();
@@ -176,19 +156,14 @@ public class UploadFragment extends Fragment {
     }
     private void displayType(TypeDTO typeDTO){
         id_type = typeDTO.getTypeID();
-     //   clean();
         if(homeActivity.update)updatePortfolio();
-
     }
 
     public void autoUpdate(){
         if(homeActivity.categories!=null)drawCategories();
         if(homeActivity.criteria!=null)drawCriteria();
         if(homeActivity.types!=null)drawTypes();
-
     }
-
-
 
     public void setCurrentTime(){
         Date currentTime = Calendar.getInstance().getTime();
@@ -198,7 +173,6 @@ public class UploadFragment extends Fragment {
         datePublicationPole.setText(date.format(currentTime));
     }
 
-
     public void addListeners(View view) {
         dateEventBlock = view.findViewById(R.id.upDateEventBlock);
         datePublicationBlock = view.findViewById(R.id.upDatePublicationBlock);
@@ -206,7 +180,6 @@ public class UploadFragment extends Fragment {
         fileLoadButton2 = view.findViewById(R.id.upFileLoadButton2);
         openCloseButton = view.findViewById(R.id.upOpenCloseButton);
         uploadButton = view.findViewById(R.id.upUploadButton);
-
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -225,7 +198,6 @@ public class UploadFragment extends Fragment {
         openCloseButton.setOnClickListener(onClickListener);
         uploadButton.setOnClickListener(onClickListener);
 
-
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -237,8 +209,6 @@ public class UploadFragment extends Fragment {
             }
         });
 
-
-
         radioButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -248,15 +218,11 @@ public class UploadFragment extends Fragment {
                         id_criterion = checkedRadioButton.getId();
                         Log.d(TAG, "id_criterion = " + id_criterion);
                     }
-                   // else checkedRadioButton.setChecked(true);
                     checkedRadioButton.setChecked(true);
-                    Log.d(TAG, "currently checked - " + group.getCheckedRadioButtonId());
-
+                    Log.d(TAG, "Выбранный критерий - " + group.getCheckedRadioButtonId());
                 }
-
             }
         });
-
 
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -266,18 +232,12 @@ public class UploadFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
-
-
 
         if(homeActivity.update)uploadButton.setText("Обновление портфолио");
         else uploadButton.setText("Загрузка портфолио");
     }
-
-
 
     public void createDateBlock(final View v){
         Calendar calendar = Calendar.getInstance();
@@ -346,8 +306,6 @@ public class UploadFragment extends Fragment {
         }
     }
 
-
-
     public void createPortfolio(){
         PortfolioDTO portfolio = new PortfolioDTO();
 
@@ -368,10 +326,7 @@ public class UploadFragment extends Fragment {
             else Toast.makeText(homeActivity,"Не выбран критерий получения",Toast.LENGTH_SHORT).show();
         }
         else Toast.makeText(homeActivity,"Описание слишком короткое",Toast.LENGTH_SHORT).show();
-
-
     }
-
 
     public void sendPortfolio(PortfolioDTO portfolio){
         List<Object> postData = new ArrayList<>();
@@ -397,12 +352,9 @@ public class UploadFragment extends Fragment {
                         clean();
                     }
                 }
-
             }
-
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-            }
+            public void onFailure(Call<Integer> call, Throwable t) { }
         });
     }
 
@@ -412,8 +364,6 @@ public class UploadFragment extends Fragment {
         fileLoadPole2.setText("...");
         selectedFiles.clear();
     }
-
-
 
     public void addFiles(int id){
         if(!selectedFiles.isEmpty()){
@@ -436,8 +386,7 @@ public class UploadFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                    }
+                    public void onFailure(Call<String> call, Throwable t) { }
                 });
             }
         }
@@ -462,20 +411,15 @@ public class UploadFragment extends Fragment {
                     if(originalFile.getName().equals(new File(selectedFiles.get(selectedFiles.size()-1)).getName())){
                         Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
                         clean();
-                        //clean
                     }
-
                 }
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.d(TAG, "Ошибка подключения");
             }
         });
     }
-
-
 
     public void drawCategories(){
         ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
@@ -489,41 +433,19 @@ public class UploadFragment extends Fragment {
                         .getCategoryID())categorySpinner.setSelection(i);
             }
         }
+        homeActivity.showLoadProgress(false);
     }
 
     public void drawCriteria(){
         radioButtons.removeAllViews();
-
-
-
-        boolean first = true;
-        Log.d(TAG,"criteria size = " + homeActivity.criteria.size());
-        RadioButton firstButton = null;
-        Log.d(TAG, "[1] All buttons = " + radioButtons.getChildCount() + " criteria = " + homeActivity.criteria.size() );
+        Log.d(TAG,"Количество критериев = " + homeActivity.criteria.size());
         for(CriterionDTO criterion:homeActivity.criteria){
             RadioButton radioButton = new RadioButton(homeActivity);
             radioButton.setId(criterion.getCriterionID());
             radioButton.setText(criterion.getName_criterion());
             radioButtons.addView(radioButton);
-            Log.d(TAG, "Radio buttons add");
-            if (first){
-                firstButton = radioButton;
-                first = false;
-               // radioButtons.check(radioButton.getId());
-            //    id_criterion = radioButton.getId();
-          //      radioButton.setChecked(true);
-                Log.d(TAG, "first detected id = " + id_criterion);
-            }
-          //  first = false;
+            Log.d(TAG, "Radio buttons добавлены");
         }
-
-        Log.d(TAG, "[2] All buttons = " + radioButtons.getChildCount() + " criteria = " + homeActivity.criteria.size() );
-    //    radioButtons.check(radioButtons.getChildCount()-1);
-    //    radioButtons.check(firstButton.getId());
-   //     firstButton.setChecked(true);
-    //    id_criterion = firstButton.getId();
-
-
     }
 
     public void drawTypes(){
@@ -540,22 +462,15 @@ public class UploadFragment extends Fragment {
         }
     }
 
-
-
-
-
     public void getCategories(){
-     //   Log.d(TAG, "new[2] - " + nameText.getText().toString() );
         Call<List<CategoryDTO>> call = NetworkService.getInstance().getJSONApi().getCategories();
         call.enqueue(new Callback<List<CategoryDTO>>() {
             @Override
             public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                 if(response.body()!=null){
-             //       Log.d(TAG, "new[3] - " + nameText.getText().toString() );
                     homeActivity.categories = response.body();
                     Log.d(TAG, "Категорий получено: " + homeActivity.categories.size());
                     drawCategories();
-
                 }
             }
             @Override
@@ -565,7 +480,6 @@ public class UploadFragment extends Fragment {
         });
     }
 
-
     public void getCriteria(int categoryId){
         Call<List<CriterionDTO>> call = NetworkService.getInstance().getJSONApi().getCriteria(categoryId);
         call.enqueue(new Callback<List<CriterionDTO>>() {
@@ -574,11 +488,7 @@ public class UploadFragment extends Fragment {
                 if(response.body()!=null){
                     homeActivity.criteria = response.body();
                     Log.d(TAG, "Критериев получено: " + homeActivity.criteria.size());
-
                     drawCriteria();
-
-
-
                 }
             }
             @Override

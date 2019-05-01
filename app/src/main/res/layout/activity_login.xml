@@ -15,8 +15,6 @@
         app:theme="@style/toolBarStyle"
         app:titleTextAppearance="@style/toolBarStyle.TitleText"/>
 
-    <!-- Login progress -->
-
     <ScrollView
         android:id="@+id/lgLoginFormScroll"
         android:layout_width="match_parent"
@@ -26,22 +24,13 @@
             android:id="@+id/lgLoginForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin">
+            style="@style/layout.Login">
 
             <ImageView
                 android:id="@+id/lgLogo"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
                 app:srcCompat="@drawable/logo_blue"
-                android:contentDescription="@string/image_description" />
+                android:contentDescription="@string/image_description"
+                style="@style/logo"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -52,11 +41,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_username"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
                     android:importantForAutofill="no"
-                    tools:ignore="UnusedAttribute"/>
+                    tools:ignore="UnusedAttribute"
+                    style="@style/text.Login.Username"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -69,33 +56,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true"
                     android:importantForAutofill="no"
-                    tools:ignore="UnusedAttribute" />
+                    tools:ignore="UnusedAttribute"
+                    style="@style/text.Login.Password"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/lgSignInButton"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
-                android:textAllCaps="false"
-                android:textStyle="bold" />
+                style="@style/button.Login.Sign"/>
 
             <Button
                 android:id="@+id/lgRecoveryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/action_recovery"
-                android:textAllCaps="false" />
+                style="@style/button.Login.Recovery"/>
 
         </LinearLayout>
     </ScrollView>
@@ -104,8 +83,8 @@
         android:id="@+id/loginProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/login_progress" />
+        android:text="@string/login_progress"
+        style="@style/text.Login.Progress"/>
 
     <ProgressBar
         android:id="@+id/login_progress"

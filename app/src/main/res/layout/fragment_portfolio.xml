@@ -11,126 +11,127 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        style="@style/layout.Portfolio.Background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            style="@style/layout.Portfolio.String">
 
             <TextView
                 android:id="@+id/pflNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/portfolio_name" />
+                android:text="@string/portfolio_name"
+                style="@style/text.Portfolio.Tag"/>
 
             <TextView
                 android:id="@+id/pflNamePole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/default_text" />
+                android:text="@string/default_text"
+                style="@style/text.Portfolio.Value"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            style="@style/layout.Portfolio.String">
 
             <TextView
                 android:id="@+id/pflCategoryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/portfolio_category" />
+                android:text="@string/portfolio_category"
+                style="@style/text.Portfolio.Tag"/>
 
             <TextView
                 android:id="@+id/pflCategoryPole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/default_text" />
+                android:text="@string/default_text"
+                style="@style/text.Portfolio.Value"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            style="@style/layout.Portfolio.String">
 
             <TextView
                 android:id="@+id/pflCriterionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/portfolio_criterion" />
+                android:text="@string/portfolio_criterion"
+                style="@style/text.Portfolio.Tag"/>
 
             <TextView
                 android:id="@+id/pflCriterionPole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/default_text" />
+                android:text="@string/default_text"
+                style="@style/text.Portfolio.Value"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            style="@style/layout.Portfolio.String">
 
             <TextView
                 android:id="@+id/pflTypeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/portfolio_type" />
+                android:text="@string/portfolio_type"
+                style="@style/text.Portfolio.Tag"/>
 
             <TextView
                 android:id="@+id/pflTypePole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/default_text" />
+                android:text="@string/default_text"
+                style="@style/text.Portfolio.Value"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            style="@style/layout.Portfolio.String">
 
             <TextView
                 android:id="@+id/pflDateEventText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/portfolio_date_event" />
+                android:text="@string/portfolio_date_event"
+                style="@style/text.Portfolio.Tag"/>
 
             <TextView
                 android:id="@+id/pflDateEventPole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/default_text" />
+                android:text="@string/default_text"
+                style="@style/text.Portfolio.Value"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            style="@style/layout.Portfolio.String">
 
             <TextView
                 android:id="@+id/pflDatePublicationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/portfolio_date_publication" />
+                android:text="@string/portfolio_date_publication"
+                style="@style/text.Portfolio.Tag"/>
 
             <TextView
                 android:id="@+id/pflDatePublicationPole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/default_text" />
+                android:text="@string/default_text"
+                style="@style/text.Portfolio.Value"/>
         </LinearLayout>
 
         <LinearLayout
@@ -142,9 +143,7 @@
                 android:id="@+id/pflFileBlock1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                style="@style/layout.Portfolio.String">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,15 +154,15 @@
                         android:id="@+id/pflFileNameText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="@string/portfolio_file_name" />
+                        android:text="@string/portfolio_file_name"
+                        style="@style/text.Portfolio.FileTag"/>
 
                     <TextView
                         android:id="@+id/pflFileNamePole1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/default_text" />
+                        android:text="@string/default_text"
+                        style="@style/text.Portfolio.FileName"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -175,33 +174,30 @@
                         android:id="@+id/pflFileTypeText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="@string/portfolio_file_type" />
+                        android:text="@string/portfolio_file_type"
+                        style="@style/text.Portfolio.FileTag"/>
 
                     <TextView
                         android:id="@+id/pflFileTypePole1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/default_text" />
-
-
+                        android:text="@string/default_text"
+                        style="@style/text.Portfolio.FileName"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/pflLoadFileButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/portfolio_file_load" />
+                    android:text="@string/portfolio_file_load"
+                    style="@style/button.Portfolio.File"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/pflFileBlock2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                style="@style/layout.Portfolio.String">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -212,15 +208,15 @@
                         android:id="@+id/pflFileNameText2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="@string/portfolio_file_name" />
+                        android:text="@string/portfolio_file_name"
+                        style="@style/text.Portfolio.FileTag"/>
 
                     <TextView
                         android:id="@+id/pflFileNamePole2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/default_text" />
+                        android:text="@string/default_text"
+                        style="@style/text.Portfolio.FileName"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -232,24 +228,23 @@
                         android:id="@+id/pflFileTypeText2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="@string/portfolio_file_type" />
+                        android:text="@string/portfolio_file_type"
+                        style="@style/text.Portfolio.FileTag"/>
 
                     <TextView
                         android:id="@+id/pflFileTypePole2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/default_text" />
-
-
+                        android:text="@string/default_text"
+                        style="@style/text.Portfolio.FileName"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/pflLoadFileButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/portfolio_file_load" />
+                    android:text="@string/portfolio_file_load"
+                    style="@style/button.Portfolio.File"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -257,6 +252,7 @@
             android:id="@+id/pflUpdatePortfolioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/portfolio_update" />
+            android:text="@string/portfolio_update"
+            style="@style/button.Portfolio.Update"/>
     </LinearLayout>
 </ScrollView>

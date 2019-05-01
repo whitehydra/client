@@ -14,6 +14,7 @@ import com.fadeev.bgtu.client.retrofit.NetworkService;
 import retrofit2.Call;
 
 public class SplashActivity extends AppCompatActivity {
+    String TAG = "Splash activity";
 
     private AutoLoginTask autoLoginTask = null;
     private TextView textWelcome;
@@ -24,14 +25,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         textWelcome = (TextView)findViewById(R.id.textWelcome);
-        textWelcome.setText("Загрузка...");
+        textWelcome.setText(getString(R.string.splash_progress));
         autoLogin();
     }
 
 
     private void autoLogin() {
-        SharedPreferences sPref;
-        sPref = getSharedPreferences(Constants.PREFERENCES.MAIN, MODE_PRIVATE);
         String username = Functions.getSharedUsername(this);
         String token = Functions.getSharedToken(this);
         if ((!username.equals("")) && (!token.equals(""))) {

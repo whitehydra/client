@@ -3,7 +3,6 @@ package com.fadeev.bgtu.client;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.fadeev.bgtu.client.adapters.PortfolioAdapter;
 import com.fadeev.bgtu.client.dto.CategoryDTO;
@@ -30,11 +28,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class PortfolioListFragment extends Fragment {
+    String TAG = "Portfolio list fragment";
 
     HomeActivity homeActivity;
-    String TAG = "Portfolio fragment";
     ListView portfolioList;
     EditText searchBar;
     Spinner categorySpinner;
@@ -45,11 +42,9 @@ public class PortfolioListFragment extends Fragment {
     CharSequence search = null;
     CharSequence choose = null;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -65,18 +60,14 @@ public class PortfolioListFragment extends Fragment {
         portfolioList = view.findViewById(R.id.poPortfolioList);
         searchBar = view.findViewById(R.id.pfSearchBar);
         categorySpinner = view.findViewById(R.id.pfCategorySpinner);
-
         homeActivity.fragmentID = 2;
+        homeActivity.showLoadProgress(true);
 
         portfolioList.setNestedScrollingEnabled(true);
-        getPortfolio();
+        getPortfolioList();
     }
 
-
-
-
-
-    public void getPortfolio(){
+    public void getPortfolioList(){
         List<Object> postData = new ArrayList<>();
         TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
         postData.add(token);
@@ -90,16 +81,11 @@ public class PortfolioListFragment extends Fragment {
                     list = response.body();
                     createAdapter();
                     createListener();
-
                     getCategories(adapter);
-
                 }
             }
-
             @Override
-            public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) {
-
-            }
+            public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) { }
         });
     }
 
@@ -110,24 +96,15 @@ public class PortfolioListFragment extends Fragment {
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 search = s;
-               // Toast.makeText(homeActivity,"search choose",Toast.LENGTH_SHORT).show();
-
                 adapter.getSearchFilter(choose).filter(search);
-             //   adapter.getCategoryFilter().filter(choose);
-
             }
-
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
     }
 
@@ -136,19 +113,13 @@ public class PortfolioListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 homeActivity.portfolioDTO = (PortfolioDTO)portfolioList.getItemAtPosition(position);
-                //Toast.makeText(homeActivity,"Выбрано - " + qwe.getName(),Toast.LENGTH_SHORT).show();
                 homeActivity.fragmentManager.beginTransaction().replace(R.id.homeFrame, homeActivity.portfolioFragment).commit();
             }
         });
 
     }
 
-
-
-
-
-
-    public void drawCategories(final PortfolioAdapter portfolioAdapter){
+    public void printCategories(final PortfolioAdapter portfolioAdapter){
         categories.add(0,new CategoryDTO(-1,"Все категории","0"));
         Log.d(TAG, "Категорий получено: " + categories.size());
 
@@ -157,23 +128,17 @@ public class PortfolioListFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
 
-
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 choose = categories.get(position).getName_category();
-
-                //  portfolioAdapter.getCategoryFilter().filter(choose);
                 portfolioAdapter.getSearchFilter(choose).filter(search);
-                //   Toast.makeText(homeActivity,"category choose",Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
-
-
 
     public void getCategories(final PortfolioAdapter portfolioAdapter){
         Call<List<CategoryDTO>> call = NetworkService.getInstance().getJSONApi().getCategories();
@@ -182,7 +147,8 @@ public class PortfolioListFragment extends Fragment {
             public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                 if(response.body()!=null){
                     categories = response.body();
-                    drawCategories(portfolioAdapter);
+                    printCategories(portfolioAdapter);
+                    homeActivity.showLoadProgress(false);
                 }
             }
             @Override
