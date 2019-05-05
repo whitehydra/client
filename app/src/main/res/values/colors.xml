@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#4479D4</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
+
+
+
+
+
+
+
+    <!-- Кнопки -->
+
+    <color name="button_corner">#767676</color>
+    <color name="button_background">#ffffff</color>
+
+
+
+
+
+
+    <!-- Текст -->
+
+    <color name="text_name">#262626</color>
+    <color name="text_value">#262626</color>
+
+
+
+
+
+
+
 </resources>

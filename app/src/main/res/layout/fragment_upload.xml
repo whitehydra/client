@@ -169,10 +169,10 @@
 
             <Button
                 android:id="@+id/upFileLoadButton1"
+                style="@style/button.Upload.File"
                 android:layout_width="68dp"
                 android:layout_height="match_parent"
-                android:text="@string/upload_file_search"
-                style="@style/button.Upload.File"/>
+                android:text="@string/upload_file_search" />
         </LinearLayout>
 
         <LinearLayout

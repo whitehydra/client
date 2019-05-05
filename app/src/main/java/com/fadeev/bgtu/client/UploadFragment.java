@@ -328,6 +328,7 @@ public class UploadFragment extends Fragment {
         else Toast.makeText(homeActivity,"Описание слишком короткое",Toast.LENGTH_SHORT).show();
     }
 
+
     public void sendPortfolio(PortfolioDTO portfolio){
         List<Object> postData = new ArrayList<>();
         TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));

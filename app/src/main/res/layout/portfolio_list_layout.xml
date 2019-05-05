@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     style="@style/layout.PortfolioListItem.Background">
 
     <LinearLayout
@@ -37,12 +38,13 @@
                 style="@style/text.PortfolioListItem.DateType"/>
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/ltClose"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:text="@string/list_element_close"
-            style="@style/button.PortfolioListItem"/>
+            style="@style/button.PortfolioListItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_delete_black_24dp"
+            android:text="@string/list_element_close" />
     </LinearLayout>
 
     <LinearLayout

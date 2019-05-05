@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +71,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         TextView tvDate = rowView.findViewById(R.id.ltDate);
         TextView tvCategory = rowView.findViewById(R.id.ltCategory);
         TextView tvType = rowView.findViewById(R.id.ltType);
-        Button tvClose = rowView.findViewById(R.id.ltClose);
+        ImageButton tvClose = rowView.findViewById(R.id.ltClose);
 
         tvName.setText(name);
         tvDate.setText(date);
@@ -151,7 +152,6 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                             filterResultsData.add(data);
                         }
                     }
-
                     results.values = filterResultsData;
                     results.count = filterResultsData.size();
                 }

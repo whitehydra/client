@@ -152,7 +152,8 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onPostCreate(Bundle savedInstanceState){
         super.onPostCreate(savedInstanceState);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent().getParent();
+            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
+           // root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent().getParent();
         }
         else {
             root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
