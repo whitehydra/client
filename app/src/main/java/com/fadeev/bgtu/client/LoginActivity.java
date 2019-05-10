@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
     public class UserLoginTask extends AsyncTask<Void, Void, String> {
         private final String mUsername;
         private final String mPassword;
@@ -154,7 +155,8 @@ public class LoginActivity extends AppCompatActivity {
                 ed.putString(Constants.PREFERENCES.USERNAME,mUsername);
                 ed.putString(Constants.PREFERENCES.TOKEN,token);
                 ed.commit();
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                Intent intent = new Intent(LoginActivity.this, PINActivity.class);
                 startActivity(intent);
                 finish();
             } else {

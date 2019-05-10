@@ -90,10 +90,10 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
     }
 
     public void createDialog(final PortfolioDTO currentItem, final int position){
-        String title = "Удаление элемента";
-        String message = "Удалить информацию о данном учебном достижении?";
-        String okText = "Удалить";
-        String cancelText = "Отмена";
+        String title = context.getResources().getString(R.string.list_element_title);
+        String message = context.getResources().getString(R.string.list_element_message);
+        String okText = context.getResources().getString(R.string.list_element_ok);
+        String cancelText = context.getResources().getString(R.string.list_element_cancel);
 
         ad = new AlertDialog.Builder(context);
         ad.setTitle(title);

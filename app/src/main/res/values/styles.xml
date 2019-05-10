@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="textInputStyle">@color/colorPrimary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -12,8 +13,6 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
-
-
 
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
@@ -52,8 +51,7 @@
 
     <!-- Текст -->
 
-    <style name="text">
-    </style>
+    <style name="text"></style>
 
 
     <style name="text.Splash">
@@ -66,35 +64,41 @@
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="text.Login.Username">
         <item name="android:inputType">textPersonName</item>
     </style>
+
     <style name="text.Login.Password">
         <item name="android:inputType">textPassword</item>
         <item name="android:imeActionId">6</item>
         <item name="android:imeActionLabel">@string/action_sign_in</item>
         <item name="android:imeOptions">actionUnspecified</item>
     </style>
+
     <style name="text.Login.Progress">
         <item name="android:gravity">center</item>
     </style>
 
 
-    <style name="text.Profile">
-    </style>
+    <style name="text.Profile"></style>
+
     <style name="text.Profile.Name">
         <item name="android:textColor">@color/text_name</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="text.Profile.Position">
         <item name="android:gravity">center</item>
         <item name="android:textStyle">italic</item>
     </style>
+
     <style name="text.Profile.Tag">
         <item name="android:layout_marginEnd">5dp</item>
         <item name="android:layout_weight">0</item>
     </style>
+
     <style name="text.Profile.Value">
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/text_value</item>
@@ -104,6 +108,7 @@
     <style name="text.Upload">
 
     </style>
+
     <style name="text.Upload.Name">
         <item name="android:inputType">text</item>
         <item name="android:lines">3</item>
@@ -111,6 +116,7 @@
         <item name="android:minLines">3</item>
         <item name="android:singleLine">false</item>
     </style>
+
     <style name="text.Upload.File">
         <item name="android:clickable">false</item>
         <item name="android:cursorVisible">false</item>
@@ -119,37 +125,38 @@
         <item name="android:focusableInTouchMode">false</item>
         <item name="android:inputType">textPersonName</item>
     </style>
-    <style name="text.Upload.Tag">
-    </style>
-    <style name="text.Upload.Value">
-    </style>
+
+    <style name="text.Upload.Tag"></style>
+
+    <style name="text.Upload.Value"></style>
 
 
-    <style name="text.Portfolio">
-    </style>
-    <style name="text.Portfolio.Tag">
-    </style>
-    <style name="text.Portfolio.Value">
-    </style>
+    <style name="text.Portfolio"></style>
+
+    <style name="text.Portfolio.Tag"></style>
+
+    <style name="text.Portfolio.Value"></style>
+
     <style name="text.Portfolio.FileTag">
         <item name="android:layout_weight">0</item>
     </style>
+
     <style name="text.Portfolio.FileName">
         <item name="android:layout_weight">1</item>
     </style>
 
 
-    <style name="text.OpenFileItem">
-    </style>
+    <style name="text.OpenFileItem"></style>
 
-    <style name="text.PortfolioListItem">
-    </style>
+    <style name="text.PortfolioListItem"></style>
+
     <style name="text.PortfolioListItem.Category">
         <item name="android:gravity">center</item>
         <item name="android:textStyle">italic</item>
     </style>
-    <style name="text.PortfolioListItem.DateType">
-    </style>
+
+    <style name="text.PortfolioListItem.DateType"></style>
+
     <style name="text.PortfolioListItem.Name">
         <item name="android:gravity">center</item>
     </style>
@@ -163,32 +170,30 @@
     </style>
 
 
-    <style name="button.Login">
-    </style>
+    <style name="button.Login"></style>
+
     <style name="button.Login.Sign">
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="button.Login.Recovery">
-    </style>
+
+    <style name="button.Login.Recovery"></style>
 
 
-    <style name="button.Upload">
-    </style>
-    <style name="button.Upload.File">
-    </style>
-    <style name="button.Upload.OpenClose">
-    </style>
-    <style name="button.Upload.Add">
-    </style>
+    <style name="button.Upload"></style>
+
+    <style name="button.Upload.File"></style>
+
+    <style name="button.Upload.OpenClose"></style>
+
+    <style name="button.Upload.Add"></style>
 
 
-    <style name="button.Portfolio">
-    </style>
-    <style name="button.Portfolio.File">
-    </style>
-    <style name="button.Portfolio.Update">
-    </style>
+    <style name="button.Portfolio"></style>
+
+    <style name="button.Portfolio.File"></style>
+
+    <style name="button.Portfolio.Update"></style>
 
 
     <style name="button.PortfolioListItem">
@@ -197,10 +202,15 @@
     </style>
 
 
+    <style name="button.PIN">
+        <item name="android:background">@drawable/button_pin</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <!-- Layouts -->
 
-    <style name="layout">
-    </style>
+    <style name="layout"></style>
 
 
     <style name="layout.Login">
@@ -219,20 +229,23 @@
     </style>
 
 
-    <style name="layout.Profile">
-    </style>
+    <style name="layout.Profile"></style>
+
     <style name="layout.Profile.Background">
         <item name="android:orientation">vertical</item>
         <item name="android:padding">15dp</item>
     </style>
+
     <style name="layout.Profile.Head">
         <item name="android:elevation">5dp</item>
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="layout.Profile.BaseInfo">
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="layout.Profile.String">
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
@@ -240,25 +253,27 @@
     </style>
 
 
-    <style name="layout.PortfolioList">
-    </style>
-    <style name="layout.PortfolioList.Background">
-    </style>
+    <style name="layout.PortfolioList"></style>
+
+    <style name="layout.PortfolioList.Background"></style>
+
     <style name="layout.PortfolioList.Head">
         <item name="android:orientation">vertical</item>
         <item name="android:padding">10dp</item>
     </style>
+
     <style name="layout.PortfolioList.Body">
         <item name="android:layout_marginBottom">30dp</item>
     </style>
 
 
-    <style name="layout.Upload">
-    </style>
+    <style name="layout.Upload"></style>
+
     <style name="layout.Upload.Background">
         <item name="android:orientation">vertical</item>
         <item name="android:padding">15dp</item>
     </style>
+
     <style name="layout.Upload.String">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
@@ -266,10 +281,10 @@
     </style>
 
 
-    <style name="layout.Portfolio">
-    </style>
-    <style name="layout.Portfolio.Background">
-    </style>
+    <style name="layout.Portfolio"></style>
+
+    <style name="layout.Portfolio.Background"></style>
+
     <style name="layout.Portfolio.String">
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
@@ -277,16 +292,26 @@
     </style>
 
 
-    <style name="layout.PortfolioListItem">
-    </style>
+    <style name="layout.PortfolioListItem"></style>
+
     <style name="layout.PortfolioListItem.Background">
         <item name="android:layout_margin">10dp</item>
         <item name="android:padding">10dp</item>
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="layout.PortfolioListItem.Body">
         <item name="android:layout_weight">1</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////// -->

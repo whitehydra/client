@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4479D4</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorAccent">#303F9F</color>
 
 
 
@@ -13,7 +13,10 @@
     <!-- Кнопки -->
 
     <color name="button_corner">#767676</color>
+    <color name="button_pin_corner">#4479D4</color>
     <color name="button_background">#ffffff</color>
+    <color name="button_pin_background">#9AB9EA</color>
+
 
 
 

@@ -76,6 +76,16 @@ public interface JSONPlaceHolderApi {
 
     @GET(Constants.URL.GET_TYPE)
     Call<List<TypeDTO>> getTypes(@Path("id") int id);
+
+
+    @GET(Constants.URL.GET_PIN_STATUS)
+    Call<Boolean> getPinStatus(@Path("username") String username);
+
+    @POST(Constants.URL.CHECK_PIN)
+    Call<Boolean> checkPin(@Body List<Object> list);
+
+    @POST(Constants.URL.SET_PIN)
+    Call<Boolean> setPin(@Body List<Object> list);
 }
 
 
