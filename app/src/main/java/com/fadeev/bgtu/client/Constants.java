@@ -2,7 +2,7 @@ package com.fadeev.bgtu.client;
 
 public class Constants {
     public static class URL{
-        public static final String HOST = "http://192.168.1.3:8080/";
+        public static final String HOST = "http://192.168.1.4:8080/";
         public static final String AVATARS = HOST + "avatars/";
         public static final String FILES = HOST + "portfolio/files/load?";
 
@@ -33,6 +33,11 @@ public class Constants {
         public static final String USERNAME = "username";
         public static final String TOKEN = "token";
         public static final String MAIN = "main";
+
+        public static final String NIGHT_MODE = "night_mode_preference";
+        public static final String TEXT_SIZE = "size_list_preference";
+        public static final String LANGUAGE = "language_preference";
+
     }
 
     public static class FILES{

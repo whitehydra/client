@@ -23,6 +23,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Functions.setLocale(this);
+        setTheme(Functions.getSharedTheme(this));
         setContentView(R.layout.activity_splash);
         textWelcome = (TextView)findViewById(R.id.textWelcome);
         textWelcome.setText(getString(R.string.splash_progress));
@@ -69,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
         protected void onPostExecute(final UserDTO transactionResult) {
             if (transactionResult!=null) {
 
-                textWelcome.setText("Успех!");
+                textWelcome.setText(getResources().getString(R.string.pin_done_message));
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException e) {

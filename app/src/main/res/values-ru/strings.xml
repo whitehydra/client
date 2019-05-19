@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Портфолио БГТУ</string>
+
+
+
+
+    <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
+
+
+    <!-- Загрузочный экран -->
+    <string name="splash_load">Загрузка</string>
+    <string name="splash_progress">Загрузка...</string>
+
+
+    <!-- Авторизация -->
+    <string name="login_activity">Авторизация</string>
+    <string name="prompt_username">Логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Авторизация</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_empty_password">Пароль не введён</string>
+    <string name="error_empty_username">Логин не введён</string>
+    <string name="error_incorrect_connection">Подключение не удалось</string>
+    <string name="login_progress">Авторизация…</string>
+    <string name="action_recovery">Восстановление доступа</string>
+    <string name="image_description">Изображение</string>
+
+
+    <!-- Домашний экран -->
+    <string name="home_activity">Профиль</string>
+    <string name="home_progress">Загрузка...</string>
+
+    <string name="title_profile">Профиль</string>
+    <string name="title_portfolio">Портфолио</string>
+    <string name="title_upload">Загрузка</string>
+
+
+    <!-- Профиль -->
+    <string name="profile_faculty">Факультет:</string>
+    <string name="profile_group">Группа:</string>
+    <string name="profile_number">Телефон:</string>
+    <string name="profile_mail">Почта:</string>
+    <string name="profile_info">Дополнительная информация:</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+    <!-- Портфолио -->
+    <string name="portfolio_name">Описание:</string>
+    <string name="portfolio_category">Категория:</string>
+    <string name="portfolio_criterion">Критерий получения:</string>
+    <string name="portfolio_type">Тип участия:</string>
+    <string name="portfolio_date_event">Дата проведения:</string>
+    <string name="portfolio_date_publication">Дата публикации:</string>
+    <string name="portfolio_file_name">Имя файла:</string>
+    <string name="portfolio_file_type">Формат файла:</string>
+    <string name="portfolio_file_load">Загрузить</string>
+    <string name="portfolio_update">Изменить</string>
+    <string name="portfolio_note">Запись</string>
+    <string name="portfolio_deleted">удалена</string>
+    <string name="portfolio_delete_error">Ошибка удаления</string>
+
+
+    <!-- Список портфолио -->
+    <string name="portfolio_list_search">Поиск по названию:</string>
+    <string name="portfolio_list_category">Поиск по категории:</string>
+    <string name="portfolio_list_all_categories">Все категории</string>
+
+
+    <!-- Загрузка портфолио -->
+    <string name="upload_name">Описание</string>
+    <string name="upload_category">Категория:</string>
+    <string name="upload_criterion">Критерий получения:</string>
+    <string name="upload_type">Тип участия:</string>
+    <string name="upload_date_event">Дата проведения:</string>
+    <string name="upload_date_publication">Дата публикации:</string>
+    <string name="upload_default_date">00 Янв 2019</string>
+    <string name="upload_file_choose">Выбор файла:</string>
+    <string name="upload_file_choose_twice">Выбор дополнительного файла:</string>
+    <string name="upload_file_dir">...</string>
+    <string name="upload_file_search">Поиск</string>
+    <string name="upload_add">Добавить</string>
+    <string name="upload_upload">Загрузка</string>
+    <string name="upload_empty_criterion">Не выбран критерий получения</string>
+    <string name="upload_short_name">Описание слишком короткое</string>
+    <string name="upload_done">Portfolio uploaded</string>
+
+
+    <string-array name="months">
+        <item>Янв</item>
+        <item>Фев</item>
+        <item>Мар</item>
+        <item>Апр</item>
+        <item>Мая</item>
+        <item>Июн</item>
+        <item>Июл</item>
+        <item>Авг</item>
+        <item>Сен</item>
+        <item>Окт</item>
+        <item>Ноя</item>
+        <item>Дек</item>
+    </string-array>
+
+
+
+
+    <!-- Элементы списка -->
+    <string name="list_element_close">X</string>
+    <string name="list_element_title">Удаление элемента</string>
+    <string name="list_element_message">Удалить информацию о данном учебном достижении?</string>
+    <string name="list_element_ok">Удалить</string>
+    <string name="list_element_cancel">Отмена</string>
+
+
+
+    <!-- Окно PIN-кода -->
+
+    <string name="title_activity_pin">Портфолио БГТУ</string>
+
+    <string name="key_1">1</string>
+    <string name="key_2">2</string>
+    <string name="key_3">3</string>
+    <string name="key_4">4</string>
+    <string name="key_5">5</string>
+    <string name="key_6">6</string>
+    <string name="key_7">7</string>
+    <string name="key_8">8</string>
+    <string name="key_9">9</string>
+    <string name="key_0">0</string>
+    <string name="key_back">x</string>
+
+
+    <string name="pin_create_message">Придумайте четырёхзнычный PIN-код:</string>
+    <string name="pin_error_title">Ошибка!</string>
+    <string name="pin_error_message">Введён неправильный PIN-код</string>
+    <string name="pin_error_ok">ОК</string>
+    <string name="pin_done_message">Успех</string>
+    <string name="pin_exit">Выход...</string>
+
+
+    <!-- Окно настроек -->
+
+    <string name="settings_category_main">Основные</string>
+    <string name="settings_profile_edit">Редактирование профиля</string>
+    <string name="settings_change_password">Смена пароля</string>
+    <string name="settings_category_appearance">Внешний вид</string>
+    <string name="settings_language_selection">Выбор языка</string>
+    <string name="settings_night_theme">Ночная тема</string>
+    <string name="settings_night_theme_on">Ночная тема влючена</string>
+    <string name="settings_night_theme_off">Ночная тема выключена</string>
+    <string name="settings_text_size">Размер текста</string>
+    <string name="settings_category_other">Другое</string>
+    <string name="settings_upload_avatar">Загрузка аватара</string>
+    <string name="settings_about">О программе</string>
+    <string name="settings_exit">Выход</string>
+    <string name="settings_exit_summary">Выход из приложения</string>
+
+
+
+    <string name="settings_exit_message">Для вступления настроек в силу необходимо перезагрузить приложение</string>
+    <string name="settings_exit_title">Предупреждение</string>
+    <string name="settings_exit_ok">ОК</string>
+
+</resources>

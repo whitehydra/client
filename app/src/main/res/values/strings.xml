@@ -6,88 +6,110 @@
 
 
     <!-- Загрузочный экран -->
-    <string name="splash_load">Загрузка</string>
-    <string name="splash_progress">Загрузка...</string>
+    <string name="splash_load">Loading</string>
+    <string name="splash_progress">Loading...</string>
 
 
     <!-- Авторизация -->
-    <string name="login_activity">Авторизация</string>
-    <string name="prompt_username">Логин</string>
-    <string name="prompt_password">Пароль</string>
-    <string name="action_sign_in">Авторизация</string>
-    <string name="error_invalid_password">Пароль слишком короткий</string>
-    <string name="error_empty_password">Пароль не введён</string>
-    <string name="error_empty_username">Логин не введён</string>
-    <string name="error_incorrect_connection">Подключение не удалось</string>
-    <string name="login_progress">Авторизация…</string>
-    <string name="action_recovery">Восстановление доступа</string>
-    <string name="image_description">Изображение</string>
+    <string name="login_activity">Authorization</string>
+    <string name="prompt_username">Login</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Authorization</string>
+    <string name="error_invalid_password">Password is too short</string>
+    <string name="error_empty_password">Password not entered</string>
+    <string name="error_empty_username">Login not entered</string>
+    <string name="error_incorrect_connection">Connection failed</string>
+    <string name="login_progress">Authorization…</string>
+    <string name="action_recovery">Access recovery</string>
+    <string name="image_description">Picture</string>
 
 
     <!-- Домашний экран -->
-    <string name="home_activity">Профиль</string>
-    <string name="home_progress">Загрузка...</string>
+    <string name="home_activity">Profile</string>
+    <string name="home_progress">Loading...</string>
 
-    <string name="title_profile">Профиль</string>
-    <string name="title_portfolio">Портфолио</string>
-    <string name="title_upload">Загрузка</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_portfolio">Portfolio</string>
+    <string name="title_upload">Loading</string>
 
 
     <!-- Профиль -->
-    <string name="profile_faculty">Факультет:</string>
-    <string name="profile_group">Группа:</string>
-    <string name="profile_number">Телефон:</string>
-    <string name="profile_mail">Почта:</string>
-    <string name="profile_info">Дополнительная информация:</string>
+    <string name="profile_faculty">Faculty:</string>
+    <string name="profile_group">Group:</string>
+    <string name="profile_number">Phone:</string>
+    <string name="profile_mail">Mail:</string>
+    <string name="profile_info">Additional Information:</string>
     <string name="title_activity_settings">Settings</string>
 
 
     <!-- Портфолио -->
-    <string name="portfolio_name">Описание:</string>
-    <string name="portfolio_category">Категория:</string>
-    <string name="portfolio_criterion">Критерий получения:</string>
-    <string name="portfolio_type">Тип участия:</string>
-    <string name="portfolio_date_event">Дата проведения:</string>
-    <string name="portfolio_date_publication">Дата публикации:</string>
-    <string name="portfolio_file_name">Имя файла:</string>
-    <string name="portfolio_file_type">Формат файла:</string>
-    <string name="portfolio_file_load">Загрузить</string>
-    <string name="portfolio_update">Изменить</string>
+    <string name="portfolio_name">Description:</string>
+    <string name="portfolio_category">Category:</string>
+    <string name="portfolio_criterion">Criterion of receipt:</string>
+    <string name="portfolio_type">Type of participation:</string>
+    <string name="portfolio_date_event">Event date:</string>
+    <string name="portfolio_date_publication">Publication date:</string>
+    <string name="portfolio_file_name">File name:</string>
+    <string name="portfolio_file_type">File type:</string>
+    <string name="portfolio_file_load">Upload</string>
+    <string name="portfolio_update">Update</string>
+    <string name="portfolio_note">Note</string>
+    <string name="portfolio_deleted">deleted</string>
+    <string name="portfolio_delete_error">Delete error</string>
 
 
     <!-- Список портфолио -->
-    <string name="portfolio_list_search">Поиск по названию:</string>
-    <string name="portfolio_list_category">Поиск по категории:</string>
+    <string name="portfolio_list_search">Search by name:</string>
+    <string name="portfolio_list_category">Search by category:</string>
+    <string name="portfolio_list_all_categories">All categories</string>
 
 
     <!-- Загрузка портфолио -->
-    <string name="upload_name">Описание</string>
-    <string name="upload_category">Категория:</string>
-    <string name="upload_criterion">Критерий получения:</string>
-    <string name="upload_type">Тип участия:</string>
-    <string name="upload_date_event">Дата проведения:</string>
-    <string name="upload_date_publication">Дата публикации:</string>
-    <string name="upload_default_date">00 Янв 2019</string>
-    <string name="upload_file_choose">Выбор файла:</string>
-    <string name="upload_file_choose_twice">Выбор дополнительного файла:</string>
+    <string name="upload_name">Description</string>
+    <string name="upload_category">Category:</string>
+    <string name="upload_criterion">Criterion of receipt:</string>
+    <string name="upload_type">Type of participation:</string>
+    <string name="upload_date_event">Event date:</string>
+    <string name="upload_date_publication">Publication date:</string>
+    <string name="upload_default_date">00 Jan 2019</string>
+    <string name="upload_file_choose">File selection:</string>
+    <string name="upload_file_choose_twice">Select additional file:</string>
     <string name="upload_file_dir">...</string>
-    <string name="upload_file_search">Поиск</string>
-    <string name="upload_add">Добавить</string>
-    <string name="upload_upload">Загрузка</string>
+    <string name="upload_file_search">Search</string>
+    <string name="upload_add">Add</string>
+    <string name="upload_upload">Upload</string>
+    <string name="upload_empty_criterion">No receive criterion selected</string>
+    <string name="upload_short_name">Description too short</string>
+    <string name="upload_done">Портфолио загружено</string>
+    
+    <string-array name="months">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
 
 
     <!-- Элементы списка -->
     <string name="list_element_close">X</string>
-    <string name="list_element_title">Удаление элемента</string>
-    <string name="list_element_message">Удалить информацию о данном учебном достижении?</string>
-    <string name="list_element_ok">Удалить</string>
-    <string name="list_element_cancel">Отмена</string>
+    <string name="list_element_title">Delete item</string>
+    <string name="list_element_message">Delete information about this academic achievement?</string>
+    <string name="list_element_ok">Delete</string>
+    <string name="list_element_cancel">Cancel</string>
 
 
 
     <!-- Окно PIN-кода -->
 
-    <string name="title_activity_pin">Портфолио БГТУ</string>
+    <string name="title_activity_pin">BSTU Portfolio</string>
 
     <string name="key_1">1</string>
     <string name="key_2">2</string>
@@ -102,9 +124,38 @@
     <string name="key_back">x</string>
 
 
-    <string name="pin_create_message">Придумайте четырёхзнычный PIN-код:</string>
-    <string name="pin_error_title">Ошибка!</string>
-    <string name="pin_error_message">Введён неправильный PIN-код</string>
-    <string name="pin_error_ok">ОК</string>
+    <string name="pin_create_message">Come up with a four-digit PIN:</string>
+    <string name="pin_error_title">Error!</string>
+    <string name="pin_error_message">Wrong PIN entered</string>
+    <string name="pin_error_ok">OK</string>
+    <string name="pin_done_message">Done</string>
+    <string name="pin_exit">Exit...</string>
+
+
+
+    <!-- Окно настроек -->
+
+    <string name="settings_category_main">Main</string>
+    <string name="settings_profile_edit">Profile editing</string>
+    <string name="settings_change_password">Change Password</string>
+    <string name="settings_category_appearance">Appearance</string>
+    <string name="settings_language_selection">Language</string>
+    <string name="settings_night_theme">Night theme</string>
+    <string name="settings_night_theme_on">Night theme on</string>
+    <string name="settings_night_theme_off">Night theme off</string>
+    <string name="settings_text_size">Text size</string>
+    <string name="settings_category_other">Other</string>
+    <string name="settings_upload_avatar">Avatar upload</string>
+    <string name="settings_about">About</string>
+    <string name="settings_exit">Exit</string>
+    <string name="settings_exit_summary">Exit application</string>
+
+
+
+
+    <string name="settings_exit_message">For the settings to take effect, you must restart the application.</string>
+    <string name="settings_exit_title">Warring</string>
+    <string name="settings_exit_ok">OK</string>
+
 
 </resources>

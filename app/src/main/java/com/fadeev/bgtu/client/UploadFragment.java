@@ -76,7 +76,7 @@ public class UploadFragment extends Fragment {
 
     List<String> selectedFiles = new ArrayList<>();
     @SuppressLint("SimpleDateFormat") final SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
-    String[] monthName = {"Янв", "Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"};
+    String[] monthName;
 
     Boolean additionalFileBlock = false;
     int id_category;
@@ -120,6 +120,7 @@ public class UploadFragment extends Fragment {
         radioButtons = view.findViewById(R.id.upRadioButtons);
 
         homeActivity.fragmentID = 3;
+        monthName = homeActivity.getResources().getStringArray(R.array.months);
 
         Log.d(TAG, "Элементы интерфейса получены");
 
@@ -323,9 +324,9 @@ public class UploadFragment extends Fragment {
 
                 sendPortfolio(portfolio);
             }
-            else Toast.makeText(homeActivity,"Не выбран критерий получения",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(homeActivity,getResources().getString(R.string.upload_empty_criterion),Toast.LENGTH_SHORT).show();
         }
-        else Toast.makeText(homeActivity,"Описание слишком короткое",Toast.LENGTH_SHORT).show();
+        else Toast.makeText(homeActivity,getResources().getString(R.string.upload_short_name),Toast.LENGTH_SHORT).show();
     }
 
 
@@ -349,7 +350,7 @@ public class UploadFragment extends Fragment {
                     if(!selectedFiles.isEmpty())addFiles(response.body());
 
                     if(selectedFiles.isEmpty()){
-                        Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
+                        Toast.makeText(homeActivity, getResources().getString(R.string.upload_done), Toast.LENGTH_LONG).show();
                         clean();
                     }
                 }
@@ -410,7 +411,7 @@ public class UploadFragment extends Fragment {
                 Log.d(TAG, response.body());
                 if(selectedFiles.size()!=0){
                     if(originalFile.getName().equals(new File(selectedFiles.get(selectedFiles.size()-1)).getName())){
-                        Toast.makeText(homeActivity, "Портфолио загружено", Toast.LENGTH_LONG).show();
+                        Toast.makeText(homeActivity, getResources().getString(R.string.upload_done), Toast.LENGTH_LONG).show();
                         clean();
                     }
                 }
@@ -424,7 +425,7 @@ public class UploadFragment extends Fragment {
 
     public void drawCategories(){
         ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
-                homeActivity,android.R.layout.simple_spinner_item, homeActivity.categories);
+                homeActivity,R.layout.spinner_item, homeActivity.categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
 
@@ -444,6 +445,7 @@ public class UploadFragment extends Fragment {
             RadioButton radioButton = new RadioButton(homeActivity);
             radioButton.setId(criterion.getCriterionID());
             radioButton.setText(criterion.getName_criterion());
+            radioButton.setTextColor(nameText.getCurrentTextColor());
             radioButtons.addView(radioButton);
             Log.d(TAG, "Radio buttons добавлены");
         }
@@ -451,7 +453,7 @@ public class UploadFragment extends Fragment {
 
     public void drawTypes(){
         ArrayAdapter<TypeDTO> adapter = new ArrayAdapter<TypeDTO>(
-                homeActivity,android.R.layout.simple_spinner_item, homeActivity.types);
+                homeActivity,R.layout.spinner_item, homeActivity.types);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(adapter);
 

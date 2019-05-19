@@ -113,12 +113,11 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         if(response.body()!=null){
-                            Toast.makeText(getContext().getApplicationContext(), "Запись " +
-                                    currentItem.getName() + " удалена", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext().getApplicationContext(), context.getResources().getString(R.string.portfolio_note) + " " +
+                                    currentItem.getName() + " " + context.getResources().getString(R.string.portfolio_deleted), Toast.LENGTH_LONG).show();
                             filteredData.remove(position);
                             notifyDataSetChanged();
-                        } else Toast.makeText(getContext().getApplicationContext(), "Ошибка " +
-                                "удаления", Toast.LENGTH_LONG).show();
+                        } else Toast.makeText(getContext().getApplicationContext(), context.getResources().getString(R.string.portfolio_delete_error), Toast.LENGTH_LONG).show();
                     }
                     @Override
                     public void onFailure(Call<Integer> call, Throwable t) {
@@ -182,7 +181,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
 
                     for(PortfolioDTO data : filteredData){
                         if(data.getCategory().getName_category().equals(constraint.toString()) ||
-                        constraint.toString().equals("Все категории")){
+                        constraint.toString().equals(context.getResources().getString(R.string.portfolio_list_all_categories))){
                             filterResultsData.add(data);
                         }
                     }

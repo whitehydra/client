@@ -1,29 +1,41 @@
 package com.fadeev.bgtu.client;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.fadeev.bgtu.client.dto.PortfolioDTO;
+import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.file.OpenFileDialog;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -36,10 +48,15 @@ public class SettingsActivity extends PreferenceActivity {
     static String TAG = "Settings activity";
 
     LinearLayout root;
+    private AlertDialog.Builder ad;
+    boolean close = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Functions.setLocale(this);
+        setTheme(Functions.getSharedTheme(this));
         super.onCreate(savedInstanceState);
+        createDialog();
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new MainSettingsFragment()).commit();
     }
@@ -52,11 +69,28 @@ public class SettingsActivity extends PreferenceActivity {
             bindSummaryValue(findPreference("language_preference"));
             bindSummaryValue(findPreference("size_list_preference"));
 
+            final ListPreference changeLanguage = (ListPreference)findPreference("language_preference");
             Preference buttonEditProfile = findPreference("edit_profile_preference");
             Preference buttonEditPassword = findPreference("edit_password_preference");
             Preference buttonAbout = findPreference("about_preference");
             Preference buttonExit = findPreference("key_exit_preference");
             Preference buttonAvatar = findPreference("load_avatar_preference");
+
+
+
+            changeLanguage.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    String[] languages = getResources().getStringArray(R.array.language_array_values);
+                    for(int i = 0; i < languages.length; i++){
+                        if(languages[i].equals(newValue.toString())){
+                            changeLanguage.setSummary(getResources().getStringArray(R.array.language_array)[i]);
+                        }
+                    }
+                    Functions.setLocale(getActivity());
+                    return true;
+                }
+            });
 
             buttonExit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
                 @Override
@@ -160,6 +194,7 @@ public class SettingsActivity extends PreferenceActivity {
         }
         Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings,root,false);
         toolbar.setTitleTextColor(0xFFFFFFFF);
+        toolbar.setBackgroundColor(getResources().getColor(Functions.getSharedColor(this)));
         root.addView(toolbar,0);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,5 +202,32 @@ public class SettingsActivity extends PreferenceActivity {
                 finish();
             }
         });
+    }
+
+    public void createDialog(){
+        String title = getResources().getString(R.string.settings_exit_title);
+        String message = getResources().getString(R.string.settings_exit_message);
+        String okText = getResources().getString(R.string.settings_exit_ok);
+
+        ad = new AlertDialog.Builder(this);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(okText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                close = true;
+                finish();
+            }
+        });
+    }
+
+
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        ad.show();
     }
 }

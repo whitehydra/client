@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+    <!-- Стили -->
+
+
+    <!-- Стандартный -->
+
     <color name="colorPrimary">#4479D4</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#303F9F</color>
 
 
+    <color name="background_default">#ffffff</color>
+    <color name="toolbar_default">#4479D4</color>
+
+    <!-- Ночной -->
 
 
+    <color name="colorPrimary_night">#7DF9FF</color>
+    <color name="colorPrimaryDark_night">#353535</color>
+    <color name="colorAccent_night">#E6E6E6</color>
+
+
+
+    <color name="background_night">#666666</color>
+    <color name="toolbar_night">#454545</color>
 
 
 
@@ -25,10 +44,34 @@
 
     <!-- Текст -->
 
-    <color name="text_name">#262626</color>
-    <color name="text_value">#262626</color>
+    <!-- Стандартный -->
+
+    <color name="text_headline">#262626</color>
+    <color name="text_pole">#262626</color>
+    <color name="text_default">#121212</color>
+
+    <!-- Ночной -->
+
+    <color name="text_headline_night">#ffffff</color>
+    <color name="text_pole_night">#D1D1D1</color>
+    <color name="text_default_night">#ffffff</color>
+
+    <!-- ////////// -->
 
 
+
+
+
+
+
+
+    <!-- Палитра -->
+
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#0000ff</color>
+    <color name="blue_light">#00ffff</color>
+    <color name="yellow">#ffff00</color>
 
 
 

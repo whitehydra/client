@@ -120,7 +120,7 @@ public class PortfolioListFragment extends Fragment {
     }
 
     public void printCategories(final PortfolioAdapter portfolioAdapter){
-        categories.add(0,new CategoryDTO(-1,"Все категории","0"));
+        categories.add(0,new CategoryDTO(-1,getResources().getString(R.string.portfolio_list_all_categories),"0"));
         Log.d(TAG, "Категорий получено: " + categories.size());
 
         ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(

@@ -3,6 +3,7 @@ package com.fadeev.bgtu.client;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,6 +52,7 @@ public class PINActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Functions.getSharedTheme(this));
         setContentView(R.layout.activity_pin);
 
 
@@ -77,7 +79,16 @@ public class PINActivity extends AppCompatActivity {
                         break;
 
                     case R.id.exit:
-                        Toast.makeText(getApplicationContext(), "Выход...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.pin_exit), Toast.LENGTH_LONG).show();
+                        SharedPreferences sPref = getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
+                        SharedPreferences.Editor ed = sPref.edit();
+                        ed.putString(Constants.PREFERENCES.USERNAME,"");
+                        ed.putString(Constants.PREFERENCES.TOKEN,"");
+                        ed.commit();
+
+                        Intent intent = new Intent(PINActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
                         break;
                 }
 
@@ -122,7 +133,7 @@ public class PINActivity extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if(response.body()!=null){
                         if(response.body()){
-                            Toast.makeText(getApplicationContext(), "Успех", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.pin_done_message), Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(PINActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
@@ -140,7 +151,7 @@ public class PINActivity extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if(response.body()!=null){
                         if(response.body()){
-                            Toast.makeText(getApplicationContext(), "Успех", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.pin_done_message), Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(PINActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();

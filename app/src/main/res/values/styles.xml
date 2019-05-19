@@ -1,18 +1,86 @@
 <resources>
 
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <item name="textInputStyle">@color/colorPrimary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+
+
+    <style name="AppTheme.DefaultTheme">
+        <item name="android:windowBackground">@color/background_default</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+        <item name="themeTextDefault">@color/text_default</item>
+        <item name="themeTextHeadline">@color/text_headline</item>
+        <item name="themeTextPole">@color/text_pole</item>
+
+
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
+
+    <style name="AppTheme.NightTheme">
+        <item name="android:windowBackground">@color/background_night</item>
+
+        <item name="colorPrimary">@color/colorPrimary_night</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_night</item>
+        <item name="colorAccent">@color/colorAccent_night</item>
+        <item name="colorControlNormal">@color/colorAccent_night</item>
+
+
+        <item name="themeTextDefault">@color/text_default_night</item>
+        <item name="themeTextHeadline">@color/text_headline_night</item>
+        <item name="themeTextPole">@color/text_pole_night</item>
+    </style>
+
+
+    <style name="AppTheme.DefaultTheme.Small">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="AppTheme.DefaultTheme.Normal">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppTheme.DefaultTheme.Big">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+    <style name="AppTheme.NightTheme.Small">
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="AppTheme.NightTheme.Normal">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppTheme.NightTheme.Big">
+        <item name="android:textSize">18sp</item>
     </style>
 
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
+
+
+
+
+
+    
+    
+    
+    <attr name="themeTextDefault" format="reference"/>
+    <attr name="themeTextHeadline" format="reference"/>
+    <attr name="themeTextPole" format="reference"/>
+
+
+
+
 
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
@@ -40,7 +108,6 @@
         <item name="android:textSize">8sp</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:actionMenuTextColor">#FFFFFF</item>
-        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="toolBarStyle.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
@@ -49,9 +116,14 @@
     </style>
 
 
+
+
     <!-- Текст -->
 
-    <style name="text"></style>
+    <style name="text">
+        <item name="android:textColor">?themeTextDefault</item>
+        <item name="android:textAppearance">@style/AppTheme.NightTheme</item>
+    </style>
 
 
     <style name="text.Splash">
@@ -78,13 +150,13 @@
 
     <style name="text.Login.Progress">
         <item name="android:gravity">center</item>
-    </style>
+    </style>@color/colorAccent
 
 
     <style name="text.Profile"></style>
 
     <style name="text.Profile.Name">
-        <item name="android:textColor">@color/text_name</item>
+        <item name="android:textColor">?themeTextPole</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
     </style>
@@ -101,7 +173,7 @@
 
     <style name="text.Profile.Value">
         <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/text_value</item>
+        <item name="android:textColor">?themeTextPole</item>
     </style>
 
 
