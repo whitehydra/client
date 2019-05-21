@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:theme="@style/toolBarStyle"
+        app:titleTextAppearance="@style/toolBarStyle.TitleText" />
+
+
+    <FrameLayout
+        android:id="@+id/editFrame"
+        style="@style/layout.Home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.widget.LinearLayout>

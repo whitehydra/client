@@ -27,6 +27,9 @@ public class Constants {
         public static final String CHECK_PIN = "/pin/check";
         public static final String SET_PIN = "/pin/set";
 
+        public static final String EDIT_PROFILE = "/edit/profile";
+        public static final String EDIT_PASSWORD = "/edit/password";
+
     }
 
     public  static class PREFERENCES{

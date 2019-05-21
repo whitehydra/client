@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
+    <string name="app_version">версия 1.1 Alpha</string>
 
 
 
@@ -157,8 +158,31 @@
 
 
 
-    <string name="settings_exit_message">Для вступления настроек в силу необходимо перезагрузить приложение</string>
+    <string name="settings_exit_message">Для вступления некоторых настроек в силу необходимо перезагрузить приложение</string>
     <string name="settings_exit_title">Предупреждение</string>
     <string name="settings_exit_ok">ОК</string>
+
+
+
+
+    <!-- Окно редактирования -->
+    <string name="title_activity_edit">Редактирование</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="edit_password">Изменить пароль</string>
+    <string name="edit_about">О программе</string>
+    <string name="edit_apply">Принять</string>
+    <string name="edit_cancel">Отмена</string>
+    <string name="edit_password_old">Старый пароль</string>
+    <string name="edit_password_new">Новый пароль</string>
+    <string name="edit_password_repeat">Повторите пароль</string>
+    <string name="edit_complete_profile">Информация успешно изменена</string>
+    <string name="edit_complete_password">Пароль успешно изменён</string>
+    <string name="edit_error_data">Произошла ошибка (проверьте корректность введённых данных)</string>
+    <string name="edit_error_connection">Ошибка подключения</string>
+    <string name="edit_error_repeat">Пароли не совпадают</string>
+
+    <string name="edit_about_info_author">Автор программы: студент БГТУ Фадеев Д.В.</string>
+    <string name="edit_about_info_additional">Данное приложение является ВКР.</string>
+    <string name="edit_about_info_contact">Связаться с разработчиком: whitehydra@yandex.ru</string>
 
 </resources>

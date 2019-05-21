@@ -17,10 +17,13 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -44,10 +47,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatActivity{
     static String TAG = "Settings activity";
 
-    LinearLayout root;
     private AlertDialog.Builder ad;
     boolean close = false;
 
@@ -56,10 +58,16 @@ public class SettingsActivity extends PreferenceActivity {
         Functions.setLocale(this);
         setTheme(Functions.getSharedTheme(this));
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(Functions.getSharedColor(this)));
+        setSupportActionBar(toolbar);
+
         createDialog();
-        getFragmentManager().beginTransaction().replace(android.R.id.content,
+        getFragmentManager().beginTransaction().replace(R.id.pref_content,
                 new MainSettingsFragment()).commit();
     }
+
 
     public static class MainSettingsFragment extends PreferenceFragment{
         @Override
@@ -76,8 +84,6 @@ public class SettingsActivity extends PreferenceActivity {
             Preference buttonExit = findPreference("key_exit_preference");
             Preference buttonAvatar = findPreference("load_avatar_preference");
 
-
-
             changeLanguage.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -88,6 +94,34 @@ public class SettingsActivity extends PreferenceActivity {
                         }
                     }
                     Functions.setLocale(getActivity());
+                    return true;
+                }
+            });
+
+            buttonEditProfile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    intent.putExtra("fragment","editProfile");
+                    startActivity(intent);
+                    return true;
+                }
+            });
+            buttonEditPassword.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    intent.putExtra("fragment","editPassword");
+                    startActivity(intent);
+                    return true;
+                }
+            });
+            buttonAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    intent.putExtra("fragment","about");
+                    startActivity(intent);
                     return true;
                 }
             });
@@ -115,6 +149,7 @@ public class SettingsActivity extends PreferenceActivity {
                 }
             });
         }
+
     }
 
     public static void openFile(final Context context){
@@ -185,23 +220,25 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState){
         super.onPostCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-           // root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent().getParent();
-        }
-        else {
-            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-        }
-        Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings,root,false);
-        toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setBackgroundColor(getResources().getColor(Functions.getSharedColor(this)));
-        root.addView(toolbar,0);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+//            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
+//           // root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent().getParent();
+//        }
+//        else {
+//            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
+//        }
+//        Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings,root,false);
+//        toolbar.setTitleTextColor(0xFFFFFFFF);
+//        toolbar.setBackgroundColor(getResources().getColor(Functions.getSharedColor(this)));
+//        root.addView(toolbar,0);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+      //  getLayoutInflater().inflate(R.layout.toolbar_settings, (ViewGroup)findViewById(android.R.id.content));
+
     }
 
     public void createDialog(){

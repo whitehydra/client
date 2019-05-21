@@ -86,6 +86,12 @@ public interface JSONPlaceHolderApi {
 
     @POST(Constants.URL.SET_PIN)
     Call<Boolean> setPin(@Body List<Object> list);
+
+    @POST(Constants.URL.EDIT_PROFILE)
+    Call<Boolean> editProfile(@Body List<Object> list);
+
+    @POST(Constants.URL.EDIT_PASSWORD)
+    Call<Boolean> editPassword(@Body List<Object> list);
 }
 
 

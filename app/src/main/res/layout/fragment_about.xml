@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AboutFragment"
+    style="@style/layout.Edit.Background">
+
+    <TextView
+        android:id="@+id/aboutTextName"
+        style="@style/text.About.Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/aboutTextVersion"
+        style="@style/text.About.Version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version" />
+
+    <TextView
+        android:id="@+id/aboutTextInfo"
+        style="@style/text.About"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_about_info_additional" />
+
+    <TextView
+        android:id="@+id/aboutTextAuthor"
+        style="@style/text.About"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_about_info_author" />
+
+    <TextView
+        android:id="@+id/aboutTextContact"
+        style="@style/text.About"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_about_info_contact" />
+</LinearLayout>
