@@ -35,6 +35,7 @@
     <string name="title_profile">Профиль</string>
     <string name="title_portfolio">Портфолио</string>
     <string name="title_upload">Загрузка</string>
+    <string name="title_users">Пользователи</string>
 
 
     <!-- Профиль -->
@@ -66,6 +67,13 @@
     <string name="portfolio_list_search">Поиск по названию:</string>
     <string name="portfolio_list_category">Поиск по категории:</string>
     <string name="portfolio_list_all_categories">Все категории</string>
+
+
+    <!-- Список пользователей -->
+    <string name="users_list_faculty">Поиск по факультету:</string>
+    <string name="users_list_group">Поиск про группе:</string>
+    <string name="users_list_all_faculties">Все факультеты</string>
+    <string name="users_list_all_groups">Все группы</string>
 
 
     <!-- Загрузка портфолио -->
@@ -161,6 +169,7 @@
     <string name="settings_exit_message">Для вступления некоторых настроек в силу необходимо перезагрузить приложение</string>
     <string name="settings_exit_title">Предупреждение</string>
     <string name="settings_exit_ok">ОК</string>
+    <string name="settings_exit_restart">Перезагрузить сейчас</string>
 
 
 

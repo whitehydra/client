@@ -1,7 +1,9 @@
 package com.fadeev.bgtu.client;
 
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
@@ -220,31 +223,13 @@ public class SettingsActivity extends AppCompatActivity{
     @Override
     protected void onPostCreate(Bundle savedInstanceState){
         super.onPostCreate(savedInstanceState);
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-//            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-//           // root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent().getParent();
-//        }
-//        else {
-//            root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-//        }
-//        Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings,root,false);
-//        toolbar.setTitleTextColor(0xFFFFFFFF);
-//        toolbar.setBackgroundColor(getResources().getColor(Functions.getSharedColor(this)));
-//        root.addView(toolbar,0);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-      //  getLayoutInflater().inflate(R.layout.toolbar_settings, (ViewGroup)findViewById(android.R.id.content));
-
     }
 
     public void createDialog(){
         String title = getResources().getString(R.string.settings_exit_title);
         String message = getResources().getString(R.string.settings_exit_message);
         String okText = getResources().getString(R.string.settings_exit_ok);
+        String restartText = getResources().getString(R.string.settings_exit_restart);
 
         ad = new AlertDialog.Builder(this);
         ad.setTitle(title);
@@ -254,6 +239,24 @@ public class SettingsActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 close = true;
                 finish();
+            }
+        });
+        ad.setNegativeButton(restartText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                FragmentManager fm = getSupportFragmentManager();
+                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                    fm.popBackStack();
+                }
+
+                Intent mStartActivity = new Intent(SettingsActivity.this, SplashActivity.class);
+                int mPendingIntentId = 123456;
+                PendingIntent mPendingIntent = PendingIntent.getActivity(SettingsActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager mgr = (AlarmManager)SettingsActivity.this.getSystemService(Context.ALARM_SERVICE);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                System.exit(0);
             }
         });
     }

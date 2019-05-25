@@ -32,7 +32,11 @@ public interface JSONPlaceHolderApi {
     Call<ResponseBody> downloadFileWithUrl(@Url String fileUrl);
 
     @POST(Constants.URL.AUTH)
-    Call<UserDTO> postTokenGetUser(@Body TokenAndNameDTO data);
+    Call<UserDTO> getUser(@Body TokenAndNameDTO data);
+
+
+    @POST(Constants.URL.USERS)
+    Call<List<UserDTO>> getUsersList(@Body List<Object> list);
 
     @POST(Constants.URL.LOGIN)
     Call<String> postAuthorizationGetToken(@Body AuthorizationDTO data);
@@ -55,6 +59,9 @@ public interface JSONPlaceHolderApi {
 
     @POST(Constants.URL.GET_PORTFOLIO)
     Call<List<PortfolioDTO>> getPortfolioList(@Body List<Object> list);
+
+    @POST(Constants.URL.GET_USER_PORTFOLIO)
+    Call<List<PortfolioDTO>> getUserPortfolioList (@Body List<Object> list);
 
     @POST(Constants.URL.UPDATE_PORTFOLIO)
     Call<Integer> updatePortfolio(@Body List<Object> list);

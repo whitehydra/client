@@ -81,27 +81,28 @@ public class ProfileFragment extends Fragment {
 
 
     public void getProfile(){
-        TokenAndNameDTO tokenAndNameDTO = new TokenAndNameDTO();
-        tokenAndNameDTO.setUsername(Functions.getSharedUsername(homeActivity));
-        tokenAndNameDTO.setToken(Functions.getSharedToken(homeActivity));
+        if(!homeActivity.userView){
+            TokenAndNameDTO tokenAndNameDTO = new TokenAndNameDTO();
+            tokenAndNameDTO.setUsername(Functions.getSharedUsername(homeActivity));
+            tokenAndNameDTO.setToken(Functions.getSharedToken(homeActivity));
 
-        Call<UserDTO> call = NetworkService.getInstance().getJSONApi().postTokenGetUser(tokenAndNameDTO);
-        call.enqueue(new Callback<UserDTO>() {
-            @Override
-            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                if(response.body()!=null){
-                    homeActivity.userDTO = response.body();
-                    loadAvatar();
-                    printData();
-                    homeActivity.showLoadProgress(false);
+            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().getUser(tokenAndNameDTO);
+            call.enqueue(new Callback<UserDTO>() {
+                @Override
+                public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                    if(response.body()!=null){
+                        homeActivity.userDTO = response.body();
+                        loadAvatar();
+                        printData();
+                        homeActivity.showLoadProgress(false);
+                    }
+                    else homeActivity.disconnect();
                 }
-                else homeActivity.disconnect();
-            }
-            @Override
-            public void onFailure(Call<UserDTO> call, Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Call<UserDTO> call, Throwable t) {
+                }
+            });
+        }
     }
 
     public void loadData(){
@@ -110,13 +111,19 @@ public class ProfileFragment extends Fragment {
 
     public void printData(){
         Log.d(TAG, "Print data");
-        pfNameValue.setText(homeActivity.userDTO.getName());
-        pfPositionValue.setText(homeActivity.userDTO.getLevel());
-        pfFacultyValue.setText(homeActivity.userDTO.getFaculty());
-        pfGroupValue.setText(homeActivity.userDTO.getStudyGroup());
-        pfNumberValue.setText(homeActivity.userDTO.getPhone());
-        pfMailValue.setText(homeActivity.userDTO.getMail());
-        pfInfoValue.setText(homeActivity.userDTO.getInfo());
+        UserDTO user;
+
+        if(homeActivity.userView)user = homeActivity.viewUserDTO;
+        else user = homeActivity.userDTO;
+
+
+        pfNameValue.setText(user.getName());
+        pfPositionValue.setText(user.getLevel());
+        pfFacultyValue.setText(user.getFaculty());
+        pfGroupValue.setText(user.getStudyGroup());
+        pfNumberValue.setText(user.getPhone());
+        pfMailValue.setText(user.getMail());
+        pfInfoValue.setText(user.getInfo());
         if(Functions.checkAvatar(getContext()))drawAvatar();
 
     }
@@ -173,10 +180,16 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+
+
+
     @Override
     public void onDetach() {
+        if(homeActivity.userView){
+            homeActivity.userView = false;
+        }
         super.onDetach();
-        Log.d(TAG, "Profile detach");
+        Log.d(TAG, "View detach");
     }
 
 }

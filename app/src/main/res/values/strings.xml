@@ -32,6 +32,7 @@
     <string name="title_profile">Profile</string>
     <string name="title_portfolio">Portfolio</string>
     <string name="title_upload">Loading</string>
+    <string name="title_users">Users</string>
 
 
     <!-- Профиль -->
@@ -63,6 +64,14 @@
     <string name="portfolio_list_search">Search by name:</string>
     <string name="portfolio_list_category">Search by category:</string>
     <string name="portfolio_list_all_categories">All categories</string>
+
+
+    <!-- Список пользователей -->
+    <string name="users_list_faculty">Search by faculty:</string>
+    <string name="users_list_group">Search by group:</string>
+    <string name="users_list_all_faculties">All faculties</string>
+    <string name="users_list_all_groups">All groups</string>
+
 
 
     <!-- Загрузка портфолио -->
@@ -153,9 +162,7 @@
     <string name="settings_exit_message">For the settings to take effect, you must restart the application.</string>
     <string name="settings_exit_title">Warring</string>
     <string name="settings_exit_ok">OK</string>
-
-
-
+    <string name="settings_exit_restart">Restart now</string>
 
 
     <!-- Окно редактирования -->
@@ -178,7 +185,8 @@
     <string name="edit_about_info_additional">This application is a Graduation work.</string>
     <string name="edit_about_info_contact">Developer contact: whitehydra@yandex.ru</string>
 
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

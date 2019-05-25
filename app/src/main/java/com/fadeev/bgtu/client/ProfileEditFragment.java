@@ -110,7 +110,7 @@ public class ProfileEditFragment extends Fragment {
             tokenAndNameDTO.setUsername(Functions.getSharedUsername(editActivity));
             tokenAndNameDTO.setToken(Functions.getSharedToken(editActivity));
 
-            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().postTokenGetUser(tokenAndNameDTO);
+            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().getUser(tokenAndNameDTO);
             call.enqueue(new Callback<UserDTO>() {
                 @Override
                 public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {

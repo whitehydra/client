@@ -105,8 +105,13 @@ public class Functions {
     }
 
     public static boolean checkAvatar(Context context){
-        File file = new File(context.getExternalFilesDir(null) + File.separator + Constants.FILES.AVATAR);
-        return file.exists();
+        try {
+            File file = new File(context.getExternalFilesDir(null) + File.separator + Constants.FILES.AVATAR);
+            return file.exists();
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     public static String getFileExtension(File file){

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,13 +32,18 @@ public class HomeActivity extends AppCompatActivity {
     PortfolioListFragment portfolioListFragment;
     PortfolioFragment portfolioFragment;
     UploadFragment uploadFragment;
+    UsersFragment usersFragment;
+    BottomNavigationView navigationView;
 
     Toolbar toolbar;
     UserDTO userDTO;
+    UserDTO viewUserDTO;
     PortfolioDTO portfolioDTO;
+    List<UserDTO> usersList;
     FragmentManager fragmentManager;
 
     Boolean update;
+    Boolean userView = false;
     int fragmentID;
 
     FrameLayout homeFrame;
@@ -46,6 +52,15 @@ public class HomeActivity extends AppCompatActivity {
     List<CategoryDTO> categories;
     List<CriterionDTO> criteria;
     List<TypeDTO> types;
+
+
+    public void setViewUserDTO(UserDTO viewUserDTO) { this.viewUserDTO = viewUserDTO; }
+    public void setUserView(Boolean userView) { this.userView = userView; }
+
+    public ProfileFragment getProfileFragment() { return profileFragment; }
+    public PortfolioListFragment getPortfolioListFragment() { return portfolioListFragment; }
+    public FragmentManager getHomeFragmentManager() { return fragmentManager; }
+
 
     public void disconnect(){
         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
@@ -58,20 +73,38 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
-                    fragmentManager.beginTransaction().replace(R.id.homeFrame, profileFragment).commit();
+                    if(userView){
+                        userView = false;
+                        profileFragment.update();
+                        fragmentManager.beginTransaction().replace(R.id.homeFrame, profileFragment).commit();
+                    }
+                    else fragmentManager.beginTransaction().replace(R.id.homeFrame, profileFragment).commit();
                     return true;
                 case R.id.navigation_portfolio:
+                    if(userView){
+                        userView = false;
+                        portfolioListFragment.getPortfolioList();
+                        fragmentManager.beginTransaction().replace(R.id.homeFrame, portfolioListFragment).commit();
+                    }
+
+
+
                     fragmentManager.beginTransaction().replace(R.id.homeFrame, portfolioListFragment).commit();
                     return true;
                 case R.id.navigation_upload:
                     fragmentManager.beginTransaction().replace(R.id.homeFrame, uploadFragment).commit();
                     return true;
+                case R.id.navigation_users:
+                    fragmentManager.beginTransaction().replace(R.id.homeFrame, usersFragment).commit();
+                    return true;
             }
             return false;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +114,7 @@ public class HomeActivity extends AppCompatActivity {
         portfolioListFragment = new PortfolioListFragment();
         uploadFragment = new UploadFragment();
         portfolioFragment = new PortfolioFragment();
+        usersFragment = new UsersFragment();
         fragmentManager =  getSupportFragmentManager();
         update = false;
 
@@ -97,8 +131,8 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.toolbar_menu);
         toolBarListener();
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
 
@@ -144,6 +178,11 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+
+    private void hideNavigationUsers(){
+        Menu navMenu = navigationView.getMenu();
+        navMenu.findItem(R.id.navigation_users).setVisible(false);
+    }
 
 
     @Override

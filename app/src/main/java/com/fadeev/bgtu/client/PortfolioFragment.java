@@ -84,6 +84,7 @@ public class PortfolioFragment extends Fragment {
         loadFileButton1 = view.findViewById(R.id.pflLoadFileButton1);
         loadFileButton2 = view.findViewById(R.id.pflLoadFileButton2);
         updatePortfolioButton = view.findViewById(R.id.pflUpdatePortfolioButton);
+        if(homeActivity.userView)updatePortfolioButton.setVisibility(View.INVISIBLE);
 
         fileBlock1 = view.findViewById(R.id.pflFileBlock1);
         fileBlock2 = view.findViewById(R.id.pflFileBlock2);

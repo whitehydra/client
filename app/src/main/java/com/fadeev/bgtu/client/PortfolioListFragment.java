@@ -22,6 +22,7 @@ import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -68,30 +69,63 @@ public class PortfolioListFragment extends Fragment {
     }
 
     public void getPortfolioList(){
-        List<Object> postData = new ArrayList<>();
-        TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
-        postData.add(token);
+        if(!homeActivity.userView){
+            List<Object> postData = new ArrayList<>();
+            TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
+            postData.add(token);
 
-        Call<List<PortfolioDTO>> call = NetworkService.getInstance().getJSONApi().getPortfolioList(postData);
-        call.enqueue(new Callback<List<PortfolioDTO>>() {
-            @Override
-            public void onResponse(Call<List<PortfolioDTO>> call, Response<List<PortfolioDTO>> response) {
-                if(response.body()!=null){
-                    Log.d(TAG, "Портфолио получено");
-                    list = response.body();
-                    createAdapter();
-                    createListener();
-                    getCategories(adapter);
+            Call<List<PortfolioDTO>> call = NetworkService.getInstance().getJSONApi().getPortfolioList(postData);
+            call.enqueue(new Callback<List<PortfolioDTO>>() {
+                @Override
+                public void onResponse(Call<List<PortfolioDTO>> call, Response<List<PortfolioDTO>> response) {
+                    if(response.body()!=null){
+                        Log.d(TAG, "Портфолио получено");
+                        list = response.body();
+                        createAdapter();
+                        createListener();
+                        getCategories(adapter);
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) { }
-        });
+                @Override
+                public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) { }
+            });
+        }
+        else {
+            List<Object> postData = new ArrayList<>();
+            TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
+
+            HashMap<String, String> userInfo = new HashMap<>();
+            userInfo.put("name",homeActivity.viewUserDTO.getName());
+            userInfo.put("faculty",homeActivity.viewUserDTO.getFaculty());
+            userInfo.put("group",homeActivity.viewUserDTO.getStudyGroup());
+
+            postData.add(token);
+            postData.add(userInfo);
+
+
+            postData.add(token);
+
+            Call<List<PortfolioDTO>> call = NetworkService.getInstance().getJSONApi().getUserPortfolioList(postData);
+            call.enqueue(new Callback<List<PortfolioDTO>>() {
+                @Override
+                public void onResponse(Call<List<PortfolioDTO>> call, Response<List<PortfolioDTO>> response) {
+                    if(response.body()!=null){
+                        Log.d(TAG, "Портфолио получено");
+                        list = response.body();
+                        createAdapter();
+                        createListener();
+                        getCategories(adapter);
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) { }
+            });
+        }
     }
 
 
     public void createAdapter(){
-        adapter = new PortfolioAdapter(homeActivity,R.layout.portfolio_list_layout,list);
+        adapter = new PortfolioAdapter(homeActivity,R.layout.portfolio_list_item,list);
         portfolioList.setAdapter(adapter);
 
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -113,7 +147,7 @@ public class PortfolioListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 homeActivity.portfolioDTO = (PortfolioDTO)portfolioList.getItemAtPosition(position);
-                homeActivity.fragmentManager.beginTransaction().replace(R.id.homeFrame, homeActivity.portfolioFragment).commit();
+                homeActivity.fragmentManager.beginTransaction().replace(R.id.homeFrame, homeActivity.portfolioFragment).addToBackStack(null).commit();
             }
         });
 
@@ -156,5 +190,13 @@ public class PortfolioListFragment extends Fragment {
                 Log.d(TAG, "Ошибка получения категорий");
             }
         });
+    }
+
+    @Override
+    public void onDetach() {
+        if(homeActivity.userView){
+            homeActivity.userView = false;
+        }
+        super.onDetach();
     }
 }

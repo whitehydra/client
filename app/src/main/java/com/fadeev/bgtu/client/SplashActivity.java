@@ -1,7 +1,6 @@
 package com.fadeev.bgtu.client;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
             tokenAndNameDTO.setUsername(mUsername);
             tokenAndNameDTO.setToken(mToken);
 
-            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().postTokenGetUser(tokenAndNameDTO);
+            Call<UserDTO> call = NetworkService.getInstance().getJSONApi().getUser(tokenAndNameDTO);
             try { return call.execute().body(); } catch (Exception e) { return null; }
         }
 

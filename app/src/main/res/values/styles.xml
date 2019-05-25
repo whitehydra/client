@@ -218,6 +218,10 @@
 
     <style name="text.PortfolioListItem.DateType"></style>
 
+    <style name="text.UsersListItem">
+
+    </style>
+
     <style name="text.PortfolioListItem.Name">
         <item name="android:gravity">center</item>
     </style>
@@ -269,6 +273,13 @@
 
 
     <style name="button.PortfolioListItem">
+        <item name="android:layout_weight">0</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+
+
+    <style name="button.UsersListItem">
         <item name="android:layout_weight">0</item>
         <item name="android:focusable">false</item>
     </style>
@@ -369,7 +380,9 @@
     </style>
 
 
-    <style name="layout.PortfolioListItem"></style>
+    <style name="layout.PortfolioListItem">
+
+    </style>
 
     <style name="layout.PortfolioListItem.Background">
         <item name="android:layout_margin">10dp</item>
@@ -380,6 +393,19 @@
     <style name="layout.PortfolioListItem.Body">
         <item name="android:layout_weight">1</item>
     </style>
+
+    <style name="layout.UsersListItem">
+
+    </style>
+    <style name="layout.UsersListItem.Background">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="layout.UsersListItem.Body">
+        <item name="android:layout_weight">1</item>
+    </style>
+
 
 
     <style name="layout.Edit"></style>

@@ -15,5 +15,10 @@
         android:id="@+id/navigation_upload"
         android:icon="@drawable/ic_cloud_upload_black_24dp"
         android:title="@string/title_upload" />
+    <item
+        android:id="@+id/navigation_users"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:title="@string/title_users"
+        />
 
 </menu>

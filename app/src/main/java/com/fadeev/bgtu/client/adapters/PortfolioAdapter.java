@@ -4,12 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import com.fadeev.bgtu.client.Functions;
 import com.fadeev.bgtu.client.R;
-import com.fadeev.bgtu.client.dto.FileDTO;
 import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
@@ -65,7 +62,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         String type = currentItem.getType().getName_type();
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View rowView = inflater.inflate(R.layout.portfolio_list_layout, parent, false);
+        View rowView = inflater.inflate(R.layout.portfolio_list_item, parent, false);
 
         TextView tvName = rowView.findViewById(R.id.ltName);
         TextView tvDate = rowView.findViewById(R.id.ltDate);

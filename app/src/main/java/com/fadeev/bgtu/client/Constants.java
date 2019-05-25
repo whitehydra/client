@@ -2,18 +2,20 @@ package com.fadeev.bgtu.client;
 
 public class Constants {
     public static class URL{
-        public static final String HOST = "http://192.168.1.4:8080/";
+        public static final String HOST = "http://192.168.1.3:8080/";
         public static final String AVATARS = HOST + "avatars/";
         public static final String FILES = HOST + "portfolio/files/load?";
 
         public static final String AUTH = "/authentication";
         public static final String LOGIN = "/login";
+        public static final String USERS = "/users/get";
 
         public static final String UPLOAD_AVATAR = "/file";
         public static final String UPLOAD_FILE = "/portfolio/upload";
 
         public static final String ADD_PORTFOLIO = "/portfolio/add";
         public static final String GET_PORTFOLIO = "/portfolio/list";
+        public static final String GET_USER_PORTFOLIO = "/users/portfolio/list";
         public static final String UPDATE_PORTFOLIO = "/portfolio/update";
         public static final String DELETE_PORTFOLIO = "/portfolio/delete";
         public static final String ADD_FILE_INFO = "/portfolio/files/post";
