@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fadeev.bgtu.client.Functions;
+import com.fadeev.bgtu.client.HomeActivity;
 import com.fadeev.bgtu.client.R;
 import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filterable {
     private String TAG = "Portfolio adapter";
 
-    private Context context;
+    private HomeActivity homeActivity;
 
     private List<PortfolioDTO> originalData;
     private List<PortfolioDTO> filteredData;
@@ -44,9 +45,9 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         return filteredData.get(position);
     }
 
-    public PortfolioAdapter(Context context, int resource, List<PortfolioDTO> portfolio) {
-        super(context, resource, portfolio);
-        this.context = context;
+    public PortfolioAdapter(HomeActivity homeActivity, int resource, List<PortfolioDTO> portfolio) {
+        super(homeActivity, resource, portfolio);
+        this.homeActivity = homeActivity;
         originalData = portfolio;
         filteredData = portfolio;
     }
@@ -61,7 +62,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         String category = currentItem.getCategory().getName_category();
         String type = currentItem.getType().getName_type();
 
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(homeActivity);
         View rowView = inflater.inflate(R.layout.portfolio_list_item, parent, false);
 
         TextView tvName = rowView.findViewById(R.id.ltName);
@@ -69,6 +70,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         TextView tvCategory = rowView.findViewById(R.id.ltCategory);
         TextView tvType = rowView.findViewById(R.id.ltType);
         ImageButton tvClose = rowView.findViewById(R.id.ltClose);
+        if(homeActivity.getUserView())tvClose.setVisibility(View.INVISIBLE);
 
         tvName.setText(name);
         tvDate.setText(date);
@@ -87,19 +89,19 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
     }
 
     public void createDialog(final PortfolioDTO currentItem, final int position){
-        String title = context.getResources().getString(R.string.list_element_title);
-        String message = context.getResources().getString(R.string.list_element_message);
-        String okText = context.getResources().getString(R.string.list_element_ok);
-        String cancelText = context.getResources().getString(R.string.list_element_cancel);
+        String title = homeActivity.getResources().getString(R.string.list_element_title);
+        String message = homeActivity.getResources().getString(R.string.list_element_message);
+        String okText = homeActivity.getResources().getString(R.string.list_element_ok);
+        String cancelText = homeActivity.getResources().getString(R.string.list_element_cancel);
 
-        ad = new AlertDialog.Builder(context);
+        ad = new AlertDialog.Builder(homeActivity);
         ad.setTitle(title);
         ad.setMessage(message);
         ad.setPositiveButton(okText, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 List<Object> postData = new ArrayList<>();
-                TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(context),Functions.getSharedToken(context));
+                TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
                 HashMap<String, Integer> portfolioID = new HashMap<>();
                 portfolioID.put("id_portfolio",currentItem.getId_portfolio());
                 postData.add(token);
@@ -110,11 +112,11 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         if(response.body()!=null){
-                            Toast.makeText(getContext().getApplicationContext(), context.getResources().getString(R.string.portfolio_note) + " " +
-                                    currentItem.getName() + " " + context.getResources().getString(R.string.portfolio_deleted), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext().getApplicationContext(), homeActivity.getResources().getString(R.string.portfolio_note) + " " +
+                                    currentItem.getName() + " " + homeActivity.getResources().getString(R.string.portfolio_deleted), Toast.LENGTH_LONG).show();
                             filteredData.remove(position);
                             notifyDataSetChanged();
-                        } else Toast.makeText(getContext().getApplicationContext(), context.getResources().getString(R.string.portfolio_delete_error), Toast.LENGTH_LONG).show();
+                        } else Toast.makeText(getContext().getApplicationContext(), homeActivity.getResources().getString(R.string.portfolio_delete_error), Toast.LENGTH_LONG).show();
                     }
                     @Override
                     public void onFailure(Call<Integer> call, Throwable t) {
@@ -178,7 +180,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
 
                     for(PortfolioDTO data : filteredData){
                         if(data.getCategory().getName_category().equals(constraint.toString()) ||
-                        constraint.toString().equals(context.getResources().getString(R.string.portfolio_list_all_categories))){
+                        constraint.toString().equals(homeActivity.getResources().getString(R.string.portfolio_list_all_categories))){
                             filterResultsData.add(data);
                         }
                     }

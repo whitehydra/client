@@ -90,7 +90,7 @@
     <string name="upload_upload">Upload</string>
     <string name="upload_empty_criterion">No receive criterion selected</string>
     <string name="upload_short_name">Description too short</string>
-    <string name="upload_done">Портфолио загружено</string>
+    <string name="upload_done">Portfolio uploaded</string>
 
     <string-array name="months">
         <item>Jan</item>

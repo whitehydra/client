@@ -119,8 +119,8 @@ public class ProfileFragment extends Fragment {
 
         pfNameValue.setText(user.getName());
         pfPositionValue.setText(user.getLevel());
-        pfFacultyValue.setText(user.getFaculty());
-        pfGroupValue.setText(user.getStudyGroup());
+        pfFacultyValue.setText(user.getFaculty().getShortName());
+        pfGroupValue.setText(user.getGroup().getShortName());
         pfNumberValue.setText(user.getPhone());
         pfMailValue.setText(user.getMail());
         pfInfoValue.setText(user.getInfo());

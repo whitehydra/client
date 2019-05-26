@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     public ProfileFragment getProfileFragment() { return profileFragment; }
     public PortfolioListFragment getPortfolioListFragment() { return portfolioListFragment; }
     public FragmentManager getHomeFragmentManager() { return fragmentManager; }
-
+    public Boolean getUserView() { return userView; }
 
     public void disconnect(){
         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);

@@ -2,7 +2,7 @@ package com.fadeev.bgtu.client;
 
 public class Constants {
     public static class URL{
-        public static final String HOST = "http://192.168.1.3:8080/";
+        public static final String HOST = "http://192.168.1.5:8080/";
         public static final String AVATARS = HOST + "avatars/";
         public static final String FILES = HOST + "portfolio/files/load?";
 
@@ -24,6 +24,9 @@ public class Constants {
         public static final String GET_CATEGORIES = "/categories";
         public static final String GET_CRITERIA = "/criteria/{id}";
         public static final String GET_TYPE = "/types/{id}";
+
+        public static final String GET_FACULTIES = "/faculties";
+        public static final String GET_GROUPS = "/groups/{id}";
 
         public static final String GET_PIN_STATUS = "/pin/{username}";
         public static final String CHECK_PIN = "/pin/check";

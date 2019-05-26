@@ -96,8 +96,8 @@ public class PortfolioListFragment extends Fragment {
 
             HashMap<String, String> userInfo = new HashMap<>();
             userInfo.put("name",homeActivity.viewUserDTO.getName());
-            userInfo.put("faculty",homeActivity.viewUserDTO.getFaculty());
-            userInfo.put("group",homeActivity.viewUserDTO.getStudyGroup());
+            userInfo.put("faculty",homeActivity.viewUserDTO.getFaculty().getShortName());
+            userInfo.put("group",homeActivity.viewUserDTO.getGroup().getShortName());
 
             postData.add(token);
             postData.add(userInfo);
@@ -154,7 +154,7 @@ public class PortfolioListFragment extends Fragment {
     }
 
     public void printCategories(final PortfolioAdapter portfolioAdapter){
-        categories.add(0,new CategoryDTO(-1,getResources().getString(R.string.portfolio_list_all_categories),"0"));
+        categories.add(0,new CategoryDTO(-1,getResources().getString(R.string.portfolio_list_all_categories)));
         Log.d(TAG, "Категорий получено: " + categories.size());
 
         ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(

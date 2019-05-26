@@ -4,7 +4,9 @@ import com.fadeev.bgtu.client.Constants;
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
 import com.fadeev.bgtu.client.dto.CategoryDTO;
 import com.fadeev.bgtu.client.dto.CriterionDTO;
+import com.fadeev.bgtu.client.dto.FacultyDTO;
 import com.fadeev.bgtu.client.dto.FileDTO;
+import com.fadeev.bgtu.client.dto.GroupDTO;
 import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.TypeDTO;
@@ -84,6 +86,11 @@ public interface JSONPlaceHolderApi {
     @GET(Constants.URL.GET_TYPE)
     Call<List<TypeDTO>> getTypes(@Path("id") int id);
 
+    @GET(Constants.URL.GET_FACULTIES)
+    Call<List<FacultyDTO>> getFaculties();
+
+    @GET(Constants.URL.GET_GROUPS)
+    Call<List<GroupDTO>> getGroups(@Path("id") int id);
 
     @GET(Constants.URL.GET_PIN_STATUS)
     Call<Boolean> getPinStatus(@Path("username") String username);

@@ -92,7 +92,7 @@
     <string name="upload_upload">Загрузка</string>
     <string name="upload_empty_criterion">Не выбран критерий получения</string>
     <string name="upload_short_name">Описание слишком короткое</string>
-    <string name="upload_done">Portfolio uploaded</string>
+    <string name="upload_done">Портфолио загружено</string>
 
 
     <string-array name="months">
