@@ -63,6 +63,7 @@ public class UsersFragment extends Fragment {
         usersList = view.findViewById(R.id.usUsersList);
         facultySpinner = view.findViewById(R.id.usFacultySpinner);
         groupSpinner = view.findViewById(R.id.usGroupSpinner);
+        homeActivity.showLoadProgress(true);
         usersList.setNestedScrollingEnabled(true);
         getUsersList();
     }
@@ -131,7 +132,7 @@ public class UsersFragment extends Fragment {
                 if(response.body()!=null){
                     faculties = response.body();
                     drawFaculties(usersAdapter);
-             //       homeActivity.showLoadProgress(false);
+                    homeActivity.showLoadProgress(false);
                 }
             }
             @Override
@@ -152,6 +153,7 @@ public class UsersFragment extends Fragment {
                     groups = response.body();
                     Log.d(TAG, "Групп получено: " + groups.size());
                     drawGroups(usersAdapter);
+                   // homeActivity.showLoadProgress(false);
                 }
             }
             @Override

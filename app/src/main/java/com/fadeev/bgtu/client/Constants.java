@@ -50,5 +50,6 @@ public class Constants {
 
     public static class FILES{
         public static final String AVATAR = "avatar.jpg";
+        public static final String IMG_TEMP = "temp.jpg";
     }
 }

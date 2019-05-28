@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
                 public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                     if(response.body()!=null){
                         homeActivity.userDTO = response.body();
-                        loadAvatar();
+                        loadAvatar(homeActivity.userDTO);
                         printData();
                         homeActivity.showLoadProgress(false);
                     }
@@ -113,7 +113,10 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "Print data");
         UserDTO user;
 
-        if(homeActivity.userView)user = homeActivity.viewUserDTO;
+        if(homeActivity.userView){
+            user = homeActivity.viewUserDTO;
+            loadAvatar(homeActivity.viewUserDTO);
+        }
         else user = homeActivity.userDTO;
 
 
@@ -128,16 +131,19 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    public void loadAvatar(){
+    public void loadAvatar(UserDTO userDTO){
         Log.d(TAG,"Load avatar");
-        final String url = Constants.URL.AVATARS + Functions.getSharedUsername(homeActivity);
+        final String url = Constants.URL.AVATARS + userDTO.getAvatar();
         Call<ResponseBody> call = NetworkService.getInstance().getJSONApi().downloadFileWithUrl(url);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    LoadAvatarTask loadAvatarTask = new LoadAvatarTask(
-                            getContext(), response.body(),Constants.FILES.AVATAR);
+                    LoadAvatarTask loadAvatarTask;
+                    if(homeActivity.userView){
+                        loadAvatarTask = new LoadAvatarTask(getContext(), response.body(),Constants.FILES.IMG_TEMP);
+                    }else loadAvatarTask = new LoadAvatarTask(getContext(), response.body(),Constants.FILES.AVATAR);
+
                     loadAvatarTask.execute();
                     Log.d(TAG, "Загрузка файла...");
                 }
@@ -151,11 +157,16 @@ public class ProfileFragment extends Fragment {
     }
 
     public void drawAvatar(){
+        String fileName;
+        if(homeActivity.userView)fileName = Constants.FILES.IMG_TEMP;
+        else
+            fileName = Constants.FILES.AVATAR;
         Drawable image = Drawable.createFromPath(getContext().getExternalFilesDir(null) +
-                File.separator + Constants.FILES.AVATAR);
+                File.separator + fileName);
 
         pfAvatar.setImageDrawable(Functions.resize(getContext(),image,500));
     }
+
 
 
     public class LoadAvatarTask extends AsyncTask<Void, Void, Boolean> {

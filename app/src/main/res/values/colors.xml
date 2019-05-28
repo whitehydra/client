@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <!-- Стили -->
-
 
     <!-- Стандартный -->
 
@@ -11,22 +8,17 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#303F9F</color>
 
-
     <color name="background_default">#ffffff</color>
     <color name="toolbar_default">#4479D4</color>
 
     <!-- Ночной -->
 
-
     <color name="colorPrimary_night">#7DF9FF</color>
     <color name="colorPrimaryDark_night">#353535</color>
     <color name="colorAccent_night">#E6E6E6</color>
 
-
-
     <color name="background_night">#666666</color>
     <color name="toolbar_night">#454545</color>
-
 
 
     <!-- Кнопки -->
@@ -35,9 +27,6 @@
     <color name="button_pin_corner">#4479D4</color>
     <color name="button_background">#ffffff</color>
     <color name="button_pin_background">#9AB9EA</color>
-
-
-
 
 
 

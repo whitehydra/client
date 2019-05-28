@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">version 1.1 Alpha</string>
+    <string name="app_version">version 1.4 Alpha</string>
 
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
@@ -184,9 +184,5 @@
     <string name="edit_about_info_author">Program author: BSTU student D. Fadeev.</string>
     <string name="edit_about_info_additional">This application is a Graduation work.</string>
     <string name="edit_about_info_contact">Developer contact: whitehydra@yandex.ru</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>

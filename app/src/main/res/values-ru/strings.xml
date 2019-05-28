@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">версия 1.1 Alpha</string>
-
-
-
+    <string name="app_version">версия 1.4 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
-
 
     <!-- Загрузочный экран -->
     <string name="splash_load">Загрузка</string>
@@ -115,7 +111,7 @@
 
     <!-- Элементы списка -->
     <string name="list_element_close">X</string>
-    <string name="list_element_title">Удаление элемента</string>
+    <string name="list_element_title">Удаление достижения</string>
     <string name="list_element_message">Удалить информацию о данном учебном достижении?</string>
     <string name="list_element_ok">Удалить</string>
     <string name="list_element_cancel">Отмена</string>
