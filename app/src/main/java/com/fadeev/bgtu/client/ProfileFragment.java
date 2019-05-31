@@ -70,12 +70,22 @@ public class ProfileFragment extends Fragment {
     }
 
     public void update(){
-        if(homeActivity.userDTO!=null){
-            printData();
+        if(!homeActivity.userView){
+            if(homeActivity.userDTO!=null){
+                printData();
+            }
+            else {
+                homeActivity.showLoadProgress(true);
+                getProfile();
+            }
         }
         else {
-            homeActivity.showLoadProgress(true);
-            getProfile();
+            if (homeActivity.viewUserDTO != null) {
+                printData();
+            } else {
+                homeActivity.showLoadProgress(true);
+                getProfile();
+            }
         }
     }
 
@@ -127,7 +137,7 @@ public class ProfileFragment extends Fragment {
         pfNumberValue.setText(user.getPhone());
         pfMailValue.setText(user.getMail());
         pfInfoValue.setText(user.getInfo());
-        if(Functions.checkAvatar(getContext()))drawAvatar();
+        if(!homeActivity.userView && Functions.checkAvatar(getContext()))drawAvatar();
 
     }
 
@@ -158,7 +168,8 @@ public class ProfileFragment extends Fragment {
 
     public void drawAvatar(){
         String fileName;
-        if(homeActivity.userView)fileName = Constants.FILES.IMG_TEMP;
+        if(homeActivity.userView)
+            fileName = Constants.FILES.IMG_TEMP;
         else
             fileName = Constants.FILES.AVATAR;
         Drawable image = Drawable.createFromPath(getContext().getExternalFilesDir(null) +

@@ -144,6 +144,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,6 +174,14 @@
                 android:layout_height="match_parent"
                 android:text="@string/upload_file_search" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/upMaxFileSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text.Upload.Tag"
+            android:text="@string/upload_max_file_size" />
+
 
         <LinearLayout
             android:id="@+id/upFileLoadBlock2"

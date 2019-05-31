@@ -2,9 +2,21 @@ package com.fadeev.bgtu.client;
 
 public class Constants {
     public static class URL{
-        public static final String HOST = "http://192.168.1.5:8080/";
-        public static final String AVATARS = HOST + "avatars/";
-        public static final String FILES = HOST + "portfolio/files/load?";
+        public static final String DEPLOY_VERSION =  "com.denis.test.server-1.0-SNAPSHOT";
+
+
+        public static final String AMAZON_HOST = "http://35.157.234.188:8080/";
+        public static final String LOCAL_HOST = "http://192.168.1.5:8080/";
+
+
+
+        public static final String HOST = "http://35.157.234.188:8080/";
+        public static final String VERSION = DEPLOY_VERSION;
+
+
+
+        public static final String AVATARS = HOST + VERSION +  "/avatars/";
+        public static final String FILES = HOST + VERSION +  "/portfolio/files/load?";
 
         public static final String AUTH = "/authentication";
         public static final String LOGIN = "/login";

@@ -24,6 +24,8 @@ import com.fadeev.bgtu.client.retrofit.NetworkService;
 
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     String TAG = "Login activity";
@@ -86,8 +88,10 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            userLoginTask = new UserLoginTask(username, password,this);
-            userLoginTask.execute((Void) null);
+            loginTask(username,password);
+
+          //  userLoginTask = new UserLoginTask(username, password,this);
+          //  userLoginTask.execute((Void) null);
         }
     }
 
@@ -116,6 +120,49 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void loginTask(final String mUsername, final String mPassword){
+        AuthorizationDTO authorizationDTO = new AuthorizationDTO();
+        authorizationDTO.setUsername(mUsername);
+        try {
+            authorizationDTO.setPassword(Functions.generateHash(mPassword));
+        } catch (Exception e) { e.printStackTrace(); }
+
+        Call<String> call = NetworkService.getInstance().getJSONApi().postAuthorizationGetToken(authorizationDTO);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                showProgress(false);
+                String token = response.body();
+                if(token!=null){
+                    if (!token.equals("")) {
+                        token = token.replace("\"","");
+                        SharedPreferences sPref = getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
+                        SharedPreferences.Editor ed = sPref.edit();
+                        ed.putString(Constants.PREFERENCES.USERNAME,mUsername);
+                        ed.putString(Constants.PREFERENCES.TOKEN,token);
+                        ed.commit();
+
+                        Intent intent = new Intent(LoginActivity.this, PINActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        password.setError(getString(R.string.error_incorrect_connection));
+                        password.requestFocus();
+                    }
+                } else {
+                    password.setError(getString(R.string.error_incorrect_connection));
+                    password.requestFocus();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                showProgress(false);
+                password.setError(getString(R.string.error_incorrect_connection));
+                password.requestFocus();
+            }
+        });
+    }
 
 
 
@@ -138,7 +185,10 @@ public class LoginActivity extends AppCompatActivity {
             } catch (Exception e) { e.printStackTrace(); }
 
             Call<String> call = NetworkService.getInstance().getJSONApi().postAuthorizationGetToken(authorizationDTO);
-            try { return call.execute().body(); } catch (Exception e) { return ""; }
+            try {
+                return call.execute().body(); }
+            catch (Exception e)
+            { return ""; }
         }
         @Override
         protected  void onPreExecute(){
@@ -146,20 +196,25 @@ public class LoginActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String token) {
-            token = token.replace("\"","");
             userLoginTask = null;
             showProgress(false);
 
-            if (!token.equals("")) {
-                SharedPreferences sPref = mContext.getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
-                SharedPreferences.Editor ed = sPref.edit();
-                ed.putString(Constants.PREFERENCES.USERNAME,mUsername);
-                ed.putString(Constants.PREFERENCES.TOKEN,token);
-                ed.commit();
+            if(token!=null){
+                if (!token.equals("")) {
+                    token = token.replace("\"","");
+                    SharedPreferences sPref = mContext.getSharedPreferences(Constants.PREFERENCES.MAIN,MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sPref.edit();
+                    ed.putString(Constants.PREFERENCES.USERNAME,mUsername);
+                    ed.putString(Constants.PREFERENCES.TOKEN,token);
+                    ed.commit();
 
-                Intent intent = new Intent(LoginActivity.this, PINActivity.class);
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(LoginActivity.this, PINActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    password.setError(getString(R.string.error_incorrect_connection));
+                    password.requestFocus();
+                }
             } else {
                 password.setError(getString(R.string.error_incorrect_connection));
                 password.requestFocus();

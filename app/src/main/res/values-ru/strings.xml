@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">версия 1.4 Alpha</string>
+    <string name="app_version">версия 1.5 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
@@ -89,6 +89,7 @@
     <string name="upload_empty_criterion">Не выбран критерий получения</string>
     <string name="upload_short_name">Описание слишком короткое</string>
     <string name="upload_done">Портфолио загружено</string>
+    <string name="upload_max_file_size">Максимальный размер файла: 10 МБ</string>
 
 
     <string-array name="months">

@@ -37,6 +37,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
     private List<PortfolioDTO> originalData;
     private List<PortfolioDTO> filteredData;
     private AlertDialog.Builder ad;
+    private PortfolioDTO portfolio;
 
     public int getCount(){
         return filteredData.size();
@@ -50,6 +51,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         this.homeActivity = homeActivity;
         originalData = portfolio;
         filteredData = portfolio;
+        createDialog();
     }
 
     @NonNull
@@ -77,23 +79,25 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
         tvCategory.setText(category);
         tvType.setText(type);
 
-        createDialog(currentItem,position);
+    //    createDialog();
 
         tvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                portfolio = currentItem;
                 ad.show();
             }
         });
         return rowView;
     }
 
-    public void createDialog(final PortfolioDTO currentItem, final int position){
+    public void createDialog(){
         String title = homeActivity.getResources().getString(R.string.list_element_title);
         String message = homeActivity.getResources().getString(R.string.list_element_message);
         String okText = homeActivity.getResources().getString(R.string.list_element_ok);
         String cancelText = homeActivity.getResources().getString(R.string.list_element_cancel);
 
+      //  final PortfolioDTO currentItem = portfolio;
         ad = new AlertDialog.Builder(homeActivity);
         ad.setTitle(title);
         ad.setMessage(message);
@@ -103,6 +107,8 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                 List<Object> postData = new ArrayList<>();
                 TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
                 HashMap<String, Integer> portfolioID = new HashMap<>();
+
+                final PortfolioDTO currentItem = portfolio;
                 portfolioID.put("id_portfolio",currentItem.getId_portfolio());
                 postData.add(token);
                 postData.add(portfolioID);
@@ -114,7 +120,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioDTO> implements Filt
                         if(response.body()!=null){
                             Toast.makeText(getContext().getApplicationContext(), homeActivity.getResources().getString(R.string.portfolio_note) + " " +
                                     currentItem.getName() + " " + homeActivity.getResources().getString(R.string.portfolio_deleted), Toast.LENGTH_LONG).show();
-                            filteredData.remove(position);
+                            filteredData.remove(currentItem);
                             notifyDataSetChanged();
                         } else Toast.makeText(getContext().getApplicationContext(), homeActivity.getResources().getString(R.string.portfolio_delete_error), Toast.LENGTH_LONG).show();
                     }
