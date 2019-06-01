@@ -241,24 +241,24 @@ public class SettingsActivity extends AppCompatActivity{
                 finish();
             }
         });
-        ad.setNegativeButton(restartText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-
-                FragmentManager fm = getSupportFragmentManager();
-                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-                    fm.popBackStack();
-                }
-
-                Intent mStartActivity = new Intent(SettingsActivity.this, SplashActivity.class);
-                int mPendingIntentId = 123456;
-                PendingIntent mPendingIntent = PendingIntent.getActivity(SettingsActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager mgr = (AlarmManager)SettingsActivity.this.getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                System.exit(0);
-            }
-        });
+//        ad.setNegativeButton(restartText, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//
+//                FragmentManager fm = getSupportFragmentManager();
+//                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+//                    fm.popBackStack();
+//                }
+//
+//                Intent mStartActivity = new Intent(SettingsActivity.this, PINActivity.class);
+//                int mPendingIntentId = 123456;
+//                PendingIntent mPendingIntent = PendingIntent.getActivity(SettingsActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+//                AlarmManager mgr = (AlarmManager)SettingsActivity.this.getSystemService(Context.ALARM_SERVICE);
+//                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+//                System.exit(0);
+//            }
+//        });
     }
 
 

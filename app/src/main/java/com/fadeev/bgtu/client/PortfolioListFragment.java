@@ -83,6 +83,7 @@ public class PortfolioListFragment extends Fragment {
                         list = response.body();
                         createAdapter();
                         createListener();
+              //          homeActivity.showLoadProgress(false);
                         getCategories(adapter);
                     }
                 }
@@ -154,7 +155,6 @@ public class PortfolioListFragment extends Fragment {
     }
 
     public void printCategories(final PortfolioAdapter portfolioAdapter){
-        categories.add(0,new CategoryDTO(-1,getResources().getString(R.string.portfolio_list_all_categories)));
         Log.d(TAG, "Категорий получено: " + categories.size());
 
         ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
@@ -181,6 +181,7 @@ public class PortfolioListFragment extends Fragment {
             public void onResponse(Call<List<CategoryDTO>> call, Response<List<CategoryDTO>> response) {
                 if(response.body()!=null){
                     categories = response.body();
+                    categories.add(0,new CategoryDTO(-1,homeActivity.getResources().getString(R.string.portfolio_list_all_categories)));
                     printCategories(portfolioAdapter);
                     homeActivity.showLoadProgress(false);
                 }

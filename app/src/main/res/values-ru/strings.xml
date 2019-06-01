@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">версия 1.5 Alpha</string>
+    <string name="app_version">версия 1.6 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
@@ -90,6 +90,9 @@
     <string name="upload_short_name">Описание слишком короткое</string>
     <string name="upload_done">Портфолио загружено</string>
     <string name="upload_max_file_size">Максимальный размер файла: 10 МБ</string>
+    <string name="upload_file_failed">Ошибка загрузки!</string>
+    <string name="upload_file_complete">Загрузка завершена</string>
+    <string name="upload_file_process">Загрузка...</string>
 
 
     <string-array name="months">

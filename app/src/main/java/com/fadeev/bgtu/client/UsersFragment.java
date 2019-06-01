@@ -91,8 +91,8 @@ public class UsersFragment extends Fragment {
 
 
     public void drawFaculties(final UsersAdapter usersAdapter){
-        faculties.add(0,new FacultyDTO(-1,getResources().getString(R.string.users_list_all_faculties),
-                getResources().getString(R.string.users_list_all_faculties)));
+        faculties.add(0,new FacultyDTO(-1,homeActivity.getResources().getString(R.string.users_list_all_faculties),
+                homeActivity.getResources().getString(R.string.users_list_all_faculties)));
         Log.d(TAG, "Факультетов получено: " + faculties.size());
 
         ArrayAdapter<FacultyDTO> adapter = new ArrayAdapter<FacultyDTO>(
@@ -103,8 +103,8 @@ public class UsersFragment extends Fragment {
 
 
     public void drawGroups(final UsersAdapter usersAdapter){
-        groups.add(0,new GroupDTO(-1,getResources().getString(R.string.users_list_all_groups),
-                getResources().getString(R.string.users_list_all_groups)));
+        groups.add(0,new GroupDTO(-1,homeActivity.getResources().getString(R.string.users_list_all_groups),
+                homeActivity.getResources().getString(R.string.users_list_all_groups)));
         ArrayAdapter<GroupDTO> adapter = new ArrayAdapter<GroupDTO>(
                 homeActivity,android.R.layout.simple_spinner_item, groups);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

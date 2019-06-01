@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -31,6 +32,7 @@ import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.dto.TypeDTO;
 import com.fadeev.bgtu.client.file.OpenFileDialog;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
+import com.fadeev.bgtu.client.retrofit.ProgressRequestBody;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,14 +41,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UploadFragment extends Fragment {
+public class UploadFragment extends Fragment implements ProgressRequestBody.UploadCallbacks{
     String TAG = "Upload fragment";
 
     HomeActivity homeActivity;
@@ -70,9 +71,14 @@ public class UploadFragment extends Fragment {
     EditText fileLoadPole1;
     EditText fileLoadPole2;
     EditText nameText;
+    TextView uploadProgressText1;
+    TextView uploadProgressText2;
 
     Calendar selectedTimeEvent = Calendar.getInstance();
     Calendar selectedTimePublication = Calendar.getInstance();
+
+    ProgressBar uploadProgress1;
+    ProgressBar uploadProgress2;
 
     List<String> selectedFiles = new ArrayList<>();
     @SuppressLint("SimpleDateFormat") final SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
@@ -82,6 +88,10 @@ public class UploadFragment extends Fragment {
     int id_category;
     int id_criterion = -1;
     int id_type;
+
+    int file_num;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,6 +128,16 @@ public class UploadFragment extends Fragment {
         nameText = view.findViewById(R.id.upNameText);
 
         radioButtons = view.findViewById(R.id.upRadioButtons);
+
+        uploadProgress1 = view.findViewById(R.id.upFileUploadProgress1);
+        uploadProgress2 = view.findViewById(R.id.upFileUploadProgress2);
+        uploadProgressText1 = view.findViewById(R.id.upFileUploadProgressText1);
+        uploadProgressText2 = view.findViewById(R.id.upFileUploadProgressText2);
+
+        uploadProgress1.setVisibility(View.INVISIBLE);
+        uploadProgress2.setVisibility(View.INVISIBLE);
+        uploadProgressText1.setVisibility(View.INVISIBLE);
+        uploadProgressText2.setVisibility(View.INVISIBLE);
 
         homeActivity.fragmentID = 3;
         monthName = homeActivity.getResources().getStringArray(R.array.months);
@@ -274,17 +294,31 @@ public class UploadFragment extends Fragment {
                 .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
                     @Override
                     public void OnSelectedFile(final String fileName) {
+                        int index = -1;
                         if(v == fileLoadButton1)
                         {
+                            index = 0;
                             fileLoadPole1.setText(fileName);
                             fileLoadPole1.setSelection(fileLoadPole1.getText().length());
                         }
                         if(v == fileLoadButton2){
+                            index = 1;
                             fileLoadPole2.setText(fileName);
                             fileLoadPole2.setSelection(fileLoadPole2.getText().length());
                         }
                         Toast.makeText(getContext().getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
-                        selectedFiles.add(fileName);
+                        if(index!=-1) {
+//                            if(selectedFiles.size() <= 2){
+//                                selectedFiles.add(index,fileName);
+//                            }
+                            if((index == 0 && selectedFiles.size()==0) || (index == 1 && selectedFiles.size() < 2))selectedFiles.add(index,fileName);
+                            if(index == 0 && selectedFiles.size()>0)selectedFiles.set(index,fileName);
+                            if(index == 1 && selectedFiles.size() == 2)selectedFiles.set(index,fileName);
+                        }
+
+                        Log.d(TAG,"Size " + selectedFiles.size());
+
+                   //     selectedFiles.add(fileName);
                     }
                 });
         openFileDialog.show();
@@ -347,7 +381,7 @@ public class UploadFragment extends Fragment {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if(response.body()!=null){
                     Log.d(TAG, "Портфолио загружено, id = " + response.body());
-                    if(!selectedFiles.isEmpty())addFiles(response.body());
+                    if(!selectedFiles.isEmpty())addFiles(response.body(),0);
 
                     if(selectedFiles.isEmpty()){
                         Toast.makeText(homeActivity, getResources().getString(R.string.upload_done), Toast.LENGTH_LONG).show();
@@ -367,10 +401,10 @@ public class UploadFragment extends Fragment {
         selectedFiles.clear();
     }
 
-    public void addFiles(int id){
+    public void addFiles(final int id, final int idFile){
         if(!selectedFiles.isEmpty()){
-            for(String fileName: selectedFiles){
-                final File originalFile = new File(fileName);
+            file_num = idFile;
+                final File originalFile = new File(selectedFiles.get(idFile));
                 FileDTO file = new FileDTO(originalFile.getName(),"-",Functions.getFileExtension(originalFile),id);
                 List<Object> postData = new ArrayList<>();
                 TokenAndNameDTO token = new TokenAndNameDTO(Functions.getSharedUsername(homeActivity),Functions.getSharedToken(homeActivity));
@@ -384,18 +418,21 @@ public class UploadFragment extends Fragment {
                         if(response.body()!=null){
                             String answer = response.body();
                             Log.d(TAG, "Информация о файле загружена. Ссылка на него - " + answer );
-                            uploadFiles(answer,originalFile);
+
+                         //   if(num == 0)fileUploading1 = true;
+                          //  if(num == 1)fileUploading2 = true;
+
+                            uploadFiles(answer,originalFile, id, idFile);
                         }
                     }
                     @Override
                     public void onFailure(Call<String> call, Throwable t) { }
                 });
             }
-        }
+
     }
 
-    public void uploadFiles(String src, final File originalFile){
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),originalFile);
+    public void uploadFiles(String src, final File originalFile, final int id, final int idFile){
         Log.d(TAG,"Передача файла...");
 
         String username = Functions.getSharedUsername(homeActivity);
@@ -403,18 +440,28 @@ public class UploadFragment extends Fragment {
         RequestBody usernamePart = RequestBody.create(MultipartBody.FORM, username);
         RequestBody tokenPart = RequestBody.create(MultipartBody.FORM,token);
 
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file",src,requestFile);
+
+
+        ProgressRequestBody fileBody = new ProgressRequestBody(originalFile,this);
+
+
+
+
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file",src, fileBody);
         Call<String> call = NetworkService.getInstance().getJSONApi().uploadFile(usernamePart,tokenPart, body);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d(TAG, response.body());
                 if(selectedFiles.size()!=0){
-                    if(originalFile.getName().equals(new File(selectedFiles.get(selectedFiles.size()-1)).getName())){
+
+                    if(selectedFiles.size() <= (idFile+1)){
                         Toast.makeText(homeActivity, getResources().getString(R.string.upload_done), Toast.LENGTH_LONG).show();
                         clean();
                     }
+                    else addFiles(id, idFile+1);
                 }
+
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
@@ -422,6 +469,56 @@ public class UploadFragment extends Fragment {
             }
         });
     }
+
+
+    @Override
+    public void onProgressUpdate(int percentage) {
+        if(file_num == 0){
+            uploadProgressText1.setText(getResources().getString(R.string.upload_file_process) + " " + percentage + "%");
+            uploadProgress1.setProgress(percentage);
+        }
+        if(file_num == 1){
+            uploadProgressText2.setText(getResources().getString(R.string.upload_file_process) + " " + percentage + "%");
+            uploadProgress2.setProgress(percentage);
+        }
+    }
+
+    @Override
+    public void onError() {
+        if(file_num == 0){
+            uploadProgressText1.setText(getResources().getString(R.string.upload_file_failed));
+        }
+        if(file_num == 1){
+            uploadProgressText2.setText(getResources().getString(R.string.upload_file_failed));
+        }
+    }
+
+    @Override
+    public void onFinish() {
+        if(file_num == 0){
+            uploadProgressText1.setText(getResources().getString(R.string.upload_file_complete));
+        }
+        if(file_num == 1){
+            uploadProgressText2.setText(getResources().getString(R.string.upload_file_complete));
+        }
+    }
+
+    @Override
+    public void uploadStart() {
+        if(file_num == 0){
+            uploadProgress1.setVisibility(View.VISIBLE);
+            uploadProgressText1.setVisibility(View.VISIBLE);
+            uploadProgressText1.setText("0%");
+            uploadProgress1.setProgress(0);
+        }
+        if(file_num == 1){
+            uploadProgress2.setVisibility(View.VISIBLE);
+            uploadProgressText2.setVisibility(View.VISIBLE);
+            uploadProgressText2.setText("0%");
+            uploadProgress2.setProgress(0);
+        }
+    }
+
 
     public void drawCategories(){
         ArrayAdapter<CategoryDTO> adapter = new ArrayAdapter<CategoryDTO>(
