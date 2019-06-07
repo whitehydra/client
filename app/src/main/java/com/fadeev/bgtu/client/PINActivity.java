@@ -61,6 +61,7 @@ public class PINActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.pin_toolbar_menu);
         toolBarListener();
+        setTitle("");
         PIN = findViewById(R.id.pin_text);
         textMessage = findViewById(R.id.text_message);
         textMessage.setVisibility(View.INVISIBLE);

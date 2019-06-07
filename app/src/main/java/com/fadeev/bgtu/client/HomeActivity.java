@@ -133,7 +133,20 @@ public class HomeActivity extends AppCompatActivity {
         toolBarListener();
         navigationView = (BottomNavigationView) findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
+
+    public void checkPermissions(){
+        if(!userView){
+            if(userDTO!=null){
+                if(!userDTO.getLevel().equals("Администратор"))navigationView.getMenu().findItem(R.id.navigation_users).setVisible(false);
+            }
+            if(viewUserDTO!=null){
+                if(!viewUserDTO.getLevel().equals("Администратор"))navigationView.getMenu().findItem(R.id.navigation_users).setVisible(false);
+            }
+        }
+    }
+
 
 
     public void toolBarListener(){

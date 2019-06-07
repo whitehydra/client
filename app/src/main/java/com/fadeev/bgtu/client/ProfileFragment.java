@@ -138,6 +138,7 @@ public class ProfileFragment extends Fragment {
         pfMailValue.setText(user.getMail());
         pfInfoValue.setText(user.getInfo());
         if(!homeActivity.userView && Functions.checkAvatar(getContext()))drawAvatar();
+        homeActivity.checkPermissions();
 
     }
 
