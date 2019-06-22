@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -13,11 +15,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.fadeev.bgtu.client.dto.AuthorizationDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
@@ -36,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private View progress;
     private View loginForm;
     Toolbar toolbar;
+    private AlertDialog.Builder recoveryDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         loginForm = findViewById(R.id.lgLoginFormScroll);
         progress = findViewById(R.id.login_progress);
 
+
         Button mEmailSignInButton = (Button) findViewById(R.id.lgSignInButton);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -58,6 +65,19 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+
+        Button recoveryButton = (Button) findViewById(R.id.lgRecoveryButton);
+        recoveryButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createRecoveryDialog();
+                recoveryDialog.show();
+            }
+        });
+
+
+
+
     }
 
     private void attemptLogin() {
@@ -95,6 +115,43 @@ public class LoginActivity extends AppCompatActivity {
           //  userLoginTask.execute((Void) null);
         }
     }
+
+
+    private void createRecoveryDialog(){
+        recoveryDialog = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(this);
+        recoveryDialog.setMessage(getString(R.string.login_recovery_message));
+        recoveryDialog.setTitle(getString(R.string.action_recovery));
+
+        recoveryDialog.setView(edittext);
+
+        recoveryDialog.setPositiveButton(getString(R.string.login_recovery_ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String login = edittext.getText().toString();
+                if(!login.equals("")){
+                    Call<String> call = NetworkService.getInstance().getJSONApi().accessRecovery(login);
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if(response.body()!=null){
+                                Toast.makeText(getApplicationContext(), response.body(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                        }
+                    });
+                }
+            }
+        });
+
+        recoveryDialog.setNegativeButton(getString(R.string.login_recovery_cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+    }
+
+
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;

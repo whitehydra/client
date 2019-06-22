@@ -137,14 +137,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void checkPermissions(){
-        if(!userView){
-            if(userDTO!=null){
-                if(!userDTO.getLevel().equals("Администратор"))navigationView.getMenu().findItem(R.id.navigation_users).setVisible(false);
-            }
-            if(viewUserDTO!=null){
-                if(!viewUserDTO.getLevel().equals("Администратор"))navigationView.getMenu().findItem(R.id.navigation_users).setVisible(false);
-            }
-        }
+        if(userDTO!=null){
+            if(!userDTO.getLevel().equals("Модератор"))navigationView.getMenu().findItem(R.id.navigation_users).setVisible(false);
+        } else navigationView.getMenu().findItem(R.id.navigation_users).setVisible(false);
     }
 
 

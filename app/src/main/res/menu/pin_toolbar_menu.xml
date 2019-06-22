@@ -11,7 +11,10 @@
                 android:id="@+id/exit"
                 android:title="Смена пользователя"
                 app:showAsAction="always"/>
-
+            <item
+                android:id="@+id/restore"
+                android:title="Напомнить PIN"
+                app:showAsAction="always"/>
         </menu>
     </item>
 

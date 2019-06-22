@@ -91,6 +91,23 @@ public class PINActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         break;
+
+                    case R.id.restore:
+                        Call<String> call = NetworkService.getInstance().getJSONApi().pinRecovery(Functions.getSharedUsername(getBaseContext()));
+                        call.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if(response.body()!=null){
+                                    Toast.makeText(getApplicationContext(), response.body(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                            }
+                        });
+
+
+                        break;
                 }
 
                 return false;

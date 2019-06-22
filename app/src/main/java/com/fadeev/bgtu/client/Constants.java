@@ -21,6 +21,8 @@ public class Constants {
         public static final String AUTH = "/authentication";
         public static final String LOGIN = "/login";
         public static final String USERS = "/users/get";
+        public static final String ACCESS_RECOVERY = "/recovery/{username}";
+        public static final String PIN_RECOVERY = "/recovery-pin/{username}";
 
         public static final String UPLOAD_AVATAR = "/file";
         public static final String UPLOAD_FILE = "/portfolio/upload";

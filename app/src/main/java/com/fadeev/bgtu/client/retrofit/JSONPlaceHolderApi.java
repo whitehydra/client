@@ -36,6 +36,12 @@ public interface JSONPlaceHolderApi {
     @POST(Constants.URL.VERSION + Constants.URL.AUTH)
     Call<UserDTO> getUser(@Body TokenAndNameDTO data);
 
+    @GET(Constants.URL.VERSION + Constants.URL.ACCESS_RECOVERY)
+    Call<String> accessRecovery (@Path("username") String username);
+
+    @GET(Constants.URL.VERSION + Constants.URL.PIN_RECOVERY)
+    Call<String> pinRecovery (@Path("username") String username);
+
 
     @POST(Constants.URL.VERSION + Constants.URL.USERS)
     Call<List<UserDTO>> getUsersList(@Body List<Object> list);

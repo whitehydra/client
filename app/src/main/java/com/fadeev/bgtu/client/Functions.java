@@ -167,34 +167,6 @@ public class Functions {
         android.content.res.Configuration conf = res.getConfiguration();
         conf.setLocale(new Locale(lang)); // API 17+ only.
         res.updateConfiguration(conf, dm);
-
-
-
-//
-//        Locale locale = new Locale(lang);
-//        Locale.setDefault(locale);
-//        Configuration config = context.getResources().getConfiguration();
-//        config.locale = locale;
-//        context.getResources().updateConfiguration(config,
-//                context.getResources().getDisplayMetrics());
-
-
-
-
-
-
-
-
-//        Locale locale = new Locale(lang);
-//        Locale.setDefault(locale);
-//        Configuration config = new Configuration();
-//        config.locale = locale;
-//        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-//
-//        SharedPreferences sPref= PreferenceManager.getDefaultSharedPreferences(context);
-//        SharedPreferences.Editor ed = sPref.edit();
-//        ed.putString(Constants.PREFERENCES.LANGUAGE,lang);
-//        ed.apply();
     }
 
 }

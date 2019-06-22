@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">версия 1.6 Alpha</string>
+    <string name="app_version">версия 1.7 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
@@ -22,7 +22,9 @@
     <string name="login_progress">Авторизация…</string>
     <string name="action_recovery">Восстановление доступа</string>
     <string name="image_description">Изображение</string>
-
+    <string name="login_recovery_message">Введите логин:</string>
+    <string name="login_recovery_ok">ОК</string>
+    <string name="login_recovery_cancel">Отмена</string>
 
     <!-- Домашний экран -->
     <string name="home_activity">Профиль</string>
