@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">версия 1.7 Alpha</string>
+    <string name="app_version">версия 1.7.5 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 
@@ -29,11 +29,12 @@
     <!-- Домашний экран -->
     <string name="home_activity">Профиль</string>
     <string name="home_progress">Загрузка...</string>
-
     <string name="title_profile">Профиль</string>
     <string name="title_portfolio">Портфолио</string>
     <string name="title_upload">Загрузка</string>
     <string name="title_users">Пользователи</string>
+    <string name="home_error_title">Ошибка подключения</string>
+    <string name="home_error_message">При подключении произошла ошибка. Пожалуйста повторите попытку позже.</string>
 
 
     <!-- Профиль -->

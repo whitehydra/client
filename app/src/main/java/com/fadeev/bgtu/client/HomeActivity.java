@@ -3,6 +3,7 @@ package com.fadeev.bgtu.client;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -186,6 +188,19 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+
+    public void printError(){
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setMessage(getString(R.string.home_error_message));
+        errorDialog.setTitle(getString(R.string.home_error_title));
+
+        errorDialog.setPositiveButton(getString(R.string.login_recovery_ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+        errorDialog.show();
+    }
 
     private void hideNavigationUsers(){
         Menu navMenu = navigationView.getMenu();

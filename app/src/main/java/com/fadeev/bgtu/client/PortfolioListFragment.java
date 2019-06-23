@@ -1,5 +1,6 @@
 package com.fadeev.bgtu.client;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,12 @@ import com.fadeev.bgtu.client.dto.PortfolioDTO;
 import com.fadeev.bgtu.client.dto.TokenAndNameDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +48,8 @@ public class PortfolioListFragment extends Fragment {
 
     CharSequence search = null;
     CharSequence choose = null;
+
+    @SuppressLint("SimpleDateFormat") final SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +96,9 @@ public class PortfolioListFragment extends Fragment {
                     }
                 }
                 @Override
-                public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) { }
+                public void onFailure(Call<List<PortfolioDTO>> call, Throwable t) {
+                    homeActivity.printError();
+                }
             });
         }
         else {
@@ -125,7 +135,21 @@ public class PortfolioListFragment extends Fragment {
     }
 
 
+    private class SortPortfolio implements Comparator<PortfolioDTO>{
+        public int compare(PortfolioDTO a, PortfolioDTO b){
+            try {
+                Date d1 = date.parse(a.getDate_event());
+                Date d2 = date.parse(b.getDate_event());
+                return d2.compareTo(d1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }
+    }
+
     public void createAdapter(){
+        Collections.sort(list, new SortPortfolio());
         adapter = new PortfolioAdapter(homeActivity,R.layout.portfolio_list_item,list);
         portfolioList.setAdapter(adapter);
 

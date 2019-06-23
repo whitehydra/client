@@ -110,6 +110,7 @@ public class ProfileFragment extends Fragment {
                 }
                 @Override
                 public void onFailure(Call<UserDTO> call, Throwable t) {
+                    homeActivity.printError();
                 }
             });
         }

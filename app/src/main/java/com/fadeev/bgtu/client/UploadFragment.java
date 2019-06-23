@@ -576,6 +576,7 @@ public class UploadFragment extends Fragment implements ProgressRequestBody.Uplo
             @Override
             public void onFailure(Call<List<CategoryDTO>> call, Throwable t) {
                 Log.d(TAG, "Ошибка получения категорий");
+                homeActivity.printError();
             }
         });
     }

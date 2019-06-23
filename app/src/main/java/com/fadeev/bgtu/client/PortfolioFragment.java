@@ -163,7 +163,9 @@ public class PortfolioFragment extends Fragment {
                 printFileData();
             }
             @Override
-            public void onFailure(Call<List<FileDTO>> call, Throwable t) { }
+            public void onFailure(Call<List<FileDTO>> call, Throwable t) {
+                homeActivity.printError();
+            }
         });
     }
 }

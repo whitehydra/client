@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Портфолио БГТУ</string>
-    <string name="app_version">version 1.7 Alpha</string>
+    <string name="app_version">version 1.7.5 Alpha</string>
 
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
@@ -31,11 +31,12 @@
     <!-- Домашний экран -->
     <string name="home_activity">Profile</string>
     <string name="home_progress">Loading...</string>
-
     <string name="title_profile">Profile</string>
     <string name="title_portfolio">Portfolio</string>
     <string name="title_upload">Loading</string>
     <string name="title_users">Users</string>
+    <string name="home_error_title">Connection error</string>
+    <string name="home_error_message">There was an error connecting. Please try again later.</string>
 
 
     <!-- Профиль -->
