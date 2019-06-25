@@ -23,6 +23,8 @@ import com.fadeev.bgtu.client.dto.UserDTO;
 import com.fadeev.bgtu.client.retrofit.NetworkService;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -166,12 +168,20 @@ public class UsersFragment extends Fragment {
 
 
 
+    private class SortUsers implements Comparator<UserDTO> {
+        public int compare(UserDTO a, UserDTO b){
+            return  a.getName().compareTo(b.getName());
+
+        }
+    }
+
 
 
     public void createAdapter(){
+
+        Collections.sort(homeActivity.usersList,new SortUsers());
         adapter = new UsersAdapter(homeActivity,R.layout.users_list_item,homeActivity.usersList);
         usersList.setAdapter(adapter);
-
 
 
         facultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

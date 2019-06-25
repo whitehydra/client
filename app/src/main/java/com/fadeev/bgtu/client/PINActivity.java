@@ -169,7 +169,6 @@ public class PINActivity extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if(response.body()!=null){
                         if(response.body()){
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.pin_done_message), Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(PINActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();

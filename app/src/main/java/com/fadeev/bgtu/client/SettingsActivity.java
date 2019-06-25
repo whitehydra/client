@@ -154,10 +154,9 @@ public class SettingsActivity extends AppCompatActivity{
         }
 
     }
-
     public static void openFile(final Context context){
         OpenFileDialog openFileDialog = new OpenFileDialog(context)
-                .setFilter(".*\\.jpg")
+                .setFilter(".*\\.(?:jpg|jpeg|png)")
                 .setOpenDialogListener(new OpenFileDialog.OpenDialogListener() {
                     @Override
                     public void OnSelectedFile(final String fileName) {
@@ -260,8 +259,6 @@ public class SettingsActivity extends AppCompatActivity{
 //            }
 //        });
     }
-
-
 
 
 

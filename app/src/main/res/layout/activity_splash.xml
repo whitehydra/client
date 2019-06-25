@@ -2,6 +2,8 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splashFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
@@ -13,4 +15,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/text.Splash"/>
+
+    <ProgressBar
+        android:id="@+id/load_progress_splash"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textWelcome"
+        app:layout_constraintVertical_bias="0.116" />
 </android.support.constraint.ConstraintLayout>

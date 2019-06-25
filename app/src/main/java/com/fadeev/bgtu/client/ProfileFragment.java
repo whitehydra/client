@@ -135,8 +135,13 @@ public class ProfileFragment extends Fragment {
         pfPositionValue.setText(user.getLevel());
         pfFacultyValue.setText(user.getFaculty().getShortName());
         pfGroupValue.setText(user.getGroup().getShortName());
-        pfNumberValue.setText(user.getPhone());
-        pfMailValue.setText(user.getMail());
+
+        if(user.getPhone()==null || user.getPhone().equals(""))pfNumberValue.setText(getResources().getString(R.string.profile_empty_number));
+        else
+            pfNumberValue.setText(user.getPhone());
+        if(user.getMail()==null || user.getMail().equals(""))pfMailValue.setText(getResources().getString(R.string.profile_empty_mail));
+        else
+            pfMailValue.setText(user.getMail());
         pfInfoValue.setText(user.getInfo());
         if(!homeActivity.userView && Functions.checkAvatar(getContext()))drawAvatar();
         homeActivity.checkPermissions();

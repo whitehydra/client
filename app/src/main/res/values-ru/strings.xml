@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Портфолио БГТУ</string>
+    <string name="app_name">Портфолио студента</string>
     <string name="app_version">версия 1.7.5 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
@@ -44,6 +44,8 @@
     <string name="profile_mail">Почта:</string>
     <string name="profile_info">Дополнительная информация:</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="profile_empty_number">не указан</string>
+    <string name="profile_empty_mail">не указана</string>
 
 
     <!-- Портфолио -->
