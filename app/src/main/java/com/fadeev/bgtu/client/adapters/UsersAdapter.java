@@ -98,11 +98,12 @@ public class UsersAdapter extends ArrayAdapter<UserDTO> implements Filterable {
                     List<UserDTO> filterResultsData = new ArrayList<>();
 
                     for(UserDTO data : originalData){
-                        if(data.getFaculty().getShortName().equals(constraint.toString()) ||
-                                constraint.toString().equals(homeActivity.getResources().getString(R.string.users_list_all_faculties))){
-                            filterResultsData.add(data);
+                        if(data.getFaculty()!=null){
+                            if(data.getFaculty().getShortName().equals(constraint.toString()) ||
+                                    constraint.toString().equals(homeActivity.getResources().getString(R.string.users_list_all_faculties))){
+                                filterResultsData.add(data);
+                            }
                         }
-
                     }
                     results.values = filterResultsData;
                     results.count = filterResultsData.size();
@@ -132,9 +133,11 @@ public class UsersAdapter extends ArrayAdapter<UserDTO> implements Filterable {
                 else{
                     List<UserDTO> filterResultsData = new ArrayList<>();
                     for(UserDTO data : filteredData){
-                        if(data.getGroup().getShortName().equals(constraint.toString()) ||
-                                constraint.toString().equals(homeActivity.getResources().getString(R.string.users_list_all_groups))){
-                            filterResultsData.add(data);
+                        if(data.getGroup()!=null){
+                            if(data.getGroup().getShortName().equals(constraint.toString()) ||
+                                    constraint.toString().equals(homeActivity.getResources().getString(R.string.users_list_all_groups))){
+                                filterResultsData.add(data);
+                            }
                         }
                     }
                     results.values = filterResultsData;

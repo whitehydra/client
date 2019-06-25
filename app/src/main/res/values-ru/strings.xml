@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Портфолио студента</string>
-    <string name="app_version">версия 1.7.5 Alpha</string>
+    <string name="app_version">версия 1.8.1 Alpha</string>
 
     <string name="default_text">&lt;&lt;empty&gt;&gt;</string>
 

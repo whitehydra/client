@@ -133,8 +133,16 @@ public class ProfileFragment extends Fragment {
 
         pfNameValue.setText(user.getName());
         pfPositionValue.setText(user.getLevel());
-        pfFacultyValue.setText(user.getFaculty().getShortName());
-        pfGroupValue.setText(user.getGroup().getShortName());
+
+
+        if(user.getFaculty()==null) pfFacultyValue.setText(getResources().getString(R.string.profile_empty_number));
+        else
+            pfFacultyValue.setText(user.getFaculty().getShortName());
+
+
+        if(user.getGroup()==null)pfGroupValue.setText(getResources().getString(R.string.profile_empty_mail));
+        else
+            pfGroupValue.setText(user.getGroup().getShortName());
 
         if(user.getPhone()==null || user.getPhone().equals(""))pfNumberValue.setText(getResources().getString(R.string.profile_empty_number));
         else
